@@ -793,9 +793,9 @@ body { background: radial-gradient(ellipse 110% 560px at 50% 0, #2a1418 0%, rgba
 .tester-dot img { width: 21px; height: 21px; }
 .tester-dot::after { font-size: 18px; padding: 7px 14px; border-radius: 10px; top: calc(100% + 10px); }
 .kit-foot { margin: 14px 0 4px; }
-
 /* TEMPORARY: hide the top-right Discord button. Revert by removing this rule. */
 .top-bar-right .discord-btn { display: none !important; }
+
 </style>
 </head>
 <body>
@@ -1652,15 +1652,53 @@ function getRole(name, player) {
 }
 function rankClass(rank) { return rank === 1 ? "rank-1" : rank === 2 ? "rank-2" : rank === 3 ? "rank-3" : ""; }
 function avatarUrl(name, size) { return `https://mc-heads.net/avatar/${encodeURIComponent(name)}/${size}`; }
-// 3D upper-body skin render. Use a separate renderer as primary because some mobile
-// browsers/services were returning a default model; keep older renderers as fallbacks.
-function skinUrl(name, size = 256) { return `https://skinrender.dev/render/${encodeURIComponent(name)}/bust?size=${size}&yaw=18&pitch=12`; }
-function skinImg(name, size) {
-  const fb1 = `https://nmsr.nickac.dev/bust/${encodeURIComponent(name)}?yaw=18&pitch=12`;
-  const fb2 = `https://minotar.net/armor/bust/${encodeURIComponent(name)}/${size}.png`;
-  const fb3 = avatarUrl(name, 96);
-  return `<img src="${skinUrl(name, size)}" alt="${name}" loading="lazy" onerror="if(!this.dataset.f){this.dataset.f='1';this.src='${fb1}'}else if(this.dataset.f==='1'){this.dataset.f='2';this.src='${fb2}'}else{this.onerror=null;this.src='${fb3}'}">`;
+// Upper-body skin render (used in the overall rows and the profile). Falls back to the face if it fails to load.
+// The render service is asked by UUID (not by name): name lookups can silently return a default Steve/Alex skin
+// (e.g. when Mojang rate-limits the lookup), which can't be detected as an error. UUIDs are resolved once and cached.
+function skinUrl(idOrName) { return `https://nmsr.nickac.dev/bust/${encodeURIComponent(idOrName)}?yaw=18&pitch=12`; }
+const _uuidCache = {};
+const _uuidPending = {};
+function _lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+function _lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+function resolveUuid(name) {
+  const key = name.toLowerCase();
+  if (_uuidCache[key]) return Promise.resolve(_uuidCache[key]);
+  const cached = _lsGet("uuid:" + key);
+  if (cached) { _uuidCache[key] = cached; return Promise.resolve(cached); }
+  if (_uuidPending[key]) return _uuidPending[key];
+  const timeout = (ms) => new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), ms));
+  const tryPlayerDb = () => fetch(`https://playerdb.co/api/player/minecraft/${encodeURIComponent(name)}`)
+    .then(r => r.ok ? r.json() : Promise.reject(new Error("http")))
+    .then(j => j && j.data && j.data.player && j.data.player.id);
+  const tryMcHeads = () => fetch(`https://api.ashcon.app/mojang/v2/user/${encodeURIComponent(name)}`)
+    .then(r => r.ok ? r.json() : Promise.reject(new Error("http")))
+    .then(j => j && j.uuid);
+  _uuidPending[key] = Promise.race([tryPlayerDb(), timeout(6000)])
+    .catch(() => Promise.race([tryMcHeads(), timeout(6000)]))
+    .then(id => {
+      if (!id) throw new Error("no id");
+      _uuidCache[key] = id; _lsSet("uuid:" + key, id);
+      return id;
+    })
+    .catch(() => null)
+    .finally(() => { delete _uuidPending[key]; });
+  return _uuidPending[key];
 }
+function skinImg(name, size) {
+  const fb1 = `https://minotar.net/armor/bust/${encodeURIComponent(name)}/${size}.png`;
+  const fb2 = avatarUrl(name, 96);
+  const safe = String(name).replace(/"/g, "&quot;");
+  return `<img data-skin-name="${safe}" data-fb1="${fb1}" data-fb2="${fb2}" alt="${safe}" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.dataset.fb1}else{this.onerror=null;this.src=this.dataset.fb2}">`;
+}
+function hydrateSkins(root) {
+  (root || document).querySelectorAll("img[data-skin-name]:not([data-hydrated])").forEach(img => {
+    img.dataset.hydrated = "1";
+    const name = img.dataset.skinName;
+    resolveUuid(name).then(id => { img.src = skinUrl(id || name); });
+  });
+}
+new MutationObserver(() => hydrateSkins()).observe(document.documentElement, { childList: true, subtree: true });
+document.addEventListener("DOMContentLoaded", () => hydrateSkins());
 
 // ---------- Profile modal ----------
 function renderProfileTiers(player) {
