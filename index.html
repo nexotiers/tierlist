@@ -793,9 +793,9 @@ body { background: radial-gradient(ellipse 110% 560px at 50% 0, #2a1418 0%, rgba
 .tester-dot img { width: 21px; height: 21px; }
 .tester-dot::after { font-size: 18px; padding: 7px 14px; border-radius: 10px; top: calc(100% + 10px); }
 .kit-foot { margin: 14px 0 4px; }
+
 /* TEMPORARY: hide the top-right Discord button. Revert by removing this rule. */
 .top-bar-right .discord-btn { display: none !important; }
-
 </style>
 </head>
 <body>
@@ -1652,12 +1652,14 @@ function getRole(name, player) {
 }
 function rankClass(rank) { return rank === 1 ? "rank-1" : rank === 2 ? "rank-2" : rank === 3 ? "rank-3" : ""; }
 function avatarUrl(name, size) { return `https://mc-heads.net/avatar/${encodeURIComponent(name)}/${size}`; }
-// Upper-body skin render (used in the overall rows and the profile). Falls back to the face if it fails to load.
-function skinUrl(name) { return `https://nmsr.nickac.dev/bust/${encodeURIComponent(name)}?yaw=18&pitch=12`; }
+// 3D upper-body skin render. Use a separate renderer as primary because some mobile
+// browsers/services were returning a default model; keep older renderers as fallbacks.
+function skinUrl(name, size = 256) { return `https://skinrender.dev/render/${encodeURIComponent(name)}/bust?size=${size}&yaw=18&pitch=12`; }
 function skinImg(name, size) {
-  const fb1 = `https://minotar.net/armor/bust/${encodeURIComponent(name)}/${size}.png`;
-  const fb2 = avatarUrl(name, 96);
-  return `<img src="${skinUrl(name)}" alt="${name}" loading="lazy" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='${fb1}'}else{this.onerror=null;this.src='${fb2}'}">`;
+  const fb1 = `https://nmsr.nickac.dev/bust/${encodeURIComponent(name)}?yaw=18&pitch=12`;
+  const fb2 = `https://minotar.net/armor/bust/${encodeURIComponent(name)}/${size}.png`;
+  const fb3 = avatarUrl(name, 96);
+  return `<img src="${skinUrl(name, size)}" alt="${name}" loading="lazy" onerror="if(!this.dataset.f){this.dataset.f='1';this.src='${fb1}'}else if(this.dataset.f==='1'){this.dataset.f='2';this.src='${fb2}'}else{this.onerror=null;this.src='${fb3}'}">`;
 }
 
 // ---------- Profile modal ----------
