@@ -793,9 +793,6 @@ body { background: radial-gradient(ellipse 110% 560px at 50% 0, #2a1418 0%, rgba
 .tester-dot img { width: 21px; height: 21px; }
 .tester-dot::after { font-size: 18px; padding: 7px 14px; border-radius: 10px; top: calc(100% + 10px); }
 .kit-foot { margin: 14px 0 4px; }
-/* TEMPORARY: hide the top-right Discord button. Revert by removing this rule. */
-.top-bar-right .discord-btn { display: none !important; }
-
 </style>
 </head>
 <body>
@@ -816,6 +813,10 @@ body { background: radial-gradient(ellipse 110% 560px at 50% 0, #2a1418 0%, rgba
       </svg></button>
       <div class="acc-drop wide" id="accPanel"></div>
     </div>
+    <a class="discord-btn" href="https://discord.gg/Y6x9FzFEaz" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+      <span>Discord</span>
+    </a>
     <div class="acc-wrap">
       <button class="hero-btn hero-btn-primary" id="accBtn" type="button"><span>Log in</span></button>
       <div class="acc-drop" id="accMenu"></div>
@@ -909,6 +910,7 @@ let currentProfileName = null;
 
 const NELISMP_ICON_URL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAbUExURf///5eXl////9nZ2WtraypeT1eejz56aQ5FNmFnVl4AAAABdFJOUwBA5thmAAAAPUlEQVR42qXMQQ4AIQwCQNRi+f+LN56WkHiS29AU3DNmemHN9LAijOKx/XDzuP6im261VOV3wcP95tyDwh+GIwEjm1Ka2QAAAABJRU5ErkJggg==";
 const SWORD_ICON_URL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAqUExURQAAAEkkPod8hx4HCnBncFBCTV1VXS4iIk45PCsbHGAxLnRDQTg2OA4CDLFjvMoAAAABdFJOUwBA5thmAAAAT0lEQVR42lXM2w7AIAgDUGtB2O3/f3fZosTyQDgl0KQAqHun2jrFrjY38fAxDXzNI1k7LNc1cnoFVq6H4uNkBjdfbGQlwP2PrCDYpB5q8AKcHQFThW5NIgAAAABJRU5ErkJggg==";
+const SWORDMODE_ICON_URL = "https://github.com/Toggelt/nexo-tiers/blob/main/assets/ItemSprite_diamond-sword.png?raw=true";
 const TRIATHLON_ICON_URL = "https://github.com/Toggelt/nexo-tiers/blob/main/assets/triathlon_sprite.png?raw=true";
 const VANILLA_ICON_URL = "https://github.com/Toggelt/nexo-tiers/blob/main/assets/Invicon_End_Crystal.gif?raw=true";
 const OVERALL_ICON_URL = "https://github.com/Toggelt/nexo-tiers/blob/main/assets/trophy.png?raw=true";
@@ -918,9 +920,10 @@ const LEADERBOARDS = {
   Overall: { key: "Overall", label: "Overall", title: "Overall Leaderboard", icon: OVERALL_ICON_URL },
   NeliSMP: { key: "NeliSMP", label: "NeliSMP", title: "NeliSMP Leaderboard", icon: NELISMP_ICON_URL, col: "nelismp" },
   Vanilla: { key: "Vanilla", label: "Vanilla", title: "Vanilla Leaderboard", icon: VANILLA_ICON_URL, col: "vanilla" },
+  Sword: { key: "Sword", label: "Sword", title: "Sword Leaderboard", icon: SWORDMODE_ICON_URL, col: "sword" },
   Triathlon: { key: "Triathlon", label: "Triathlon", title: "Triathlon Leaderboard", icon: TRIATHLON_ICON_URL, col: "triathlon" }
 };
-const SUB_BOARDS = ["NeliSMP", "Vanilla", "Triathlon"];
+const SUB_BOARDS = ["NeliSMP", "Vanilla", "Sword", "Triathlon"];
 // Gamemodes listed here show "Coming soon" instead of tier columns and are left out of titles/points.
 // RELEASE: remove "Vanilla" from this object (or set it to {}) and everything switches back on.
 const COMING_SOON = { Vanilla: true };
@@ -1143,7 +1146,9 @@ const KIT_ICON_FILES = {
   wind_charge: "Invicon_Wind_Charge.png", golden_apple: "ItemSprite_golden-apple.png", bucket: "ItemSprite_water-bucket.png",
   cobweb: "Invicon_Cobweb.png", axe: "ItemSprite_netherite-axe.png", boots: "ItemSprite_netherite-boots.png",
   leggings: "ItemSprite_netherite-leggings.png", chestplate: "ItemSprite_netherite-chestplate.png", helmet: "ItemSprite_netherite-helmet.png",
-  strength_potion: "ItemSprite_splash-potion-of-strength(1).png"
+  strength_potion: "ItemSprite_splash-potion-of-strength(1).png",
+  d_helmet: "ItemSprite_diamond-helmet.png", d_chestplate: "ItemSprite_diamond-chestplate.png",
+  d_leggings: "ItemSprite_diamond-leggings.png", d_boots: "ItemSprite_diamond-boots.png", d_sword: "ItemSprite_diamond-sword.png"
 };
 Object.keys(KIT_ICON_FILES).forEach(k => { ICONS[k] = KIT_ICON_BASE + encodeURIComponent(KIT_ICON_FILES[k]).replace(/'/g, "%27").replace(/\(/g, "%28").replace(/\)/g, "%29"); });
 ICONS.trident = NELISMP_ICON_URL;   // the NeliSMP gamemode icon is the trident
@@ -1200,6 +1205,15 @@ const KIT_ITEMS = [
   { slot: 42, name: "Wind Charge", icon: "wind_charge", count: 64 },
   { slot: 43, name: "Netherite Axe", icon: "axe", enchants: ["Sharpness V", "Unbreaking III"], slotLabel: WEAPON, attributes: ["&2 10 Attack Damage", "&2 1 Attack Speed"] },
   { slot: 44, name: "Shield", icon: "shield", enchants: ["Unbreaking III"] }
+];
+
+// Sword gamemode kit: full diamond armour (Protection IV + Unbreaking III) and a diamond sword (Unbreaking III) in the first hotbar slot
+const SWORD_KIT_ITEMS = [
+  { slot: 2, name: "Diamond Helmet", icon: "d_helmet", enchants: ["Protection IV", "Unbreaking III"], slotLabel: "When on Head:", attributes: ["+3 Armor", "+2 Armor Toughness"] },
+  { slot: 3, name: "Diamond Chestplate", icon: "d_chestplate", enchants: ["Protection IV", "Unbreaking III"], slotLabel: "When on Body:", attributes: ["+8 Armor", "+2 Armor Toughness"] },
+  { slot: 4, name: "Diamond Leggings", icon: "d_leggings", enchants: ["Protection IV", "Unbreaking III"], slotLabel: "When on Legs:", attributes: ["+6 Armor", "+2 Armor Toughness"] },
+  { slot: 5, name: "Diamond Boots", icon: "d_boots", enchants: ["Protection IV", "Unbreaking III"], slotLabel: "When on Feet:", attributes: ["+3 Armor", "+2 Armor Toughness"] },
+  { slot: 36, name: "Diamond Sword", icon: "d_sword", enchants: ["Unbreaking III"], slotLabel: WEAPON, attributes: ["&2 7 Attack Damage", "&2 1.6 Attack Speed"] }
 ];
 
 const MC_COLORS = { 0:'#000000',1:'#0000AA',2:'#00AA00',3:'#00AAAA',4:'#AA0000',5:'#AA00AA',6:'#FFAA00',7:'#AAAAAA',8:'#555555',9:'#5555FF',a:'#55FF55',b:'#55FFFF',c:'#FF5555',d:'#FF55FF',e:'#FFFF55',f:'#FFFFFF' };
@@ -1317,9 +1331,9 @@ function cleanSprite(src, f = 8) {
   x.putImageData(img, 0, 0);
   document.documentElement.style.setProperty('--glint-tex', `url(${c.toDataURL()})`);
 })();
-function renderInventory(container) {
+function renderInventory(container, items = KIT_ITEMS) {
   const bySlot = {};
-  KIT_ITEMS.forEach(it => { bySlot[it.slot] = it; });
+  items.forEach(it => { bySlot[it.slot] = it; });
   // positions (in texture pixels) of every slot in the 176x166 inventory image
   const slotPos = i => {
     if (i >= 2 && i <= 5) return [8, 8 + (i - 2) * 18];
@@ -1334,7 +1348,7 @@ function renderInventory(container) {
     const glint = ''; // enchantment glint is switched off on the kit page
     return `<div class="mc-slot" data-slot="${it.slot}" style="left:calc(var(--s) * ${p[0]});top:calc(var(--s) * ${p[1]})"><div class="mc-ibox"><img class="mc-icon" src="${src}" alt="">${glint}</div>${it.count > 1 ? `<span class="mc-count">${it.count}</span>` : ''}</div>`;
   };
-  container.innerHTML = `<div class="mc-inv inv-img"><div class="mc-window"></div>${KIT_ITEMS.map(slotHtml).join('')}</div>`;
+  container.innerHTML = `<div class="mc-inv inv-img"><div class="mc-window"></div>${items.map(slotHtml).join('')}</div>`;
   container.querySelectorAll('.mc-glint[data-src]').forEach(async g => {
     const u = await upscaleSprite(g.dataset.src);
     g.style.webkitMaskImage = g.style.maskImage = `url("${u}")`;
@@ -1358,7 +1372,7 @@ function renderInventory(container) {
 }
 document.addEventListener('click', e => { if (!e.target.closest('.mc-slot')) mcTip.style.display = 'none'; });
 
-const TEST_SERVERS = { NeliSMP: 'mcpvp.club', Triathlon: 'mcpvp.club', Vanilla: 'centralpvp.net' };
+const TEST_SERVERS = { NeliSMP: 'mcpvp.club', Triathlon: 'mcpvp.club', Vanilla: 'centralpvp.net', Sword: 'mcpvp.club' };
 const COPY_ICON = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 012-2h9"/></svg>';
 const CHECK_ICON = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
 function serverLineHtml(kit) {
@@ -1380,6 +1394,15 @@ function triathlonKitHtml(withHeader = true) {
     <div class="tri-boxes">${box('golden_apple', 'Early Game', '(UHC)')}${box('ender_pearl', 'Mid Game', '(SMP)')}${box('mace', 'Late Game', '(Mace)')}</div>
     <div class="kit-sub tri-foot">Each kit is played first to 3</div>
     ${serverLineHtml('Triathlon')}
+  </div>`;
+}
+
+function swordKitHtml(withHeader = true, invId = 'kitInventory') {
+  return `<div class="kit-pane">
+    ${withHeader ? `<div class="kit-header"><img src="${SWORDMODE_ICON_URL}" alt="Sword"><span>Sword Kit</span></div>` : ''}
+    <div id="${invId}"></div>
+    <div class="kit-sub kit-foot">LT3 and below first to 6 · HT3 first to 10 · T2 first to 15 · T1 first to 20</div>
+    ${serverLineHtml('Sword')}
   </div>`;
 }
 
@@ -1602,7 +1625,7 @@ function render() {
 // ---------- Info tooltip ----------
 let infoTab = 'titles';
 let infoSig = '';
-const boardHasKit = () => currentBoard === 'NeliSMP' || currentBoard === 'Triathlon' || currentBoard === 'Vanilla';
+const boardHasKit = () => currentBoard === 'NeliSMP' || currentBoard === 'Triathlon' || currentBoard === 'Vanilla' || currentBoard === 'Sword';
 function renderInfoTooltip() {
   const kitAvail = boardHasKit();
   if (infoTab === 'kit' && !kitAvail) infoTab = 'titles';
@@ -1625,6 +1648,7 @@ function renderInfoTooltip() {
        </div>`
     : currentBoard === 'Triathlon' ? triathlonKitHtml(true)
     : currentBoard === 'Vanilla' ? vanillaKitHtml(true)
+    : currentBoard === 'Sword' ? swordKitHtml(true)
     : `<div class="kit-empty">No kit yet</div>`;
   infoTooltip.innerHTML = `
     <div class="tooltip-tabs">
@@ -1639,7 +1663,7 @@ function renderInfoTooltip() {
   infoTooltip.classList.toggle("kit-open", infoTab === 'kit');
   const inv = document.getElementById('kitInventory');
   if (inv) {
-    try { renderInventory(inv); }
+    try { renderInventory(inv, currentBoard === 'Sword' ? SWORD_KIT_ITEMS : KIT_ITEMS); }
     catch (err) { console.error('Kit render failed:', err); inv.textContent = 'Kit failed to load'; }
   }
 }
@@ -1653,52 +1677,12 @@ function getRole(name, player) {
 function rankClass(rank) { return rank === 1 ? "rank-1" : rank === 2 ? "rank-2" : rank === 3 ? "rank-3" : ""; }
 function avatarUrl(name, size) { return `https://mc-heads.net/avatar/${encodeURIComponent(name)}/${size}`; }
 // Upper-body skin render (used in the overall rows and the profile). Falls back to the face if it fails to load.
-// The render service is asked by UUID (not by name): name lookups can silently return a default Steve/Alex skin
-// (e.g. when Mojang rate-limits the lookup), which can't be detected as an error. UUIDs are resolved once and cached.
-function skinUrl(idOrName) { return `https://nmsr.nickac.dev/bust/${encodeURIComponent(idOrName)}?yaw=18&pitch=12`; }
-const _uuidCache = {};
-const _uuidPending = {};
-function _lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
-function _lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
-function resolveUuid(name) {
-  const key = name.toLowerCase();
-  if (_uuidCache[key]) return Promise.resolve(_uuidCache[key]);
-  const cached = _lsGet("uuid:" + key);
-  if (cached) { _uuidCache[key] = cached; return Promise.resolve(cached); }
-  if (_uuidPending[key]) return _uuidPending[key];
-  const timeout = (ms) => new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), ms));
-  const tryPlayerDb = () => fetch(`https://playerdb.co/api/player/minecraft/${encodeURIComponent(name)}`)
-    .then(r => r.ok ? r.json() : Promise.reject(new Error("http")))
-    .then(j => j && j.data && j.data.player && j.data.player.id);
-  const tryMcHeads = () => fetch(`https://api.ashcon.app/mojang/v2/user/${encodeURIComponent(name)}`)
-    .then(r => r.ok ? r.json() : Promise.reject(new Error("http")))
-    .then(j => j && j.uuid);
-  _uuidPending[key] = Promise.race([tryPlayerDb(), timeout(6000)])
-    .catch(() => Promise.race([tryMcHeads(), timeout(6000)]))
-    .then(id => {
-      if (!id) throw new Error("no id");
-      _uuidCache[key] = id; _lsSet("uuid:" + key, id);
-      return id;
-    })
-    .catch(() => null)
-    .finally(() => { delete _uuidPending[key]; });
-  return _uuidPending[key];
-}
+function skinUrl(name) { return `https://nmsr.nickac.dev/bust/${encodeURIComponent(name)}?yaw=18&pitch=12`; }
 function skinImg(name, size) {
   const fb1 = `https://minotar.net/armor/bust/${encodeURIComponent(name)}/${size}.png`;
   const fb2 = avatarUrl(name, 96);
-  const safe = String(name).replace(/"/g, "&quot;");
-  return `<img data-skin-name="${safe}" data-fb1="${fb1}" data-fb2="${fb2}" alt="${safe}" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.dataset.fb1}else{this.onerror=null;this.src=this.dataset.fb2}">`;
+  return `<img src="${skinUrl(name)}" alt="${name}" loading="lazy" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='${fb1}'}else{this.onerror=null;this.src='${fb2}'}">`;
 }
-function hydrateSkins(root) {
-  (root || document).querySelectorAll("img[data-skin-name]:not([data-hydrated])").forEach(img => {
-    img.dataset.hydrated = "1";
-    const name = img.dataset.skinName;
-    resolveUuid(name).then(id => { img.src = skinUrl(id || name); });
-  });
-}
-new MutationObserver(() => hydrateSkins()).observe(document.documentElement, { childList: true, subtree: true });
-document.addEventListener("DOMContentLoaded", () => hydrateSkins());
 
 // ---------- Profile modal ----------
 function renderProfileTiers(player) {
@@ -1850,9 +1834,9 @@ async function loadPlayersAndRender(force = true) {
     };
     // falls back to older column sets until the SQL migrations have been run
     let lastErr = null;
-    outer: for (const van of [true, false]) {
+    outer: for (const sw of [true, false]) for (const van of [true, false]) {
       for (const [c, roles] of [['triathlon', true], ['triathlon', false], ['lowblockranked', true], ['lowblockranked', false]]) {
-        const cols = `id,player,nelismp_tier,nelismp_peaktier,${c}_tier,${c}_peaktier` + (van ? ',vanilla_tier,vanilla_peaktier' : '') + (roles ? `,tierlist_regulator,nelismp_tester,${c}_tester` + (van ? ',vanilla_tester' : '') : '');
+        const cols = `id,player,nelismp_tier,nelismp_peaktier,${c}_tier,${c}_peaktier` + (van ? ',vanilla_tier,vanilla_peaktier' : '') + (sw ? ',sword_tier,sword_peaktier' : '') + (roles ? `,tierlist_regulator,nelismp_tester,${c}_tester` + (van ? ',vanilla_tester' : '') + (sw ? ',sword_tester' : '') : '');
         try { rows = await get(cols); LEADERBOARDS.Triathlon.col = c; break outer; } catch (e) { lastErr = e; }
       }
     }
@@ -1949,6 +1933,9 @@ function accTestInfo(kit, name, st = {}) {
 function accTierPlayers(kit, key, exclude) {
   return allPlayers.filter(p => p[`${kit}_tier`] != null && tierKey(p[`${kit}_tier`], !!p[`${kit}_plus`]) === key && p.name.toLowerCase() !== exclude.toLowerCase()).map(p => p.name);
 }
+// Sword: rounds the testee has to score against the higher tier opponent, and the match format per tier
+const swordRoundsNeeded = key => key === '1+' ? 20 : key === '1' ? 17 : (key === '2+' || key === '2') ? 12 : key === '3+' ? 8 : 4;
+const swordFirstTo = key => !key ? 6 : +key[0] === 1 ? 20 : +key[0] === 2 ? 15 : key === '3+' ? 10 : 6;
 const accPick = a => a[Math.floor(Math.random() * a.length)];
 // Assigns opponents for high-tier tests following the promotion rules. When bridging, the own-tier match is skipped.
 function accAssign(kit, name, info, st = {}) {
@@ -1964,7 +1951,7 @@ function accAssign(kit, name, info, st = {}) {
   }
   if (!tgt.length) { steps.push({ title: `Defeat all other ${keyLabel(info.myKey)} players`, opponents: own, tier: info.myKey }); return { steps, meta }; }
   if (own.length && !meta.bridged) steps.push({ title: `Win against a ${keyLabel(info.myKey)} player`, opponents: [accPick(own)], tier: info.myKey });
-  steps.push({ title: `Play a ${keyLabel(info.targetKey)} player (${kit === 'Triathlon' ? 'win overall' : 'win with 4-3 or better'})`, opponents: [accPick(tgt)], tier: info.targetKey });
+  steps.push({ title: `Play a ${keyLabel(info.targetKey)} player (${kit === 'Triathlon' ? 'win overall' : kit === 'Sword' ? 'get at least ' + swordRoundsNeeded(info.targetKey) + ' rounds' : 'win with 4-3 or better'})`, opponents: [accPick(tgt)], tier: info.targetKey });
   return { steps, meta };
 }
 // Tier shift: you're in the 2nd highest occupied tier, the top tier has exactly one player and is between HT3 and LT1.
@@ -2071,6 +2058,21 @@ const GM_RULES = {
     forfeit: FORFEIT_RULES
   }
 };
+GM_RULES.Sword = {
+  maps: ['Map: <b>Stadium (Any)</b>'],
+  format: 'Match length depends on your tier: <b>LT3 and below first to 6</b> (evaluation matches too), <b>HT3 first to 10</b>, <b>T2 first to 15</b> and <b>T1 first to 20</b>.',
+  step2: 'Play against an opponent from the tier you are testing for and score <b>at least 4 rounds</b> for LT3, <b>8 rounds</b> for HT3, <b>12 rounds</b> for LT2/HT2 or <b>17 rounds</b> for LT1 (you do not have to win)',
+  evalPass: 'Winning your evaluation match (first to <b>6</b>)',
+  promoRounds: ['To <b>LT3</b>: get at least <b>4 rounds</b> on an LT3 opponent', 'To <b>HT3</b>: get at least <b>8 rounds</b> on an HT3 opponent', 'To <b>LT2/HT2</b>: get at least <b>12 rounds</b> on an LT2/HT2 opponent', 'To <b>LT1</b>: get at least <b>17 rounds</b> on an LT1 opponent'],
+  shift: 'You must defeat 2 players from your tier with a combined score of <b>20-12 or better</b> if you are HT3, or <b>30-18 or better</b> if you are LT2/HT2 (both matches counted together)',
+  demoHT3: ['<b>HT3:</b> you lose to another HT3 with a score of <b>4-10 or worse</b> (instant demotion)', '<b>HT3:</b> you lose to 2 players from your tier consecutively with a combined score of <b>8-20 or worse</b>', '<b>LT3:</b> you lose to another LT3 with a score of <b>2-6 or worse</b> (instant demotion)'],
+  dsStart: '<b>5</b> (max <b>10</b>) for T2; for T1 it starts at <b>4</b> (max <b>10</b>)',
+  dsLose: 'You lose DS when you lose competitive matches. The penalty is the score difference.',
+  dsLower: ['Losing to a player <b>below</b> your tier gives an additional <b>-3</b>', 'If you are LT1 the additional penalty is <b>-6</b>'],
+  dsGain: ['Winning a match gives <b>+1</b> DS', 'Winning with <b>double the score of your opponent</b> gives <b>+2</b> DS instead of +1 (not additional)'],
+  bridge: 'you beat your second opponent with <b>at least double their rounds</b> (e.g. 10-5). For <b>T1</b> you must win <b>20-14 or better</b>.',
+  forfeit: FORFEIT_RULES
+};
 const gmCfg = kit => GM_RULES[kit] || GM_RULES.NeliSMP;
 const gmv0 = t => `<span class="gmv">${t}</span>`;
 const gmv = t => `<span class="gmv">${t}</span>`;
@@ -2087,6 +2089,7 @@ function gmSections(kit, ctx = {}) {
       <p>After an evaluation test you have a <b>7 day</b> cooldown, unless you pass evaluation and test for HT3, which you may do immediately.</p>`, open);
   S.promo = (type, t2, open) => det(`⏫ Tier Promotion${type ? ': ' + type : ''}`, `<p>${gmv(c.format)} To be promoted you must complete the following steps in order:</p>
         ${ul(['Win against an opponent from your own tier', gmv(c.step2)])}
+        ${c.promoRounds ? ul(c.promoRounds, true) : ''}
         <p><i>If the tier you're trying to achieve is empty, you need to defeat all other players in your tier.</i></p>
         ${t2 ? '<p class="hl">This test is Tier 2 or above, so it must be spectated by a staff member or a recording must be provided.</p>' : ''}`, open);
   S.ht1 = open => det('👑 Testing for HT1', `<p>In order to be promoted to HT1, you must complete the following steps:</p>
@@ -2126,7 +2129,7 @@ function accRulesHtml(kit, info) {
     h += info.mode === 'promo' ? S.promo(info.type, t2, true) : S.ht1(true);
     const shift = info.mode === 'promo' ? accTierShift(kit, info.myKey) : null;
     if (shift) h += S.shift(shift, false);
-    if (info.myKey === '3+') h += S.demoLow(false);
+    if (info.myKey === '3+' || (kit === 'Sword' && info.myKey === '3')) h += S.demoLow(false);
     else if (tn <= 2) h += S.demoDS(false);
     h += S.bridge(false) + S.forfeit(false) + S.fail(false);
   }
@@ -2155,14 +2158,14 @@ function openKitPop(kit) {
   closeKitPop();
   const pop = document.createElement('div');
   pop.id = 'kitPop'; pop.className = 'info-tooltip overall-tooltip kit-open kit-pop active';
-  pop.innerHTML = '<button class="kit-close" type="button" aria-label="Close">&times;</button>' + (kit === 'Triathlon' ? triathlonKitHtml(true) : kit === 'Vanilla' ? vanillaKitHtml(true) : kit === 'NeliSMP'
+  pop.innerHTML = '<button class="kit-close" type="button" aria-label="Close">&times;</button>' + (kit === 'Triathlon' ? triathlonKitHtml(true) : kit === 'Vanilla' ? vanillaKitHtml(true) : kit === 'Sword' ? swordKitHtml(true, 'kitPopInv') : kit === 'NeliSMP'
     ? `<div class="kit-pane"><div class="kit-header"><img src="${LEADERBOARDS[kit].icon}" alt=""><span>${kit} Kit</span></div><div id="kitPopInv"></div><div class="kit-sub kit-foot">Rounds are first to 4</div>${serverLineHtml('NeliSMP')}</div>`
     : `<div class="kit-header" style="margin:4px 0 10px"><img src="${LEADERBOARDS[kit].icon}" alt="" style="width:36px;height:36px;image-rendering:pixelated"><span style="font-size:22px;font-weight:700">${accEsc(kit)} Kit</span></div><div class="kit-empty">No kit yet</div>`);
   accEl('accModal').appendChild(pop);
   pop.querySelector('.kit-close').onclick = closeKitPop;
   pop.onclick = e => e.stopPropagation();
   const inv = accEl('kitPopInv');
-  if (inv) { try { renderInventory(inv); } catch (err) { console.error(err); inv.textContent = 'Kit failed to load'; } }
+  if (inv) { try { renderInventory(inv, kit === 'Sword' ? SWORD_KIT_ITEMS : KIT_ITEMS); } catch (err) { console.error(err); inv.textContent = 'Kit failed to load'; } }
 }
 
 // ----- views: login / register -----
@@ -2476,15 +2479,15 @@ function accBindMatches(box) {
 }
 function accViewScore(m) {
   const iAmTestee = m.testee_user === accSession.user.id, you = iAmTestee ? m.testee_name : m.opponent_name, them = iAmTestee ? m.opponent_name : m.testee_name;
-  accOpen(`<h2>Final score</h2><p class="acc-p">${accEsc(m.test_type || 'Test')} · ${accEsc(m.kit || '')}<br>${accEsc(m.testee_name)} vs ${accEsc(m.opponent_name)}. ${m.kit === 'Triathlon' ? 'Enter the total score of all 3 kits combined.' : 'Matches are first to 4.'}</p>
-    <div class="tt-when"><div><div class="acc-label">${accEsc(you)} (you)</div><input class="acc-in" id="sMe" type="number" min="0" max="${m.kit === 'Triathlon' ? 9 : 4}" inputmode="numeric"></div>
-    <div><div class="acc-label">${accEsc(them)}</div><input class="acc-in" id="sThem" type="number" min="0" max="${m.kit === 'Triathlon' ? 9 : 4}" inputmode="numeric"></div></div>
+  accOpen(`<h2>Final score</h2><p class="acc-p">${accEsc(m.test_type || 'Test')} · ${accEsc(m.kit || '')}<br>${accEsc(m.testee_name)} vs ${accEsc(m.opponent_name)}. ${m.kit === 'Triathlon' ? 'Enter the total score of all 3 kits combined.' : m.kit === 'Sword' ? 'LT3 and below first to 6, HT3 first to 10, T2 first to 15, T1 first to 20.' : 'Matches are first to 4.'}</p>
+    <div class="tt-when"><div><div class="acc-label">${accEsc(you)} (you)</div><input class="acc-in" id="sMe" type="number" min="0" max="${m.kit === 'Triathlon' ? 9 : m.kit === 'Sword' ? 20 : 4}" inputmode="numeric"></div>
+    <div><div class="acc-label">${accEsc(them)}</div><input class="acc-in" id="sThem" type="number" min="0" max="${m.kit === 'Triathlon' ? 9 : m.kit === 'Sword' ? 20 : 4}" inputmode="numeric"></div></div>
     <div class="acc-msg" id="aMsg"></div><button class="acc-go" id="aGo" type="button">Submit score</button><button class="acc-go ghost" id="aLater" type="button">Later</button>`);
   accEl('aLater').onclick = accClose;
   accEl('aGo').onclick = async () => {
     const a = parseInt(accEl('sMe').value, 10), b = parseInt(accEl('sThem').value, 10);
-    const tri = m.kit === 'Triathlon';
-    if (tri ? (![a, b].every(n => Number.isInteger(n) && n >= 0 && n <= 9) || a === b) : (![a, b].every(n => Number.isInteger(n) && n >= 0 && n <= 4) || (a === 4) === (b === 4))) return accMsg(tri ? 'Enter the total score of all 3 kits (0-9). It cannot be a tie.' : 'Enter a valid score: exactly one player has 4.');
+    const tri = m.kit === 'Triathlon', swd = m.kit === 'Sword';
+    if (swd) { if (![a, b].every(n => Number.isInteger(n) && n >= 0 && n <= 20) || a === b || ![6, 10, 15, 20].includes(Math.max(a, b))) return accMsg('Enter a valid score: the winner must have 6, 10, 15 or 20 rounds depending on the match length.'); } else if (tri ? (![a, b].every(n => Number.isInteger(n) && n >= 0 && n <= 9) || a === b) : (![a, b].every(n => Number.isInteger(n) && n >= 0 && n <= 4) || (a === 4) === (b === 4))) return accMsg(tri ? 'Enter the total score of all 3 kits (0-9). It cannot be a tie.' : 'Enter a valid score: exactly one player has 4.');
     accEl('aGo').disabled = true;
     const vals = { status: 'completed', score_testee: iAmTestee ? a : b, score_opponent: iAmTestee ? b : a };
     if (await accMatchUpdate(m, vals, `${accProfile.mc_username} reported the final score of your duel: ${you} ${a}-${b} ${them}.`)) {
@@ -2580,9 +2583,12 @@ async function accViewResolve(id) {
   const high = !!myKey && TIER_ORDER[myKey] <= TIER_ORDER['3+'];     // HT3 or above in this gamemode
   const plan = req.opponents || { steps: [] }, meta = plan.meta || {};
   const tm = /^([HL])T([1-5]) Test$/.exec(req.test_type || ''), target = tm ? tm[2] + (tm[1] === 'H' ? '+' : '') : null;
-  const isTri = kit === 'Triathlon', SCORES = isTri ? TRI_SCORES : RS_SCORES;
-  const bridgeSc = sc => isTri ? (sc[1] - sc[2] >= 3) : (sc[1] - sc[2] >= 2);
-  const bridgeOk = (score) => { const sc = SCORES.find(x => x[0] === score); return !!sc && target !== '1+' && bridgeSc(sc); };
+  const isTri = kit === 'Triathlon', isSword = kit === 'Sword', SCORES = isTri ? TRI_SCORES : RS_SCORES;
+  // Sword scores are free round counts ("a-b"); bridging needs double the opponent's rounds, T1 needs 20-14 or better
+  const swSc = score => { const m = /^(\d+)-(\d+)$/.exec(score || ''); return m ? ['' + score, +m[1], +m[2]] : null; };
+  const findSc = score => isSword ? swSc(score) : SCORES.find(x => x[0] === score);
+  const bridgeSc = (sc, tier) => isTri ? (sc[1] - sc[2] >= 3) : isSword ? ((tier === 1) ? (sc[1] >= 20 && sc[2] <= 14) : (sc[1] > sc[2] && sc[1] >= 2 * sc[2])) : (sc[1] - sc[2] >= 2);
+  const bridgeOk = (score) => { const sc = findSc(score); return !!sc && target !== '1+' && bridgeSc(sc, target ? +target[0] : null); };
   let side = null, choice = null, score = null, opp2 = null;
 
   const getOpp2 = () => {
@@ -2591,13 +2597,13 @@ async function accViewResolve(id) {
     const pool = accTierPlayers(kit, myKey, me).filter(n => n.toLowerCase() !== req.mc_username.toLowerCase());
     const pick = pool.length ? accPick(pool) : null;
     if (pick) {
-      plan.steps = [...(plan.steps || []), { kind: 'eval2', title: `Tester lost: play a ${keyLabel(myKey)} player (${isTri ? 'win overall' : 'win with 4-3 or better'})`, opponents: [pick], tier: myKey }];
+      plan.steps = [...(plan.steps || []), { kind: 'eval2', title: `Tester lost: play a ${keyLabel(myKey)} player (${isTri ? 'win overall' : isSword ? 'get at least ' + swordRoundsNeeded(myKey) + ' rounds' : 'win with 4-3 or better'})`, opponents: [pick], tier: myKey }];
       sb.from('tier_requests').update({ opponents: plan }).eq('id', req.id).then(() => sb.rpc('sync_matches', { p_request: String(req.id) })).then(() => {}, () => {});
     }
     return pick;
   };
   const opt = (val, cur, label, sub = '', cls = '') => `<button type="button" class="rs-opt ${cls} ${cur === val ? 'on' : ''}" data-v="${val}">${label}${sub ? `<small>${sub}</small>` : ''}</button>`;
-  const scoreOpts = (cur, extra = '') => `<div class="rs-opts">${(isTri ? SCORES.filter(x => x[1] > x[2]) : SCORES).map(x => opt(x[0], cur, x[0])).join('')}${extra}</div>`;
+  const scoreOpts = (cur, extra = '') => isSword ? `<div class="tt-when"><div><div class="acc-label">Testee rounds</div><input class="acc-in" id="swA" type="number" min="0" max="20" inputmode="numeric" value="${swSc(cur) ? swSc(cur)[1] : ''}"></div><div><div class="acc-label">Opponent rounds</div><input class="acc-in" id="swB" type="number" min="0" max="20" inputmode="numeric" value="${swSc(cur) ? swSc(cur)[2] : ''}"></div></div><div class="rs-opts one"><button type="button" class="rs-opt" data-sw="1">Set score</button>${extra}</div>` : `<div class="rs-opts">${(isTri ? SCORES.filter(x => x[1] > x[2]) : SCORES).map(x => opt(x[0], cur, x[0])).join('')}${extra}</div>`;
 
   const outcomeNow = () => {
     if (isEval) {
@@ -2608,7 +2614,7 @@ async function accViewResolve(id) {
         if (!high) return choice === 'PASS' ? { status: 'passed', tier: '3', eval_passed: true, side } : null;
         if (choice === 'GRANT') return { status: 'passed', tier: myKey, side };
         if (score === 'WORSE') return { status: 'passed', tier: '3', eval_passed: true, side, score };
-        if (score) { const sc = SCORES.find(x => x[0] === score); return { status: 'passed', tier: myKey, bridge: myKey !== '1+' && bridgeSc(sc), side, score }; }
+        if (score) { const sc = findSc(score); return { status: 'passed', tier: myKey, bridge: !!sc && myKey !== '1+' && bridgeSc(sc, +myKey[0]), side, score }; }
       }
       return null;
     }
@@ -2629,7 +2635,7 @@ async function accViewResolve(id) {
         if (!high) {
           body += `<div class="rs-opts one">${opt('PASS', choice, 'Passed Evaluation', 'Assigns LT3 and lets them test for HT3 right away', 'pass')}</div>`;
         } else if (opp2) {
-          body += `<div class="tt-note">The testee beat you, so they now play another ${keyLabel(myKey)} player. ${isTri ? 'Winning overall (any margin)' : 'Winning with <b>4-3 or better</b>'} earns ${keyLabel(myKey)}. Winning also lets them test the next tier straight away (bridging).</div>
+          body += `<div class="tt-note">The testee beat you, so they now play another ${keyLabel(myKey)} player. ${isTri ? 'Winning overall (any margin)' : isSword ? 'Winning the match' : 'Winning with <b>4-3 or better</b>'} earns ${keyLabel(myKey)}. Winning also lets them test the next tier straight away (bridging).</div>
             <div class="acc-label">Assigned opponent</div><div style="margin-bottom:12px">${oppChips([opp2])}</div>
             <div class="acc-label">Testee's score against ${accEsc(opp2)}</div>${scoreOpts(score, opt('WORSE', score, isTri ? 'Lost overall' : 'Lost', 'Gets LT3 + Passed Evaluation', 'bad'))}`;
         } else {
@@ -2638,7 +2644,7 @@ async function accViewResolve(id) {
       }
     } else {
       body += `<div class="rs-seg">${opt('PASS', choice, 'Passed', '', 'pass')}${opt('FAIL', choice, 'Failed', '14 day cooldown', 'bad')}</div>`;
-      if (choice === 'PASS') body += `<div class="acc-label">${isTri ? 'Total result over all 3 kits' : 'Score of the final match'}</div>${scoreOpts(score)}`;
+      if (choice === 'PASS') body += (isSword && target ? `<div class="tt-note">${keyLabel(target)}: the testee needs at least <b>${swordRoundsNeeded(target)} rounds</b> (first to ${swordFirstTo(target)}). Bridging needs ${+target[0] === 1 ? '20-14 or better' : 'double the opponent\'s rounds'}.</div>` : '') + `<div class="acc-label">${isTri ? 'Total result over all 3 kits' : 'Score of the final match'}</div>${scoreOpts(score)}`;
     }
     const out = outcomeNow();
     let sum = '';
@@ -2657,7 +2663,12 @@ async function accViewResolve(id) {
       if (side === 'lost' && !high && isEval) choice = 'PASS';
       draw();
     });
-    bodyEl.querySelectorAll('.rs-opt').forEach(b => b.onclick = () => {
+    bodyEl.querySelectorAll('[data-sw]').forEach(b => b.onclick = () => {
+      const a = parseInt(accEl('swA').value, 10), c = parseInt(accEl('swB').value, 10);
+      if (![a, c].every(n => Number.isInteger(n) && n >= 0 && n <= 20)) return accMsg('Enter both round counts (0-20).');
+      score = a + '-' + c; draw();
+    });
+    bodyEl.querySelectorAll('.rs-opt[data-v]').forEach(b => b.onclick = () => {
       const v = b.dataset.v;
       if (!isEval) { if (v === 'PASS' || v === 'FAIL') { choice = v; if (v === 'FAIL') score = null; } else score = v; }
       else if (side === 'lost' && high && opp2) score = v;
