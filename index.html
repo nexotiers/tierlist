@@ -1736,11 +1736,51 @@ function rankClass(rank) { return rank === 1 ? "rank-1" : rank === 2 ? "rank-2" 
 function avatarUrl(name, size) { return `https://mc-heads.net/avatar/${encodeURIComponent(name)}/${size}`; }
 // Upper-body skin render (used in the overall rows and the profile). Falls back to the face if it fails to load.
 function skinUrl(name) { return `https://nmsr.nickac.dev/bust/${encodeURIComponent(name)}?yaw=18&pitch=12`; }
-function skinImg(name, size) {
-  const fb1 = `https://minotar.net/armor/bust/${encodeURIComponent(name)}/${size}.png`;
-  const fb2 = avatarUrl(name, 96);
-  return `<img src="${skinUrl(name)}" alt="${name}" loading="lazy" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='${fb1}'}else{this.onerror=null;this.src='${fb2}'}">`;
+// Skin renders are requested by UUID: the render services look usernames up on Mojang themselves and, when that lookup
+// fails or is rate-limited (common for mobile / shared carrier IPs), they answer 200 with a default Steve skin, so onerror never fires.
+const SKIN_UUID_KEY = 'nx_uuid_v1', skinUuidMem = {}, skinUuidWait = {};
+let skinUuidQueue = [], skinUuidActive = 0;
+const skinUuidStore = () => { try { return JSON.parse(localStorage.getItem(SKIN_UUID_KEY) || '{}'); } catch (e) { return {}; } };
+function skinUuidSave(n, u) { try { const m = skinUuidStore(); m[n] = u; localStorage.setItem(SKIN_UUID_KEY, JSON.stringify(m)); } catch (e) {} }
+function skinUuidPump() {
+  while (skinUuidActive < 4 && skinUuidQueue.length) {
+    const { name, done } = skinUuidQueue.shift(); skinUuidActive++;
+    fetch(`https://playerdb.co/api/player/minecraft/${encodeURIComponent(name)}`)
+      .then(r => r.json())
+      .then(j => { const u = j && j.data && j.data.player && (j.data.player.raw_id || (j.data.player.id || '').replace(/-/g, '')); if (u) skinUuidSave(name.toLowerCase(), u); done(u || null); })
+      .catch(() => done(null))
+      .finally(() => { skinUuidActive--; skinUuidPump(); });
+  }
 }
+function skinUuid(name) {
+  const k = name.toLowerCase();
+  if (skinUuidMem[k]) return Promise.resolve(skinUuidMem[k]);
+  const c = skinUuidStore()[k]; if (c) { skinUuidMem[k] = c; return Promise.resolve(c); }
+  return skinUuidWait[k] || (skinUuidWait[k] = new Promise(res => { skinUuidQueue.push({ name, done: u => { if (u) skinUuidMem[k] = u; delete skinUuidWait[k]; res(u); } }); skinUuidPump(); }));
+}
+function skinImg(name, size) {
+  const safe = String(name).replace(/"/g, '&quot;');
+  return `<img data-skin="${safe}" data-size="${size}" alt="${safe}">`;
+}
+function hydrateSkins(root) {
+  (root || document).querySelectorAll('img[data-skin]:not([data-h])').forEach(img => {
+    img.dataset.h = '1';
+    const name = img.dataset.skin, size = img.dataset.size || 160, en = encodeURIComponent(name);
+    skinUuid(name).then(u => {
+      const id = u || en;
+      const chain = [
+        `https://nmsr.nickac.dev/bust/${id}?yaw=18&pitch=12`,
+        `https://minotar.net/armor/bust/${id}/${size}.png`,
+        `https://mc-heads.net/avatar/${id}/96`
+      ];
+      let i = 0;
+      img.onerror = () => { i++; if (i < chain.length) img.src = chain[i]; else img.onerror = null; };
+      img.src = chain[0];
+    });
+  });
+}
+new MutationObserver(() => hydrateSkins()).observe(document.documentElement, { childList: true, subtree: true });
+document.addEventListener('DOMContentLoaded', () => hydrateSkins());
 
 // ---------- Profile modal ----------
 function renderProfileTiers(player) {
@@ -2633,11 +2673,23 @@ const TRI_SCORES = [['Won by 1-2', 2, 0], ['Won by 3+', 3, 0], ['Lost', 0, 1]];
 async function accSubmitResult(req, outcome) {
   const col = LEADERBOARDS[req.kit].col, now = new Date().toISOString();
   if (outcome.tier) {
-    const cur = allPlayers.find(p => p.name.toLowerCase() === req.mc_username.toLowerCase());
+    const like = req.mc_username.replace(/[\\_%]/g, '\\$&');
     let peak = outcome.tier;
-    if (cur && cur[`${req.kit}_peak_tier`] != null) { const pk = tierKey(cur[`${req.kit}_peak_tier`], !!cur[`${req.kit}_peak_plus`]); if (TIER_ORDER[pk] < TIER_ORDER[peak]) peak = pk; }
+    const better = k => { if (k && TIER_ORDER[k] != null && TIER_ORDER[k] < TIER_ORDER[peak]) peak = k; };
+    // read the stored tier/peak fresh from the database (the cached list can be stale or missing the sword/spear peak)
+    let fresh = null;
+    try { const r = await sb.from('players').select(`${col}_tier,${col}_peaktier`).ilike('player', like).limit(1); fresh = r.data && r.data[0]; } catch (e) {}
+    if (fresh) {
+      [fresh[`${col}_peaktier`], fresh[`${col}_tier`]].forEach(v => { const p = parseTier(v); if (p.tier) better(tierKey(p.tier, p.plus)); });
+    } else {
+      const cur = allPlayers.find(p => p.name.toLowerCase() === req.mc_username.toLowerCase());
+      if (cur) {
+        if (cur[`${req.kit}_peak_tier`] != null) better(tierKey(cur[`${req.kit}_peak_tier`], !!cur[`${req.kit}_peak_plus`]));
+        if (cur[`${req.kit}_tier`] != null) better(tierKey(cur[`${req.kit}_tier`], !!cur[`${req.kit}_plus`]));
+      }
+    }
     const vals = { [`${col}_tier`]: keyLabel(outcome.tier), [`${col}_peaktier`]: keyLabel(peak) };
-    let { data, error } = await sb.from('players').update(vals).ilike('player', req.mc_username.replace(/[\\_%]/g, '\\$&')).select('id');
+    let { data, error } = await sb.from('players').update(vals).ilike('player', like).select('id');
     if (!error && (!data || !data.length)) ({ error } = await sb.from('players').insert({ player: req.mc_username, ...vals }));
     if (error) return 'Could not update the player\'s tier. Check the Supabase permissions.';
   }
