@@ -624,7 +624,7 @@ body { background: radial-gradient(ellipse 110% 560px at 50% 0, #2a1418 0%, rgba
 .mt-form button { background: #34343e; }
 /* regulator role + tester badges */
 .role-regulator { color: #6f8cff; border: 1px solid #1d3f9e; background: #0d1738; }
-.role-row { position: absolute; top: 16px; left: 16px; display: flex; align-items: center; gap: 6px; z-index: 2; }
+.role-row { position: absolute; top: 16px; left: 16px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; z-index: 2; }
 .role-row .role-badge { position: static; }
 .tester-dot { position: relative; width: 24px; height: 24px; border-radius: 50%; background: #123821; border: 2px solid #34c759; display: flex; align-items: center; justify-content: center; cursor: default; }
 .tester-dot img { width: 14px; height: 14px; image-rendering: pixelated; }
@@ -788,7 +788,7 @@ body { background: radial-gradient(ellipse 110% 560px at 50% 0, #2a1418 0%, rgba
 .cs-title { font-family: 'Geist', Arial, sans-serif; font-size: 30px; font-weight: 800; letter-spacing: 0.3px; }
 .cs-sub { margin-top: 8px; color: #8b8b96; font-size: 15px; }
 .role-row { flex-direction: column; align-items: flex-start; gap: 8px; }
-.tester-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.tester-row { display: grid; grid-template-columns: repeat(2, 24px); gap: 8px; }  /* 2 icons per row, the next ones go below */
 .tester-dot { width: 36px; height: 36px; }
 .tester-dot img { width: 21px; height: 21px; }
 .tester-dot::after { font-size: 18px; padding: 7px 14px; border-radius: 10px; top: calc(100% + 10px); }
@@ -813,7 +813,7 @@ body { background: radial-gradient(ellipse 110% 560px at 50% 0, #2a1418 0%, rgba
       </svg></button>
       <div class="acc-drop wide" id="accPanel"></div>
     </div>
-    <a class="discord-btn" href="https://discord.gg/chACXVBxP8" target="_blank" rel="noopener">
+    <a class="discord-btn" href="https://discord.gg/Y6x9FzFEaz" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
       <span>Discord</span>
     </a>
@@ -911,6 +911,7 @@ let currentProfileName = null;
 const NELISMP_ICON_URL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAbUExURf///5eXl////9nZ2WtraypeT1eejz56aQ5FNmFnVl4AAAABdFJOUwBA5thmAAAAPUlEQVR42qXMQQ4AIQwCQNRi+f+LN56WkHiS29AU3DNmemHN9LAijOKx/XDzuP6im261VOV3wcP95tyDwh+GIwEjm1Ka2QAAAABJRU5ErkJggg==";
 const SWORD_ICON_URL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAqUExURQAAAEkkPod8hx4HCnBncFBCTV1VXS4iIk45PCsbHGAxLnRDQTg2OA4CDLFjvMoAAAABdFJOUwBA5thmAAAAT0lEQVR42lXM2w7AIAgDUGtB2O3/f3fZosTyQDgl0KQAqHun2jrFrjY38fAxDXzNI1k7LNc1cnoFVq6H4uNkBjdfbGQlwP2PrCDYpB5q8AKcHQFThW5NIgAAAABJRU5ErkJggg==";
 const SWORDMODE_ICON_URL = "https://github.com/Toggelt/nexo-tiers/blob/main/assets/ItemSprite_diamond-sword.png?raw=true";
+const SPEAR_ICON_URL = "https://github.com/Toggelt/nexo-tiers/blob/main/assets/ItemSprite_netherite-spear.png?raw=true";
 const TRIATHLON_ICON_URL = "https://github.com/Toggelt/nexo-tiers/blob/main/assets/triathlon_sprite.png?raw=true";
 const VANILLA_ICON_URL = "https://github.com/Toggelt/nexo-tiers/blob/main/assets/Invicon_End_Crystal.gif?raw=true";
 const OVERALL_ICON_URL = "https://github.com/Toggelt/nexo-tiers/blob/main/assets/trophy.png?raw=true";
@@ -921,9 +922,10 @@ const LEADERBOARDS = {
   NeliSMP: { key: "NeliSMP", label: "NeliSMP", title: "NeliSMP Leaderboard", icon: NELISMP_ICON_URL, col: "nelismp" },
   Vanilla: { key: "Vanilla", label: "Vanilla", title: "Vanilla Leaderboard", icon: VANILLA_ICON_URL, col: "vanilla" },
   Sword: { key: "Sword", label: "Sword", title: "Sword Leaderboard", icon: SWORDMODE_ICON_URL, col: "sword" },
+  Spear: { key: "Spear", label: "Spear", title: "Spear Leaderboard", icon: SPEAR_ICON_URL, col: "spear" },
   Triathlon: { key: "Triathlon", label: "Triathlon", title: "Triathlon Leaderboard", icon: TRIATHLON_ICON_URL, col: "triathlon" }
 };
-const SUB_BOARDS = ["NeliSMP", "Vanilla", "Sword", "Triathlon"];
+const SUB_BOARDS = ["NeliSMP", "Vanilla", "Sword", "Spear", "Triathlon"];
 // Gamemodes listed here show "Coming soon" instead of tier columns and are left out of titles/points.
 // RELEASE: remove "Vanilla" from this object (or set it to {}) and everything switches back on.
 const COMING_SOON = {};
@@ -1148,7 +1150,8 @@ const KIT_ICON_FILES = {
   leggings: "ItemSprite_netherite-leggings.png", chestplate: "ItemSprite_netherite-chestplate.png", helmet: "ItemSprite_netherite-helmet.png",
   strength_potion: "ItemSprite_splash-potion-of-strength(1).png",
   d_helmet: "ItemSprite_diamond-helmet.png", d_chestplate: "ItemSprite_diamond-chestplate.png",
-  d_leggings: "ItemSprite_diamond-leggings.png", d_boots: "ItemSprite_diamond-boots.png", d_sword: "ItemSprite_diamond-sword.png"
+  d_leggings: "ItemSprite_diamond-leggings.png", d_boots: "ItemSprite_diamond-boots.png", d_sword: "ItemSprite_diamond-sword.png",
+  speed_potion: "Invicon_Splash_Potion_of_Swiftness.png", shulker: "Invicon_Shulker_Box.png", steak: "ItemSprite_steak.png", spear: "ItemSprite_netherite-spear.png"
 };
 Object.keys(KIT_ICON_FILES).forEach(k => { ICONS[k] = KIT_ICON_BASE + encodeURIComponent(KIT_ICON_FILES[k]).replace(/'/g, "%27").replace(/\(/g, "%28").replace(/\)/g, "%29"); });
 ICONS.trident = NELISMP_ICON_URL;   // the NeliSMP gamemode icon is the trident
@@ -1164,6 +1167,7 @@ ICONS.sword = SWORD_ICON_URL;       // netherite sword item
 //  slotLabel + attributes: the "When in Main Hand:" block
 const WEAPON = "When in Main Hand:";
 const STRENGTH = { name: "Splash Potion of Strength", icon: "strength_potion", lore: ["&9Strength II (1:30)"] };
+const SPEED = { name: "Splash Potion of Swiftness", icon: "speed_potion", lore: ["&9Speed II (1:30)"] };
 const KIT_ITEMS = [
   // armour + offhand
   { slot: 2, name: "Netherite Helmet", icon: "helmet", enchants: ["Protection IV", "Respiration III", "Aqua Affinity", "Unbreaking III", "Mending"], slotLabel: "When on Head:", attributes: ["+3 Armor", "+3 Armor Toughness", "+10% Knockback Resistance"] },
@@ -1215,6 +1219,42 @@ const SWORD_KIT_ITEMS = [
   { slot: 5, name: "Diamond Boots", icon: "d_boots", enchants: ["Protection IV", "Unbreaking III"], slotLabel: "When on Feet:", attributes: ["+3 Armor", "+2 Armor Toughness"] },
   { slot: 36, name: "Diamond Sword", icon: "d_sword", enchants: ["Unbreaking III"], slotLabel: WEAPON, attributes: ["&2 7 Attack Damage", "&2 1.6 Attack Speed"] }
 ];
+
+// Spear gamemode kit: netherite armour (Protection IV, Feather Falling IV on the boots), totem in the offhand
+const SPEAR_KIT_ITEMS = [
+  { slot: 2, name: "Netherite Helmet", icon: "helmet", enchants: ["Protection IV"], slotLabel: "When on Head:", attributes: ["+3 Armor", "+3 Armor Toughness", "+10% Knockback Resistance"] },
+  { slot: 3, name: "Netherite Chestplate", icon: "chestplate", enchants: ["Protection IV"], slotLabel: "When on Body:", attributes: ["+8 Armor", "+3 Armor Toughness", "+10% Knockback Resistance"] },
+  { slot: 4, name: "Netherite Leggings", icon: "leggings", enchants: ["Protection IV"], slotLabel: "When on Legs:", attributes: ["+6 Armor", "+3 Armor Toughness", "+10% Knockback Resistance"] },
+  { slot: 5, name: "Netherite Boots", icon: "boots", enchants: ["Protection IV", "Feather Falling IV"], slotLabel: "When on Feet:", attributes: ["+3 Armor", "+3 Armor Toughness", "+10% Knockback Resistance"] },
+  { slot: 6, name: "Totem of Undying", icon: "totem", rarity: "uncommon" },
+  // row 1: strength x6, totem, wind charges, strength
+  ...[9, 10, 11, 12, 13, 14].map(slot => ({ slot, ...STRENGTH })),
+  { slot: 15, name: "Totem of Undying", icon: "totem", rarity: "uncommon" },
+  { slot: 16, name: "Wind Charge", icon: "wind_charge", count: 64 },
+  { slot: 17, ...STRENGTH },
+  // row 2: strength x3, speed x3, pearls, wind charges, speed
+  ...[18, 19, 20].map(slot => ({ slot, ...STRENGTH })),
+  ...[21, 22, 23].map(slot => ({ slot, ...SPEED })),
+  { slot: 24, name: "Ender Pearl", icon: "ender_pearl", count: 16 },
+  { slot: 25, name: "Wind Charge", icon: "wind_charge", count: 64 },
+  { slot: 26, ...SPEED },
+  // row 3: speed x6, pearls, wind charges, shulker box
+  ...[27, 28, 29, 30, 31, 32].map(slot => ({ slot, ...SPEED })),
+  { slot: 33, name: "Ender Pearl", icon: "ender_pearl", count: 16 },
+  { slot: 34, name: "Wind Charge", icon: "wind_charge", count: 64 },
+  { slot: 35, name: "Shulker Box", icon: "shulker", lore: ["&fSplash Potion of Strength &7x14", "&fSplash Potion of Swiftness &7x13"] },
+  // hotbar
+  { slot: 36, name: "Netherite Sword", icon: "sword", enchants: ["Sharpness V", "Unbreaking III"], slotLabel: WEAPON, attributes: ["&2 8 Attack Damage", "&2 1.6 Attack Speed"] },
+  { slot: 37, name: "Netherite Axe", icon: "axe", enchants: ["Sharpness V", "Unbreaking III"], slotLabel: WEAPON, attributes: ["&2 10 Attack Damage", "&2 1 Attack Speed"] },
+  { slot: 38, name: "Netherite Spear", icon: "spear", enchants: ["Lunge III", "Sharpness V", "Unbreaking III"], slotLabel: WEAPON, attributes: ["&2 5 Attack Damage", "&2 0.87 Attack Speed"] },
+  { slot: 39, name: "Mace", icon: "mace", rarity: "epic", enchants: ["Wind Burst I", "Density V", "Unbreaking III"], slotLabel: WEAPON, attributes: ["&2 6 Attack Damage", "&2 0.6 Attack Speed"] },
+  { slot: 40, name: "Steak", icon: "steak", count: 64 },
+  { slot: 41, name: "Golden Apple", icon: "golden_apple", rarity: "uncommon", count: 64 },
+  { slot: 42, name: "Ender Pearl", icon: "ender_pearl", count: 16 },
+  { slot: 43, name: "Wind Charge", icon: "wind_charge", count: 64 },
+  { slot: 44, name: "Shield", icon: "shield", enchants: ["Unbreaking III"] }
+];
+const kitItemsFor = kit => kit === 'Sword' ? SWORD_KIT_ITEMS : kit === 'Spear' ? SPEAR_KIT_ITEMS : KIT_ITEMS;
 
 const MC_COLORS = { 0:'#000000',1:'#0000AA',2:'#00AA00',3:'#00AAAA',4:'#AA0000',5:'#AA00AA',6:'#FFAA00',7:'#AAAAAA',8:'#555555',9:'#5555FF',a:'#55FF55',b:'#55FFFF',c:'#FF5555',d:'#FF55FF',e:'#FFFF55',f:'#FFFFFF' };
 const RARITY_COLORS = { common: '#FFFFFF', uncommon: '#FFFF55', rare: '#55FFFF', epic: '#FF55FF' };
@@ -1372,7 +1412,7 @@ function renderInventory(container, items = KIT_ITEMS) {
 }
 document.addEventListener('click', e => { if (!e.target.closest('.mc-slot')) mcTip.style.display = 'none'; });
 
-const TEST_SERVERS = { NeliSMP: 'mcpvp.club', Triathlon: 'mcpvp.club', Vanilla: 'centralpvp.net', Sword: 'mcpvp.club' };
+const TEST_SERVERS = { NeliSMP: 'mcpvp.club', Triathlon: 'mcpvp.club', Vanilla: 'eu.stray.gg', Sword: 'mcpvp.club', Spear: 'mcpvp.club' };
 const COPY_ICON = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 012-2h9"/></svg>';
 const CHECK_ICON = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
 function serverLineHtml(kit) {
@@ -1406,11 +1446,20 @@ function swordKitHtml(withHeader = true, invId = 'kitInventory') {
   </div>`;
 }
 
-function vanillaKitHtml(withHeader = true) {
+function spearKitHtml(withHeader = true, invId = 'kitInventory') {
+  return `<div class="kit-pane">
+    ${withHeader ? `<div class="kit-header"><img src="${SPEAR_ICON_URL}" alt="Spear"><span>Spear Kit</span></div>` : ''}
+    <div id="${invId}"></div>
+    <div class="kit-sub kit-foot">Rounds are first to 4</div>
+    ${serverLineHtml('Spear')}
+  </div>`;
+}
+
+function vanillaKitHtml(withHeader = true, withRulebook = true) {
   return `<div class="kit-pane van-pane">
     ${withHeader ? `<div class="kit-header"><img src="${VANILLA_ICON_URL}" alt="Vanilla"><span>Vanilla Kit</span></div>` : ''}
     <div class="kit-sub van-sub">Bring your own items</div>
-    <button class="van-rulebook" type="button" data-gm="Vanilla">View rulebook</button>
+    ${withRulebook ? '<button class="van-rulebook" type="button" data-gm="Vanilla">View rulebook</button>' : ''}
     <div class="kit-sub van-foot">Rounds are first to 4</div>
     ${serverLineHtml('Vanilla')}
   </div>`;
@@ -1625,10 +1674,19 @@ function render() {
 // ---------- Info tooltip ----------
 let infoTab = 'titles';
 let infoSig = '';
-const boardHasKit = () => currentBoard === 'NeliSMP' || currentBoard === 'Triathlon' || currentBoard === 'Vanilla' || currentBoard === 'Sword';
+const boardHasKit = () => ['NeliSMP', 'Triathlon', 'Vanilla', 'Sword', 'Spear'].includes(currentBoard);
+const INFO_BTN_ICON = '<svg class="info-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16.5"/><circle cx="12" cy="7.8" r="0.7" fill="currentColor" stroke="none"/></svg>';
+const KIT_BTN_ICON = '<svg class="info-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><line x1="16" y1="16" x2="20" y2="20"/><line x1="19" y1="21" x2="21" y2="19"/></svg>';
+// Overall board: "Info" (titles + points). Gamemode boards: "Kit" (only the kit).
+function updateInfoBtn() {
+  const b = document.getElementById('infoBtn'); if (!b) return;
+  const kit = boardHasKit();
+  b.innerHTML = (kit ? KIT_BTN_ICON : INFO_BTN_ICON) + (kit ? 'Kit' : 'Info');
+}
 function renderInfoTooltip() {
   const kitAvail = boardHasKit();
-  if (infoTab === 'kit' && !kitAvail) infoTab = 'titles';
+  updateInfoBtn();
+  if (kitAvail) infoTab = 'kit'; else if (infoTab === 'kit') infoTab = 'titles';
   const sig = currentBoard + '|' + infoTab;
   if (sig === infoSig && infoTooltip.innerHTML.trim() && infoTooltip.innerHTML !== 'Loading...') return;
   infoSig = sig;
@@ -1649,21 +1707,21 @@ function renderInfoTooltip() {
     : currentBoard === 'Triathlon' ? triathlonKitHtml(true)
     : currentBoard === 'Vanilla' ? vanillaKitHtml(true)
     : currentBoard === 'Sword' ? swordKitHtml(true)
+    : currentBoard === 'Spear' ? spearKitHtml(true)
     : `<div class="kit-empty">No kit yet</div>`;
-  infoTooltip.innerHTML = `
-    <div class="tooltip-tabs">
+  infoTooltip.innerHTML = kitAvail
+    ? `<div class="tooltip-content" id="tooltipKit">${kitHtml}</div>`
+    : `<div class="tooltip-tabs">
       <span class="tooltip-tab ${infoTab === 'titles' ? 'active' : ''}" data-tab="titles">Titles</span>
       <span class="tooltip-tab ${infoTab === 'points' ? 'active' : ''}" data-tab="points">Points</span>
-      ${kitAvail ? `<span class="tooltip-tab ${infoTab === 'kit' ? 'active' : ''}" data-tab="kit">Kit</span>` : ''}
     </div>
     <div class="tooltip-content ${infoTab === 'titles' ? '' : 'hidden'}" id="tooltipTitles">${titlesHtml}</div>
-    <div class="tooltip-content ${infoTab === 'points' ? '' : 'hidden'}" id="tooltipPoints">${pointsHtml}</div>
-    ${kitAvail ? `<div class="tooltip-content ${infoTab === 'kit' ? '' : 'hidden'}" id="tooltipKit">${kitHtml}</div>` : ''}`;
+    <div class="tooltip-content ${infoTab === 'points' ? '' : 'hidden'}" id="tooltipPoints">${pointsHtml}</div>`;
   infoTooltip.classList.add("overall-tooltip");
   infoTooltip.classList.toggle("kit-open", infoTab === 'kit');
   const inv = document.getElementById('kitInventory');
   if (inv) {
-    try { renderInventory(inv, currentBoard === 'Sword' ? SWORD_KIT_ITEMS : KIT_ITEMS); }
+    try { renderInventory(inv, kitItemsFor(currentBoard)); }
     catch (err) { console.error('Kit render failed:', err); inv.textContent = 'Kit failed to load'; }
   }
 }
@@ -1834,9 +1892,9 @@ async function loadPlayersAndRender(force = true) {
     };
     // falls back to older column sets until the SQL migrations have been run
     let lastErr = null;
-    outer: for (const sw of [true, false]) for (const van of [true, false]) {
+    outer: for (const sp of [true, false]) for (const sw of [true, false]) for (const van of [true, false]) {
       for (const [c, roles] of [['triathlon', true], ['triathlon', false], ['lowblockranked', true], ['lowblockranked', false]]) {
-        const cols = `id,player,nelismp_tier,nelismp_peaktier,${c}_tier,${c}_peaktier` + (van ? ',vanilla_tier,vanilla_peaktier' : '') + (sw ? ',sword_tier,sword_peaktier' : '') + (roles ? `,tierlist_regulator,nelismp_tester,${c}_tester` + (van ? ',vanilla_tester' : '') + (sw ? ',sword_tester' : '') : '');
+        const cols = `id,player,nelismp_tier,nelismp_peaktier,${c}_tier,${c}_peaktier` + (van ? ',vanilla_tier,vanilla_peaktier' : '') + (sw ? ',sword_tier,sword_peaktier' : '') + (sp ? ',spear_tier,spear_peaktier' : '') + (roles ? `,tierlist_regulator,nelismp_tester,${c}_tester` + (van ? ',vanilla_tester' : '') + (sw ? ',sword_tester' : '') + (sp ? ',spear_tester' : '') : '');
         try { rows = await get(cols); LEADERBOARDS.Triathlon.col = c; break outer; } catch (e) { lastErr = e; }
       }
     }
@@ -1951,7 +2009,7 @@ function accAssign(kit, name, info, st = {}) {
   }
   if (!tgt.length) { steps.push({ title: `Defeat all other ${keyLabel(info.myKey)} players`, opponents: own, tier: info.myKey }); return { steps, meta }; }
   if (own.length && !meta.bridged) steps.push({ title: `Win against a ${keyLabel(info.myKey)} player`, opponents: [accPick(own)], tier: info.myKey });
-  steps.push({ title: `Play a ${keyLabel(info.targetKey)} player (${kit === 'Triathlon' ? 'win overall' : kit === 'Sword' ? 'get at least ' + swordRoundsNeeded(info.targetKey) + ' rounds' : 'win with 4-3 or better'})`, opponents: [accPick(tgt)], tier: info.targetKey });
+  steps.push({ title: `Play a ${keyLabel(info.targetKey)} player (${kit === 'Triathlon' ? 'win overall, or lose by 2 or less if you beat your own tier opponent 9-2 or better' : kit === 'Sword' ? 'get at least ' + swordRoundsNeeded(info.targetKey) + ' rounds' : 'win with 4-3 or better (or play 3-4 if you beat your own tier opponent 4-1 or better)'})`, opponents: [accPick(tgt)], tier: info.targetKey });
   return { steps, meta };
 }
 // Tier shift: you're in the 2nd highest occupied tier, the top tier has exactly one player and is between HT3 and LT1.
@@ -2006,6 +2064,8 @@ function tierlistRulesHtml(open = true, kit) {
 function openRuleset(kit) {
   kit = kit || (GM_RULES[currentBoard] ? currentBoard : 'NeliSMP');
   accOpen(`<h2>Tierlist Ruleset</h2>${rulesetHtml(kit)}`, true);
+  const inv = accEl('rsKitInv');
+  if (inv) { try { renderInventory(inv, kitItemsFor(kit)); } catch (err) { console.error('Kit render failed:', err); inv.textContent = 'Kit failed to load'; } }
 }
 document.addEventListener('click', e => { const b = e.target.closest('.rs-gm'); if (b) openRuleset(b.dataset.gm); });
 document.addEventListener('click', e => { if (e.target.closest('.ruleset-btn')) openRuleset(); });
@@ -2016,6 +2076,7 @@ const GM_RULES = {
     maps: ['Map: <b>Giant Stadium (Plains)</b>'],
     format: 'All competitive matches are first to 4.',
     step2: 'Play against an opponent from a higher tier and win with a score of <b>4-3 or better</b>',
+    promoShortcut: 'If you beat the opponent from your own tier with a score of <b>4-1 or better</b>, you only need to play <b>3-4</b> (in the higher tier opponent\'s favour) against the higher tier opponent to be promoted.',
     evalPass: 'Winning with a score of <b>4-3 or better</b>',
     shift: 'You must defeat 2 players from your tier with a combined score of <b>8-4 or better</b> (both matches counted together)',
     demoHT3: ['You lose 0-4 against another player from your tier (instant demotion)', '<b>or</b> you lose to 2 opponents from your tier consecutively'],
@@ -2031,6 +2092,7 @@ const GM_RULES = {
     maps: ['<b>Map pool:</b> Plains, Desert, Badlands, Mushroom Fields, Snowy Fields', 'Both players <b>ban 2 maps</b> each; the last remaining map is the one you fight on', '<b>Evaluation tests</b> are always played on <b>Plains</b> (no map selection)'],
     format: 'All competitive matches are first to 4.',
     step2: 'Play against an opponent from a higher tier and win with a score of <b>4-3 or better</b>',
+    promoShortcut: 'If you beat the opponent from your own tier with a score of <b>4-1 or better</b>, you only need to play <b>3-4</b> (in the higher tier opponent\'s favour) against the higher tier opponent to be promoted.',
     evalPass: 'Winning with a score of <b>4-3 or better</b>',
     shift: 'You must defeat 2 players from your tier with a combined score of <b>8-4 or better</b> (both matches counted together)',
     demoHT3: ['You lose 0-4 against another player from your tier (instant demotion)', '<b>or</b> you lose to 2 opponents from your tier consecutively'],
@@ -2047,10 +2109,11 @@ const GM_RULES = {
     maps: ['Early Game (UHC): <b>Stadium (Any)</b>', 'Mid Game (SMP): <b>Giant Stadium (Plains)</b>', 'Late Game (Mace): <b>Giant Stadium (Plains)</b>'],
     format: 'Triathlon consists of 3 kits (Early Game UHC, Mid Game SMP, Late Game Mace), each played first to 3. The final score is the <b>total of all 3 matches combined</b>.',
     step2: 'Play against an opponent from a higher tier and <b>win overall</b> (any winning total score)',
+    promoShortcut: 'If you beat the opponent from your own tier with a total score of <b>9-2 or better</b>, you only need to finish the match by losing by <b>2 or less</b> (e.g. 6-8) against the higher tier opponent to be promoted.',
     evalPass: 'A <b>winning total score</b> (any margin)',
     shift: 'You must win overall by <b>3 or more</b> (total score of all 3 kits combined)',
     demoHT3: ['You lose against another player from your tier by <b>4 or more</b> (total score) and are demoted instantly', '<b>or</b> you lose to 2 players from your tier by <b>3 or more</b> each'],
-    dsStart: 8,
+    dsStart: '<b>4</b> (max <b>8</b>)',
     dsLose: 'You lose DS when you lose competitive matches. The penalty is the total score difference at the end of the match.',
     dsLower: ['Losing to a player <b>below</b> your tier gives an additional <b>-3</b>', 'If you are LT1 the additional penalty is <b>-4</b>'],
     dsGain: ["Defending your tier (you are assigned to someone else's promotion test and win): <b>+1</b>", 'Winning by <b>4 or more</b> (total score): <b>+2</b>'],
@@ -2073,6 +2136,7 @@ GM_RULES.Sword = {
   bridge: 'you beat your second opponent with <b>at least double their rounds</b> (e.g. 10-5). For <b>T1</b> you must win <b>20-14 or better</b>.',
   forfeit: FORFEIT_RULES
 };
+GM_RULES.Spear = { ...GM_RULES.NeliSMP };   // Spear plays by the exact same rules as NeliSMP (same server too)
 const gmCfg = kit => GM_RULES[kit] || GM_RULES.NeliSMP;
 const gmv0 = t => `<span class="gmv">${t}</span>`;
 const gmv = t => `<span class="gmv">${t}</span>`;
@@ -2090,6 +2154,7 @@ function gmSections(kit, ctx = {}) {
   S.promo = (type, t2, open) => det(`⏫ Tier Promotion${type ? ': ' + type : ''}`, `<p>${gmv(c.format)} To be promoted you must complete the following steps in order:</p>
         ${ul(['Win against an opponent from your own tier', gmv(c.step2)])}
         ${c.promoRounds ? ul(c.promoRounds, true) : ''}
+        ${c.promoShortcut ? `<p>${gmv(c.promoShortcut)}</p>` : ''}
         <p><i>If the tier you're trying to achieve is empty, you need to defeat all other players in your tier.</i></p>
         ${t2 ? '<p class="hl">This test is Tier 2 or above, so it must be spectated by a staff member or a recording must be provided.</p>' : ''}`, open);
   S.ht1 = open => det('👑 Testing for HT1', `<p>In order to be promoted to HT1, you must complete the following steps:</p>
@@ -2136,10 +2201,20 @@ function accRulesHtml(kit, info) {
   h += S.items(false) + S.maps(false) + tierlistRulesHtml(false, kit);
   return svgify(`<div class="acc-rules">${h}</div>`);
 }
+// the kit as a rule-style section that is open by default (shown above the rules in the ruleset)
+function rulesetKitHtml(kit) {
+  const body = kit === 'Triathlon' ? triathlonKitHtml(false)
+    : kit === 'Vanilla' ? vanillaKitHtml(false, false)
+    : kit === 'Sword' ? swordKitHtml(false, 'rsKitInv')
+    : kit === 'Spear' ? spearKitHtml(false, 'rsKitInv')
+    : `<div class="kit-pane"><div id="rsKitInv"></div><div class="kit-sub kit-foot">Rounds are first to 4</div>${serverLineHtml('NeliSMP')}</div>`;
+  return `<div class="acc-rules"><details open><summary>⚔ Kit</summary><div>${body}</div></details></div>`;
+}
 // full ruleset page for one gamemode
 function rulesetHtml(kit) {
   const S = gmSections(kit);
-  return svgify(`<div class="rs-seg">${Object.keys(GM_RULES).map(k => `<button type="button" class="rs-gm ${k === kit ? 'on' : ''}" data-gm="${k}">${k}</button>`).join('')}</div>
+  return svgify(`<div class="rs-seg">${SUB_BOARDS.filter(k => GM_RULES[k]).map(k => `<button type="button" class="rs-gm ${k === kit ? 'on' : ''}" data-gm="${k}">${k}</button>`).join('')}</div>
+    ${rulesetKitHtml(kit)}
     <p class="acc-p"><span class="gmv">Highlighted</span> rules are different in each gamemode.</p>
     <div class="acc-rules">${S.eval(false)}${S.promo('', false, false)}${S.ht1(false)}${S.shift(null, false)}${S.demoLow(false)}${S.demoDS(false)}${S.bridge(false)}${S.forfeit(false)}${S.fail(false)}${S.items(false)}${S.maps(false)}${tierlistRulesHtml(false, kit)}</div>`);
 }
@@ -2158,14 +2233,14 @@ function openKitPop(kit) {
   closeKitPop();
   const pop = document.createElement('div');
   pop.id = 'kitPop'; pop.className = 'info-tooltip overall-tooltip kit-open kit-pop active';
-  pop.innerHTML = '<button class="kit-close" type="button" aria-label="Close">&times;</button>' + (kit === 'Triathlon' ? triathlonKitHtml(true) : kit === 'Vanilla' ? vanillaKitHtml(true) : kit === 'Sword' ? swordKitHtml(true, 'kitPopInv') : kit === 'NeliSMP'
+  pop.innerHTML = '<button class="kit-close" type="button" aria-label="Close">&times;</button>' + (kit === 'Triathlon' ? triathlonKitHtml(true) : kit === 'Vanilla' ? vanillaKitHtml(true) : kit === 'Sword' ? swordKitHtml(true, 'kitPopInv') : kit === 'Spear' ? spearKitHtml(true, 'kitPopInv') : kit === 'NeliSMP'
     ? `<div class="kit-pane"><div class="kit-header"><img src="${LEADERBOARDS[kit].icon}" alt=""><span>${kit} Kit</span></div><div id="kitPopInv"></div><div class="kit-sub kit-foot">Rounds are first to 4</div>${serverLineHtml('NeliSMP')}</div>`
     : `<div class="kit-header" style="margin:4px 0 10px"><img src="${LEADERBOARDS[kit].icon}" alt="" style="width:36px;height:36px;image-rendering:pixelated"><span style="font-size:22px;font-weight:700">${accEsc(kit)} Kit</span></div><div class="kit-empty">No kit yet</div>`);
   accEl('accModal').appendChild(pop);
   pop.querySelector('.kit-close').onclick = closeKitPop;
   pop.onclick = e => e.stopPropagation();
   const inv = accEl('kitPopInv');
-  if (inv) { try { renderInventory(inv, kit === 'Sword' ? SWORD_KIT_ITEMS : KIT_ITEMS); } catch (err) { console.error(err); inv.textContent = 'Kit failed to load'; } }
+  if (inv) { try { renderInventory(inv, kitItemsFor(kit)); } catch (err) { console.error(err); inv.textContent = 'Kit failed to load'; } }
 }
 
 // ----- views: login / register -----
