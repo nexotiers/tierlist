@@ -748,13 +748,6 @@ body { background: radial-gradient(ellipse 110% 560px at 50% 0, #2a1418 0%, rgba
 .mc-inv.inv-img .mc-count { right: calc(var(--s) * 0.5); bottom: 0; font-size: calc(var(--s) * 6); line-height: 1; text-shadow: var(--s) var(--s) 0 #3f3f3f; }
 /* ---------- Round: kit text, Triathlon pane, ruleset, slot background ---------- */
 .kit-sub { text-align: center; font-family: 'Geist', Arial, sans-serif !important; font-weight: 600; font-size: 16px; letter-spacing: 0.3px; color: #d6d6de; }
-.tri-desc { font-size: 17px; margin: 6px auto 16px; max-width: 420px; line-height: 1.4; }
-.tri-foot { margin: 16px 0 4px; }
-.tri-boxes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.tri-box { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 16px 8px 14px; background: #1c1c22; border: 1px solid #2c2c34; border-radius: 12px; }
-.tri-box img { width: 48px; height: 48px; image-rendering: pixelated; object-fit: contain; margin-bottom: 6px; }
-.tri-box b { font-family: 'Geist', Arial, sans-serif; font-size: 15px; }
-.tri-box small { font-family: 'Geist', Arial, sans-serif; font-size: 12px; color: #8b8b96; }
 .ruleset-btn { white-space: nowrap; }
 .hero-search { display: flex; align-items: center; gap: 8px; }
 .info-btn svg.info-svg { flex-shrink: 0; }
@@ -830,7 +823,7 @@ body { background: radial-gradient(ellipse 110% 560px at 50% 0, #2a1418 0%, rgba
       </svg></button>
       <div class="acc-drop wide" id="accPanel"></div>
     </div>
-    <a class="discord-btn" href="https://discord.gg/Y6x9FzFEaz" target="_blank" rel="noopener">
+    <a class="discord-btn" href="https://discord.gg/BjBjqmRHAD" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
       <span>Discord</span>
     </a>
@@ -926,7 +919,7 @@ let animatedUpTo = 0, lastAnimBoard = null;
 let currentBoard = 'Home';
 let currentProfileName = null;
 
-const NELISMP_ICON_URL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAbUExURf///5eXl////9nZ2WtraypeT1eejz56aQ5FNmFnVl4AAAABdFJOUwBA5thmAAAAPUlEQVR42qXMQQ4AIQwCQNRi+f+LN56WkHiS29AU3DNmemHN9LAijOKx/XDzuP6im261VOV3wcP95tyDwh+GIwEjm1Ka2QAAAABJRU5ErkJggg==";
+const TRIDENT_ICON_URL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAbUExURf///5eXl////9nZ2WtraypeT1eejz56aQ5FNmFnVl4AAAABdFJOUwBA5thmAAAAPUlEQVR42qXMQQ4AIQwCQNRi+f+LN56WkHiS29AU3DNmemHN9LAijOKx/XDzuP6im261VOV3wcP95tyDwh+GIwEjm1Ka2QAAAABJRU5ErkJggg==";
 const SWORD_ICON_URL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAqUExURQAAAEkkPod8hx4HCnBncFBCTV1VXS4iIk45PCsbHGAxLnRDQTg2OA4CDLFjvMoAAAABdFJOUwBA5thmAAAAT0lEQVR42lXM2w7AIAgDUGtB2O3/f3fZosTyQDgl0KQAqHun2jrFrjY38fAxDXzNI1k7LNc1cnoFVq6H4uNkBjdfbGQlwP2PrCDYpB5q8AKcHQFThW5NIgAAAABJRU5ErkJggg==";
 const SWORDMODE_ICON_URL = "https://github.com/Toggelt/nexo-tiers/blob/main/assets/ItemSprite_diamond-sword.png?raw=true";
 const SPEAR_ICON_URL = "https://github.com/Toggelt/nexo-tiers/blob/main/assets/ItemSprite_netherite-spear.png?raw=true";
@@ -934,22 +927,30 @@ const CPVP_ICON_URL = "https://github.com/Toggelt/nexo-tiers/blob/main/assets/15
 const DIASMP_ICON_URL = "https://github.com/Toggelt/nexo-tiers/blob/main/assets/ItemSprite_chorus-fruit.png?raw=true";
 const DIASMP_KIT_IMG_URL = "https://raw.githubusercontent.com/Toggelt/nexo-tiers/main/assets/diamondsmp_kit.png";
 const CPVP_KIT_IMG_URL = "https://raw.githubusercontent.com/Toggelt/nexo-tiers/main/assets/2026-11-11_14.21.20.png";
-const TRIATHLON_ICON_URL = "https://github.com/Toggelt/nexo-tiers/blob/main/assets/triathlon_sprite.png?raw=true";
 const VANILLA_ICON_URL = "https://github.com/Toggelt/nexo-tiers/blob/main/assets/Invicon_End_Crystal.gif?raw=true";
 const OVERALL_ICON_URL = "https://github.com/Toggelt/nexo-tiers/blob/main/assets/trophy.png?raw=true";
 const imgStyle = b => b.key === "Overall" ? "image-rendering:auto;border-radius:6px;" : "";
 
+const GH_RAW = "https://raw.githubusercontent.com/Toggelt/nexo-tiers/main/assets/";
+const MACE_ICON_URL = GH_RAW + "Invicon_Mace.png";
+const UHC_ICON_URL = GH_RAW + "ItemSprite_golden-apple.png";
+const SMP_ICON_URL = GH_RAW + "Invicon_Ender_Pearl.png";
+const MACE_KIT_IMG_URL = GH_RAW + "mace_kit.png";
+const UHC_KIT_IMG_URL = GH_RAW + "uhc_kit.png";
+const SMP_KIT_IMG_URL = GH_RAW + "smp_kit.png";
+
 const LEADERBOARDS = {
   Overall: { key: "Overall", label: "Overall", title: "Overall Leaderboard", icon: OVERALL_ICON_URL },
-  NeliSMP: { key: "NeliSMP", label: "NeliSMP", title: "NeliSMP Leaderboard", icon: NELISMP_ICON_URL, col: "nelismp" },
   Vanilla: { key: "Vanilla", label: "Vanilla", title: "Vanilla Leaderboard", icon: VANILLA_ICON_URL, col: "vanilla" },
+  Mace: { key: "Mace", label: "Mace", title: "Mace Leaderboard", icon: MACE_ICON_URL, col: "mace" },
+  UHC: { key: "UHC", label: "UHC", title: "UHC Leaderboard", icon: UHC_ICON_URL, col: "uhc" },
+  SMP: { key: "SMP", label: "SMP", title: "SMP Leaderboard", icon: SMP_ICON_URL, col: "smp" },
   Sword: { key: "Sword", label: "Sword", title: "Sword Leaderboard", icon: SWORDMODE_ICON_URL, col: "sword" },
   CPvP: { key: "CPvP", label: "CPvP", title: "CPvP Leaderboard", icon: CPVP_ICON_URL, col: "cpvp" },
-  DiaSMP: { key: "DiaSMP", label: "DiaSMP", title: "DiaSMP Leaderboard", icon: DIASMP_ICON_URL, col: "diasmp" },
   Spear: { key: "Spear", label: "Spear", title: "Spear Leaderboard", icon: SPEAR_ICON_URL, col: "spear" },
-  Triathlon: { key: "Triathlon", label: "Triathlon", title: "Triathlon Leaderboard", icon: TRIATHLON_ICON_URL, col: "triathlon" }
+  DiaSMP: { key: "DiaSMP", label: "DiaSMP", title: "DiaSMP Leaderboard", icon: DIASMP_ICON_URL, col: "diasmp" }
 };
-const SUB_BOARDS = ["NeliSMP", "Vanilla", "Sword", "CPvP", "DiaSMP", "Spear", "Triathlon"];
+const SUB_BOARDS = ["Vanilla", "Mace", "UHC", "SMP", "Sword", "CPvP", "Spear", "DiaSMP"];
 // Gamemodes listed here show "Coming soon" instead of tier columns and are left out of titles/points.
 // RELEASE: remove "Vanilla" from this object (or set it to {}) and everything switches back on.
 const COMING_SOON = {};
@@ -1045,8 +1046,8 @@ function parseRoute() {
   const p = window.location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
   let board = 'Home', profile = null;
   if (p[0] === 'player' && p[1]) profile = decodeURIComponent(p[1]);
-  else if (p[0]) { const seg = p[0].toLowerCase() === 'lowblock' ? 'triathlon' : p[0].toLowerCase(); const k = Object.keys(LEADERBOARDS).find(k => k.toLowerCase() === seg); if (k) board = k; }
-  const kit = board === 'NeliSMP' && !profile && p[1] === 'kit';
+  else if (p[0]) { const seg = p[0].toLowerCase(); const k = Object.keys(LEADERBOARDS).find(k => k.toLowerCase() === seg); if (k) board = k; }
+  const kit = board === 'Mace' && !profile && p[1] === 'kit';
   return { board, profile, kit };
 }
 function navigateTo(board, profileName) {
@@ -1168,7 +1169,7 @@ function assignRanks(sorted) {
 // ---------- Minecraft-style kit inventory ----------
 const ICONS = {"helmet": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAtklEQVR4nO2SPwuCQADFf4W0ROG5OGrkYtD3/wIN0Sp4S5IHggaB/2hpsUlB76TWoDf+eO/du+Pg57UwwcDzOxO/qlTzW6bw3vNYrbcjXmQprhDdvSxHJdZcONyF5I+cqq0AcITT20Yly+mC/mR5k0P49WymJYO0AgAZR8g4wt7YACRKkShlspoLANqmHha0TT1n0x8RIDwckXHE5XwasSJLPy/o7/st1xR4fucKof0DVwgj/wveTDZHT6ahXGYAAAAASUVORK5CYII=", "chestplate": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABU0lEQVR4nMWST2vCQBDFf5pSkhZLpBIVYlqhRBQs/QIePIo3D37uQqGFINgGwT+0ZqtoFkHTQ5slGouXQue0M7PvzXsz8N8RAbi7uY0OG4O310wy/+3PWZzUG002qwUilHzMpkenXVtFTEPn/PKKl+cnALJxMwZbBQuAml1RE+O3VbAQoWSzWihSRSBCyU6u2awW1BtNtppGza5ENbsSbTVNKdzJNSKUaQK36tJudRChxMyZ9Lp9tprGVtPodfuYORMRStqtDm7VTZu4XHzi2DZZ/QLT0LFKDuVCGYDx+5jZxFcq/dEIgGkQfJuYcDx6aN5jlRzEUqgpYimwSg5MfB4HHtMgUBtSW0h6IYYeblVVCgC8oXd0MykC09AVIAmK6ycJRCgxDX1PQdKDkwQ7uWYu13u12cRnHsxPK/gxRx1QPPHQ+SRmL4mjmM+n7v4Y+E/ii6qjqZr8JWslAAAAAElFTkSuQmCC", "leggings": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAt0lEQVR4nMWSvQrCMBSFP8VVxeJgoWgH30EcfP+1tC8gUohC6U9Cly51ijT1Bu3UMx5yvpx7E5hbi7FxPsW977DRDa+qcjKrcfh6uRHuQwBUoQCoTQ3AM78D9EOIA7BShfqEhgp2AY88d7ylBLDhrtV0rfZN5G9gw0mWAnCMIg5R/B/A3p5k6XBhvQ8gjjCuvd5sfUVlwBR9AaSlGd14lyk2KKtSPCz5DsDoZlIYhFcYf5Rf/vx6Az++VNQlFydiAAAAAElFTkSuQmCC", "boots": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAyUlEQVR4nN2PMQvCMBCFv6iFaGl3CSEoGFJHAvFHhBQispaCrZEU/gtJ8hdEG4N46WJtddhYnkFhzeoMmQvKHk8emtxKz4mp1R55CGcdrfO5E3HyIoIMd+oDI+Cs1oEaqjTXV7FjEsnLEJVvX3d3x6CKI7OACTlC7oFQd3jt/6C4oHtaEAAAAABJRU5ErkJggg==", "totem": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABa0lEQVR4nKWTMUhCURSGP6O2Fw65vaFHIS0u4daShGCJNDkELjpE0GJLU4tE7kljgzYIDY6RudiDoJYnTQ0PMV0ub+g5pG4GryG8pF6j6Gznv/+557h8fvjuvffe/nc/Z3FSbzTZrBaIUPIxmx6ddm0VMQ2d88srXp6fAMjGzRhsFSwAanZFTYzfVsFChJLNaqFIFYEIJTu5ZrNaUG802WoaNbsS1exKtNU0pXAn14hQpgncqku71UGEEjNn0uv22WoaW02j1+1j5kxEKGm3OrhVN23icvGJY9tk9QtMQ8cqOZQLZQDG72NmE1+p9EcjAKZB8G1iwvHooXmPVXIQS6GmiKXAKjkw8XkceEyDQG1IbSHphRh6uFVXKQDwht7RzaQITENXgCQorp8kEKHENPQ9BUkPThLs5Jq5XO/VZhOfeTA/reDHHHVA8cRD55OYvSSOYj6fuvtj4D+JL6qOpmvylayUAAAAAElFTkSuQmCC", "trident": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAvUlEQVR4nNXSMQqCcBTH8a/RCRyEcA2EBgm3TuDqEjR5gb9nafNPSwepC9QkTvKgDqBd4jXZUEmmEPTWx+f3eI8HvyhrraqqjsIiogAi0j+sC1tr+wcMxgDGGA3TRJ9x7zXCNNHNfqthmrxgY4wCTD6F1NcLrj9jdz4iIhoEAVmWkee5A+B0QS9e6SJaUhUlAOt59Oi1uDMgTBN1/RlVUXI7nDqHvK12by9eff84/4mdUQcDpnXTUDfNIAxwByy8puaLugTUAAAAAElFTkSuQmCC", "bucket": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABMUlEQVR4nK2TP0vDQBjGfxGxqGDOCBGEwhUKxdKhS8ZO+Qp18hP0w2R2zJCxfoVM3XrLTYZKxC1uZyuI1KVOLflzKlKf6Tie9/fyvHfws+fIcl0GQbCx3SulGv5D22AYhgBIKev+TR20OwRBsAnDkGk25vS4hX/ps1yuAPhcrwF4/1hzc39Pmqa7LAdl/DQb05FtBn2Jf3GCEC4Ag77kqNWiI9tMs/H3EbxiwqqA56s7zsUZQrgI4fL49MLr8g3n4Rbvpw6SJEFrTRRNoIBVKacHjEYjut0ucRzbAQDD4ZAkSQDQWgNgjCHP87qVRgdb9Xo9qxnA86ohKoDtxr+oApjP578OGGPsAKWUM5vNAFgsFtbhbYHlh9TooB6jvrGuCkAp5URR1IDkeW7dDv/wmfbWF4A59PYzm6fLBwAAAABJRU5ErkJggg==", "elytra": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABBUlEQVR4nMWRsW6EMBBEHxfSrSVXFKFG4gP4C5SvPfkH0uIm5Skd0sWSm1wEoYkQKXK2MEeU8qZCMzuzOwbujWxLtG27hG/vPQBFUUTdGJN48q2xrmtEKqw9JsameWYc3wCWdVAezMGodRm3d12XBV3rEq1LRKoYZIzJDmGDSIVSI/N8+rPvPJ9QakSkivViBaVGAIZBgPON+XI5A4JSY5wFiBc4565m+Pz4ugkI3DAIzrnIxwtW3YCn3QpBF6mAl/QC719/e37vm9eatce0gjEm6/ueaZoAeHh8T4ze+8hN05T8ocN6KCAErbHHweoNrolL04C1Nm74T8vZYDuwDdk94674ATPojAFvOx16AAAAAElFTkSuQmCC", "mace": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAB+0lEQVR4nI3TQUiTYRzH8c9jE8tcaS4nxetg6XKLHYRBaZcxDwuJmEYOxC7JAt3wEgQeOnno2iENgqGFO1htdAkZxvAQhRFE7rDmlmQDQcxtLgqHxdPBfHPuFfa/vc/zfv48z+95HqigXO4+6XL3Sa053WFopMOMQV/Lm2MW6R0YxGLvBJCxaETcGByWmxvrxKIRodngIH49Pw/AvfsTpFMJmUwskc9lAajSwnVHq0twMrFEJpNhOf6OJy9i5HNZvq0khGYDgA8nLqh4c2Oda739KIqCxd7J+Jifi11OWsxWCSAOC621rZ2mZqM61t3Tz/iYX/1uPG1k8e1CeYgjHWYmoxEBu6k3NRtRFEXF6VSC+oZT6v+aK/Bfv81E+DEtZqu80tNLOvW5BBsMRtKpBE79r/JTCNx9ztnGWjz1NmkzOZiZ9qnoIH76abV0C95AkIa6ahaXU9JmcjC7ENpN+19g+3FhewfYd5G8gSDHa/TEV79Kn6uL0eAUN7vdIl5TIDwXEpitMp/Lqvhlcu1/A28gSM0RHdn8mooHnG7xfWuH8FwIz/kzwJYAKGyj4pLyDD2Qr0Lv5TnXsLx15xneQFAr37LS7T0Sm8nBaHCKy/ZL4mfxB7MPhypqUAXQ2tbOzLSPL7FHovjnd8UYQOxdSYCrJ4ti8uNKxRjgL1fhzrJHZKP6AAAAAElFTkSuQmCC", "sword": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABK0lEQVR4nJ2QTUsCURiFnwkjoQ/F0XERQ6ghuJD8ASIuwoVLf1fblm3atQvCFq4iQgqDQgYGgwnEhaYhTrQIgrkt5A5N4+jkWV1e3ufc8x6FNVQvVIV8b6wDlxs1yo0avWH3fwYSHr+P3VloAwl3Hu7RkhpnpydYs6mihIXzlRJ965WDXJari3Os2VQBWGlQL1SFWtT5nNrsJGK0W00X9hjIZq/NG89sa3+P/qCHnkpjGIYHhj8dqEXdNQoD+06Qt77cPrOpOgwmb0thXwKpfKUUCvYlkClkad3Hu6WwL8FRJiu07Q/arSbO14xYOkUunhBBMEDkN3x8mOGy8zT/1TAEMDcBEZREka3b8W9GpumLLBMEGUQARs4Q25wsXFrVgaJFk2I36oRaXqQfQsCZTkyUro8AAAAASUVORK5CYII=", "axe": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA8klEQVR4nGNgoAfw0nT476Xp8B+bHAsxmm2C3CCcdQz/t10/wEi0ATDNJw/ugIowYahhxBBB0qxmZ8Bw/+o5uBiflDwD872rDAvOnIPrwzQSCm4+v4TC55OSZ/j07CHD4TsPiHMBAwMDg7KA0H8GBgYGKzdvhk/PHjI8fv2SQVZUnOHKlSsMdz+8Y8TrAgYGBoa7H94x8ggKMDDfu8pw5coVBllRcXzKMYG+otL/Ylfn/zCXKAsIwdlEaU4wMSJeA7pmZwdnojRjBKK+otJ/HglJhhfXr8MDCh9ACUR9RaX/IvKKRGvGsBk5wEgGJIUwNQEA6mBZrw/x9JUAAAAASUVORK5CYII=", "ender_pearl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABQklEQVR4nMWSMUvDQBiGnxpDl0oITUE7tQrVse0Sl24uRdwUioKIi0ux/oT8FHH2bxSaxbp6tKUg6JBKGqo4hBAHydmQs5PgCwe5u+99v+f7Dv5bubXLgl2Pk+9391FZu77KuHfZASDwZrxCrArKBBTserxs9MQYgK2jAwAm/jyOxFSGrKnMgTejc3ZKvt0i9ANCP8ATYzwxZvv8GK1WkaMpR7i6ueb2aYjoOpm7hCiRRFnunm+3EF2H6M2XhVrRRLdMAHTTYDEYEolpThJ8+nPZIXQfVGAAlO1miiL1BoE3+9WYyChZqb0MiMQ0N7m7p1Tb+ca0TLTiz9Itk6rTA5D4GYJEumnIkGRVnR4Xuw1GfTdVm/m7tFol3jw55OP5hdAPKNtNiT3qu6nuyoAkBGBjvyHPFoOhHHUlgSpIZfwzfQHDPYKsmtsEowAAAABJRU5ErkJggg==", "breeze_rod": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAvElEQVR4nGNgoDcIz5n73y6u/T+Mz0Sq5jhLXQYbFVsG/aD6/yQZEJ4z93+Gsw7D0bu/GI7cOcxwcV0jI9EGwDRfu8fFcOTOYYZDiyoZYXKM+DQiOxtmM7Jmgi4gpBmvAeh+xqYZr83715/8X9V05D8stHEBDFORnb31wm54aOMCKF5AdjYxmsl2NoYL7OLa/8dZ6jLsvvwbJZEQbYCehArDgxecpIc2AwMDCwMDA8PhO1cYLr24Q7JmqgAAVa57xF8qMisAAAAASUVORK5CYII=", "cobweb": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAt0lEQVR4nIVTsRHEIAyzf4g0v/8mqVNkghSkcJbQV+KEMXk3ISBZOoFtP07YSwFYnnduBdqPEy0CANAikIUmDkEABrACuV66ahGTSlbOmMm2qpBMEr+lA1WqgFl5csINNmJ42khJXZBpa+JaVS5lkwqgzSii1zsErD8K+idQWqtCzG+AmA8B7u7c/G6bmZndzzO4AwB3dzOz6w6bitZ1XT2kcn6y3Zx+no0lORNWip2zGue3MVaRHxHYfNiNnY/1AAAAAElFTkSuQmCC", "golden_apple": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABMklEQVR4nL2SsUvDQBTGv x6FtCKUGHAvOOTWrEKmunWSzE6ls0uG+ge4+B84Zi4OpWOntpmErhFCyeYgkhAIsYGS55RrL7nior7l7l3e73vf7dnwH+GajE59Yz/Bs5FO0V77m+4A0DrVFQBW6xTRXkO/XQAAnt5KZb0Ehp5BJb1T6BnkXHVpNtLp8/WGQs8g12RUd9Q6hrnN0BsOcH52jY7miKJdMUWW+0jnCzw/JpKbtspJlvvIcl86Y9sYveEAYxxEAMUU2DZurNUeAHRuIfo4TEUIrNYpACAJNgJI5wskwUacq0J5heNinVtSXheSxuKajMYPuhKs8sl9jmn8JbiGg2BZgttMwDq3ROdgWTbcNn4M56JLd7cdcJsJoNp7Lzupu1KgEulfFiKvXr0O/0p8Ax48kA5GNLmUAAAAAElFTkSuQmCC", "wind_charge": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABOUlEQVR4nN2ST0rDQBTGfw3dpA1lIq1IwF1FqLr2AAUFdx7AC4hHcOkRxAt4AOuyha5EtNhdV/0DCkIobWhGTTIbcVyEhP5JD6BvM/PefO9733wz8Ocjt+7g5rap5/Pzs+NM7EqxN9R6qwye5wIgpY+UktdxmEliLBcenluMPSiXHcyigxA2QggqJYOpr3VvqBeU5ZNNu6P100uDSskgj8to5KcgIWyq1T1CBffNBpkEmxvxahVMpPQRwgZiJaGCbveRIFLpsPphLrfgwZurddGMgfFUkU6RUhJEiunnDyf1I75CONhZIpg3MFSgQjc1MIgU+7UaZtFZaF4hALi6vtO72xZWwUyVCGHzjcNkBon0tQTtjtb9QYtKycAqmOm9++8BlxenK/jMz5E81WQG/UGL2UeU2fxP4hd4T4N+j1+kdgAAAABJRU5ErkJggg==", "strength_potion": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHklEQVR4nGP8//8/AyWAiSLdpBpwLc/j/7U8DxQnE20ATOPVGzdRxFmI0Rw38ch/6+PHGYQEhTAl////jxdvufD2P4w9w4Tv/wwTvv/I8kRr3nLhLYZmvAZcffb9Py7DkDHWMLj2/Md/rUecDFtfvf3/fKUwAwMDA8OJywwMDC1v/3vrCzEiq8WIhWvPf/zvS+Nk2MrxlsH7hzCDthIDg7YSA4OFLgPD+hphhriJRwhHo4Uugv30NYSGGYIOMAy4/+obAwMDA4PQaWGG45cZGF69g4gfE7nIwMNFhAEMDBD/Xr0HYQvxI9h7ThJhgLe+EOMvl8NwQ758Y2D4aHaR4fpcfYZfLocZFuXboAQiI67ciB5YDAwMGJrxGkAsAAAOFea9HMpdzQAAAABJRU5ErkJggg==", "shield": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA40lEQVR4nJWTQQrCMBBFf6UNNoigO7vxGN7Gne4Ud57BnehOL+F1vEBdKlKSkhbqIqSN00Tih0CSSd58JpMIRNvdvqF7tk7HQ2SvY3pACoHX/YaEMVRKYTLmKMoalVIAgNV601wv5xYyoICU83aeMAYA7WUadwJ4qg+Mhtrc8y2+gCbuBVApVf+MewFF2V00EOPqLwdGph5BAJPRLh51FeTAzkphQQAfLAjgyugqYn8HAGNx7/kqpVAAmIY6CFUPIGTXeS4XdtzrwNV9vo50/sb5YglA/4tZluGR5xBSQAo9bH0ANAtcnYrzIpcAAAAASUVORK5CYII=", "xp_bottle": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABOklEQVR4nKWTMUsDQRCFv6iFaGl3CSEoGFJHAvFHhBQispaCrZEU/gtJ8hdEG4N46WJtddhYnkUI4gULLS9gCp9FvCPxNofowDDs7NvlzbyZjCT+Yytpl2Paehl5AGw7lxkrSJLVQ7VUr6JSFtWryA+MbLiMrYQxbR3uNuKz/zyNt55JMFmysYpo/8oWleAHRqUsegxMaglWBgA5p0IxD69/YRA1sB8YNd2yrlNYpD721NGBu6+mW1Z/wSdzJYxpayfX4Lhr2HAqnPfuGQxDAra4e/A57RrO9q54Gh3G0iUGqZiHZeADGAxD3oJ3ALKFaS6SNLI5BrPy3fQu5oC12hGflh6mjvJmYT2Oq0yY2EA2/WcVaLpleeqo/z0XP5u4cIjqVeJdiDxUKyGjdReAuNM5pxLn1jhJbOQXImhLhM8jq3oAAAAASUVORK5CYII="};
 
-// Kit item images hosted in the GitHub repo (the trident item reuses the NeliSMP gamemode icon)
+// Kit item images hosted in the GitHub repo (the trident item reuses the Mace gamemode icon)
 // raw.githubusercontent.com sends CORS headers, which the enchantment glint mask needs (github.com/blob?raw=true does not)
 const KIT_ICON_BASE = "https://raw.githubusercontent.com/Toggelt/nexo-tiers/main/assets/";
 const KIT_ICON_FILES = {
@@ -1183,7 +1184,7 @@ const KIT_ICON_FILES = {
   speed_potion: "Invicon_Splash_Potion_of_Swiftness.png", shulker: "Invicon_Shulker_Box.png", steak: "ItemSprite_steak.png", spear: "ItemSprite_netherite-spear.png"
 };
 Object.keys(KIT_ICON_FILES).forEach(k => { ICONS[k] = KIT_ICON_BASE + encodeURIComponent(KIT_ICON_FILES[k]).replace(/'/g, "%27").replace(/\(/g, "%28").replace(/\)/g, "%29"); });
-ICONS.trident = NELISMP_ICON_URL;   // the NeliSMP gamemode icon is the trident
+ICONS.trident = TRIDENT_ICON_URL;   // trident item sprite
 ICONS.sword = SWORD_ICON_URL;       // netherite sword item
 
 // EDIT THE KIT HERE.
@@ -1441,7 +1442,7 @@ function renderInventory(container, items = KIT_ITEMS) {
 }
 document.addEventListener('click', e => { if (!e.target.closest('.mc-slot')) mcTip.style.display = 'none'; });
 
-const TEST_SERVERS = { NeliSMP: 'mcpvp.club', Triathlon: 'mcpvp.club', Vanilla: 'eu.stray.gg', Sword: 'mcpvp.club', Spear: 'mcpvp.club', CPvP: 'mcpvp.club', DiaSMP: 'mcpvp.club' };
+const TEST_SERVERS = { Mace: 'mcpvp.club', UHC: 'mcpvp.club', SMP: 'mcpvp.club', Vanilla: 'eu.stray.gg', Sword: 'mcpvp.club', Spear: 'mcpvp.club', CPvP: 'mcpvp.club', DiaSMP: 'mcpvp.club' };
 const COPY_ICON = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 012-2h9"/></svg>';
 const CHECK_ICON = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
 function serverLineHtml(kit) {
@@ -1455,17 +1456,6 @@ document.addEventListener('click', e => {
   const fallback = () => { const t = document.createElement('textarea'); t.value = b.dataset.addr; t.style.position = 'fixed'; t.style.opacity = '0'; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); } catch (_) {} t.remove(); done(); };
   (navigator.clipboard ? navigator.clipboard.writeText(b.dataset.addr).then(done, fallback) : fallback());
 }, true);
-function triathlonKitHtml(withHeader = true) {
-  const box = (icon, title, sub) => `<div class="tri-box"><img src="${ICONS[icon]}" alt=""><b>${title}</b><small>${sub}</small></div>`;
-  return `<div class="kit-pane tri-pane">
-    ${withHeader ? `<div class="kit-header"><img src="${TRIATHLON_ICON_URL}" alt="Triathlon"><span>Triathlon Kit</span></div>` : ''}
-    <div class="kit-sub tri-desc">Triathlon is a special gamemode consisting of 3 different kits</div>
-    <div class="tri-boxes">${box('golden_apple', 'Early Game', '(UHC)')}${box('ender_pearl', 'Mid Game', '(SMP)')}${box('mace', 'Late Game', '(Mace)')}</div>
-    <div class="kit-sub tri-foot">Each kit is played first to 3</div>
-    ${serverLineHtml('Triathlon')}
-  </div>`;
-}
-
 function swordKitHtml(withHeader = true, invId = 'kitInventory') {
   return `<div class="kit-pane">
     ${withHeader ? `<div class="kit-header"><img src="${SWORDMODE_ICON_URL}" alt="Sword"><span>Sword Kit</span></div>` : ''}
@@ -1494,6 +1484,9 @@ function imgKitHtml(key, icon, img, withHeader, note, foot) {
     ${serverLineHtml(key)}
   </div>`;
 }
+const maceKitHtml = h => imgKitHtml('Mace', MACE_ICON_URL, MACE_KIT_IMG_URL, h, '', 'Rounds are first to 4');
+const uhcKitHtml = h => imgKitHtml('UHC', UHC_ICON_URL, UHC_KIT_IMG_URL, h, '', 'Evaluation matches are first to 6 · all other matches are first to 10');
+const smpKitHtml = h => imgKitHtml('SMP', SMP_ICON_URL, SMP_KIT_IMG_URL, h, '', 'Rounds are first to 4');
 const cpvpKitHtml = h => imgKitHtml('CPvP', CPVP_ICON_URL, CPVP_KIT_IMG_URL, h, CPVP_KIT_NOTE, 'Evaluation and LT3 matches are first to 4 · HT3 and above are first to 6');
 const diasmpKitHtml = h => imgKitHtml('DiaSMP', DIASMP_ICON_URL, DIASMP_KIT_IMG_URL, h, '', 'Rounds are first to 4');
 
@@ -1716,7 +1709,7 @@ function render() {
 // ---------- Info tooltip ----------
 let infoTab = 'titles';
 let infoSig = '';
-const boardHasKit = () => ['NeliSMP', 'Triathlon', 'Vanilla', 'Sword', 'Spear', 'CPvP', 'DiaSMP'].includes(currentBoard);
+const boardHasKit = () => ['Mace', 'UHC', 'SMP', 'Vanilla', 'Sword', 'Spear', 'CPvP', 'DiaSMP'].includes(currentBoard);
 const INFO_BTN_ICON = '<svg class="info-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16.5"/><circle cx="12" cy="7.8" r="0.7" fill="currentColor" stroke="none"/></svg>';
 const KIT_BTN_ICON = '<svg class="info-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9.5 17.5 21 6 21 3 18 3 6.5 14.5"/><line x1="11" y1="19" x2="5" y2="13"/><line x1="8" y1="16" x2="4" y2="20"/><line x1="5" y1="21" x2="3" y2="19"/></svg>';
 // Overall board: "Info" (titles + points). Gamemode boards: "Kit" (only the kit).
@@ -1739,14 +1732,9 @@ function renderInfoTooltip() {
       <span class="info-desc">${TITLE_REQUIREMENTS[name]}</span>
     </div>`).join('');
   const pointsHtml = `<div class="tp-compact">${tiersRowsHTML()}</div>`;
-  const kitHtml = currentBoard === 'NeliSMP'
-    ? `<div class="kit-pane">
-         <div class="kit-header"><img src="${NELISMP_ICON_URL}" alt="NeliSMP"><span>NeliSMP Kit</span></div>
-         <div id="kitInventory"></div>
-         <div class="kit-sub kit-foot">Rounds are first to 4</div>
-         ${serverLineHtml('NeliSMP')}
-       </div>`
-    : currentBoard === 'Triathlon' ? triathlonKitHtml(true)
+  const kitHtml = currentBoard === 'Mace' ? maceKitHtml(true)
+    : currentBoard === 'UHC' ? uhcKitHtml(true)
+    : currentBoard === 'SMP' ? smpKitHtml(true)
     : currentBoard === 'Vanilla' ? vanillaKitHtml(true)
     : currentBoard === 'Sword' ? swordKitHtml(true)
     : currentBoard === 'Spear' ? spearKitHtml(true)
@@ -1975,12 +1963,21 @@ async function loadPlayersAndRender(force = true) {
       if (!res.ok) throw new Error((body.code || res.status) + " " + (body.message || ""));
       return body;
     };
-    // falls back to older column sets until the SQL migrations have been run
+    // Each column has candidate names (newest first). When the database reports a missing column the next
+    // candidate is tried (e.g. mace_* falls back to the old mace_* columns until the migration has run).
+    const specs = [['id'], ['player'], ['inactive'], ['tierlist_regulator']];
+    SUB_BOARDS.forEach(k => { const c = LEADERBOARDS[k].col; ['tier', 'peaktier', 'tester'].forEach(f => specs.push(k === 'Mace' ? [`mace_${f}`, `mace_${f}:mace_${f}`] : [`${c}_${f}`])); });
+    const idx = specs.map(() => 0);
     let lastErr = null;
-    outer: for (const nw of [true, false]) for (const sp of [true, false]) for (const sw of [true, false]) for (const van of [true, false]) {
-      for (const [c, roles] of [['triathlon', true], ['triathlon', false], ['lowblockranked', true], ['lowblockranked', false]]) {
-        const cols = `id,player,nelismp_tier,nelismp_peaktier,${c}_tier,${c}_peaktier` + (van ? ',vanilla_tier,vanilla_peaktier' : '') + (sw ? ',sword_tier,sword_peaktier' : '') + (sp ? ',spear_tier,spear_peaktier' : '') + (nw ? ',inactive,cpvp_tier,cpvp_peaktier,diasmp_tier,diasmp_peaktier' : '') + (roles ? `,tierlist_regulator,nelismp_tester,${c}_tester` + (van ? ',vanilla_tester' : '') + (sw ? ',sword_tester' : '') + (sp ? ',spear_tester' : '') + (nw ? ',cpvp_tester,diasmp_tester' : '') : '');
-        try { rows = await get(cols); LEADERBOARDS.Triathlon.col = c; break outer; } catch (e) { lastErr = e; }
+    for (let attempt = 0; attempt < 60 && !rows; attempt++) {
+      try { rows = await get(specs.map((c, i) => c[idx[i]]).filter(Boolean).join(',')); }
+      catch (e) {
+        lastErr = e;
+        const m = /column (?:players\.)?"?([a-z_]+)"? does not exist/i.exec(e.message || '');
+        if (!m) break;
+        let hit = false;
+        specs.forEach((c, i) => { const cur = c[idx[i]]; if (cur && cur.split(':').pop() === m[1]) { idx[i]++; hit = true; } });
+        if (!hit) break;
       }
     }
     if (!rows) throw lastErr;
@@ -2094,7 +2091,7 @@ function accAssign(kit, name, info, st = {}) {
   }
   if (!tgt.length) { steps.push({ title: `Defeat all other ${keyLabel(info.myKey)} players`, opponents: own, tier: info.myKey }); return { steps, meta }; }
   if (own.length && !meta.bridged) steps.push({ title: `Win against a ${keyLabel(info.myKey)} player`, opponents: [accPick(own)], tier: info.myKey });
-  steps.push({ title: `Play a ${keyLabel(info.targetKey)} player (${kit === 'Triathlon' ? 'win overall, or lose by 2 or less if you beat your own tier opponent 9-2 or better' : kit === 'Sword' || kit === 'CPvP' ? 'win the match' : 'win with 4-3 or better (or play 3-4 if you beat your own tier opponent 4-1 or better)'})`, opponents: [accPick(tgt)], tier: info.targetKey });
+  steps.push({ title: `Play a ${keyLabel(info.targetKey)} player (${kit === 'Sword' || kit === 'CPvP' || kit === 'UHC' ? 'win the match' : 'win with 4-3 or better (or play 3-4 if you beat your own tier opponent 4-1 or better)'})`, opponents: [accPick(tgt)], tier: info.targetKey });
   return { steps, meta };
 }
 // Tier shift: you're in the 2nd highest occupied tier, the top tier has exactly one player and is between HT3 and LT1.
@@ -2147,7 +2144,7 @@ function tierlistRulesHtml(open = true, kit) {
     <p><i>Rules are subject to common sense. If you are unsure about any rules, contact a staff member.</i></p></div></details>`;
 }
 function openRuleset(kit) {
-  kit = kit || (GM_RULES[currentBoard] ? currentBoard : 'NeliSMP');
+  kit = kit || (GM_RULES[currentBoard] ? currentBoard : 'Mace');
   accOpen(`<h2>Tierlist Ruleset</h2>${rulesetHtml(kit)}`, true);
   const inv = accEl('rsKitInv');
   if (inv) { try { renderInventory(inv, kitItemsFor(kit)); } catch (err) { console.error('Kit render failed:', err); inv.textContent = 'Kit failed to load'; } }
@@ -2157,7 +2154,7 @@ document.addEventListener('click', e => { if (e.target.closest('.ruleset-btn')) 
 // Gamemode specific rule values. Anything that differs between gamemodes is highlighted (.gmv) in the rules.
 const FORFEIT_RULES = ['If your opponent forfeits while you are winning the match, you receive the win', 'If your opponent forfeits while the score is even or you are losing, the match is invalidated', 'If your opponent forfeits while being a higher tier, the rounds you won carry over to the next opponent'];
 const GM_RULES = {
-  NeliSMP: {
+  Mace: {
     maps: ['Map: <b>Giant Stadium (Plains)</b>'],
     format: 'All competitive matches are first to 4.',
     step2: 'Play against an opponent from a higher tier and win with a score of <b>4-3 or better</b>',
@@ -2189,22 +2186,6 @@ const GM_RULES = {
     restrictions: ['No <b>Beacons</b>', 'No <b>Milk</b>', 'No <b>Enchanted Golden Apples</b>', 'No potions/arrows of <b>Turtle Master</b>', 'No potions/arrows of <b>Weakness</b>', 'No <b>Thorns</b> enchantment', 'No <b>Lunge</b> enchantment', 'Max <b>64</b> Respawn Anchors', 'Max <b>24</b> Firework Rockets', 'Max <b>4</b> Armour Pieces', 'Max <b>8</b> Totems', 'Kit items must be obtainable in 1.21+ Vanilla Survival'],
     extraMatch: ['Rekitting or using <b>/heal</b> mid-fight gives your opponent the round', 'Ender chest: load it <b>once per round</b>. Loading mid-round is allowed if you have not used any stored contents yet', 'No stalling (slow regearing, exploring/looting, camping, unusual EXP farming)', 'No crafting, smelting or enchanting mid-match', 'Do not mine/collect placed Respawn Anchors', 'Do not take off your armour to hide from or attack your opponent while invisible', 'No TP trapping: wait <b>3 seconds</b> after a teleport before attacking/debuffing, and only teleport if you are both surfaced', 'No RTP without mutual agreement', 'Do not fly up or place blocks within <b>3 seconds</b> of teleporting to your opponent'],
     forfeit: FORFEIT_RULES
-  },
-  Triathlon: {
-    maps: ['Early Game (UHC): <b>Stadium (Any)</b>', 'Mid Game (SMP): <b>Giant Stadium (Plains)</b>', 'Late Game (Mace): <b>Giant Stadium (Plains)</b>'],
-    format: 'Triathlon consists of 3 kits (Early Game UHC, Mid Game SMP, Late Game Mace), each played first to 3. The final score is the <b>total of all 3 matches combined</b>.',
-    step2: 'Play against an opponent from a higher tier and <b>win overall</b> (any winning total score)',
-    promoShortcut: 'If you beat the opponent from your own tier with a total score of <b>9-2 or better</b>, you only need to finish the match by losing by <b>2 or less</b> (e.g. 6-8) against the higher tier opponent to be promoted.',
-    evalPass: 'A <b>winning total score</b> (any margin)',
-    shift: 'You must win overall by <b>3 or more</b> (total score of all 3 kits combined)',
-    demoHT3: ['You lose against another player from your tier by <b>4 or more</b> (total score) and are demoted instantly', '<b>or</b> you lose to 2 players from your tier by <b>3 or more</b> each'],
-    dsStart: '<b>6</b> (max <b>12</b>)',
-    dsLose: 'You lose DS when you lose competitive matches. The penalty is the total score difference at the end of the match.',
-    dsLower: ['Losing to a player <b>below</b> your tier gives an additional <b>-3</b>', 'If you are LT1 the additional penalty is <b>-4</b>'],
-    dsGain: ["Defending your tier (you are assigned to someone else's promotion test and win): <b>+1</b>", 'Winning by <b>4 or more</b> (total score): <b>+2</b>'],
-    bridge: 'you win your second opponent overall by <b>3 or more</b> (total score of all 3 kits combined).',
-    shortcut: '<b>18-5 or better</b> (total score of all 3 kits, both matches combined)',
-    forfeit: FORFEIT_RULES
   }
 };
 GM_RULES.Sword = {
@@ -2222,21 +2203,35 @@ GM_RULES.Sword = {
   shortcut: 'LT3: <b>12-4 or better</b> · HT3: <b>20-7 or better</b> · LT2: <b>30-10 or better</b>',
   forfeit: FORFEIT_RULES
 };
-GM_RULES.Spear = { ...GM_RULES.NeliSMP };   // Spear plays by the exact same rules as NeliSMP (same server too)
-GM_RULES.CPvP = { ...GM_RULES.NeliSMP, maps: ['Map: <b>Field</b>'],
+GM_RULES.Spear = { ...GM_RULES.Mace };   // Spear plays by the exact same rules as Mace (same server too)
+GM_RULES.CPvP = { ...GM_RULES.Mace, maps: ['Map: <b>Field</b>'],
   format: 'Evaluation and LT3 matches are <b>first to 4</b>. All other tests (<b>HT3 and above</b>) are <b>first to 6</b>.',
   step2: 'Play against an opponent from a higher tier and <b>win the match</b>',
   promoShortcut: null,
   evalPass: 'Winning your evaluation match (first to <b>4</b>)',
   shift: 'You must defeat 2 players from your tier with a combined score of <b>8-4 or better</b> (LT3) or <b>12-6 or better</b> (HT3 and above), both matches counted together',
   demoHT3: ['You lose 0-4 (LT3) or 0-6 (HT3) against another player from your tier (instant demotion)', '<b>or</b> you lose to 2 opponents from your tier consecutively'],
-  dsStart: GM_RULES.Triathlon.dsStart, dsLose: GM_RULES.Triathlon.dsLose, dsLower: GM_RULES.Triathlon.dsLower,
+  dsStart: '<b>6</b> (max <b>12</b>)',
+  dsLose: 'You lose DS when you lose competitive matches. The penalty is the score difference at the end of the match.',
+  dsLower: ['Losing to a player <b>below</b> your tier gives an additional <b>-3</b>', 'If you are LT1 the additional penalty is <b>-4</b>'],
   dsGain: ["Defending your tier (you are assigned to someone else's promotion test and win): <b>+1</b>", 'Winning without losing a round (4-0 or 6-0) gives <b>+2</b> instead of +1 (not additional)'],
   bridge: 'you beat your second opponent <b>6-3 or better</b> (<b>4-2 or better</b> in evaluation tests).',
   shortcut: 'LT3: <b>8-2 or better</b> · HT3 and above: <b>12-4 or better</b>',
   restrictions: ['Only the <b>amount</b> of items may be changed. No other type of item or block may be added to the kit', 'Max <b>20 totems</b>', 'Max <b>2 stacks of ender pearls</b>', '<b>No Thorns</b>', '<b>Single Blast Protection</b> is the default. <b>Double Blast Protection</b> is only allowed if <b>both players agree</b>. The decision is permanent for the entire match and cannot be changed after the match has started', 'You must create your own <b>vanilla kit on PvP Club</b> and use it in the duel'] };
-GM_RULES.DiaSMP = { ...GM_RULES.NeliSMP, maps: ['Map: <b>Field</b>'] };
-const gmCfg = kit => GM_RULES[kit] || GM_RULES.NeliSMP;
+GM_RULES.DiaSMP = { ...GM_RULES.Mace, maps: ['Map: <b>Field</b>'] };
+GM_RULES.SMP = { ...GM_RULES.Mace };   // SMP plays by the exact same rules as Mace (first to 4)
+GM_RULES.UHC = { ...GM_RULES.Mace, maps: ['Map: <b>Stadium (Any)</b>'],
+  format: 'Evaluation matches are <b>first to 6</b>. All other matches are <b>first to 10</b>.',
+  step2: 'Play against an opponent from a higher tier and <b>win the match</b>',
+  promoShortcut: null,
+  evalPass: 'Winning your evaluation match (first to <b>6</b>)',
+  shift: 'You must defeat 2 players from your tier with a combined score of <b>20-10 or better</b> (both matches counted together)',
+  demoHT3: ['You lose to another player from your tier with a score of <b>4-10 or worse</b> (instant demotion)', '<b>or</b> you lose to 2 opponents from your tier consecutively'],
+  dsStart: '<b>8</b> (max <b>15</b>)',
+  dsGain: ["Defending your tier (you are assigned to someone else's promotion test and win): <b>+1</b>", 'Winning with <b>double the score of your opponent</b> gives <b>+2</b> instead of +1 (not additional)'],
+  bridge: 'you beat your second opponent with <b>at least double their rounds</b> (e.g. 10-5).',
+  shortcut: '<b>20-7 or better</b>' };
+const gmCfg = kit => GM_RULES[kit] || GM_RULES.Mace;
 const gmv0 = t => `<span class="gmv">${t}</span>`;
 const gmv = t => `<span class="gmv">${t}</span>`;
 
@@ -2305,13 +2300,15 @@ function accRulesHtml(kit, info) {
 }
 // the kit as a rule-style section that is open by default (shown above the rules in the ruleset)
 function rulesetKitHtml(kit) {
-  const body = kit === 'Triathlon' ? triathlonKitHtml(false)
+  const body = kit === 'Mace' ? maceKitHtml(false)
+    : kit === 'UHC' ? uhcKitHtml(false)
+    : kit === 'SMP' ? smpKitHtml(false)
     : kit === 'Vanilla' ? vanillaKitHtml(false, false)
     : kit === 'Sword' ? swordKitHtml(false, 'rsKitInv')
     : kit === 'Spear' ? spearKitHtml(false, 'rsKitInv')
     : kit === 'CPvP' ? cpvpKitHtml(false)
     : kit === 'DiaSMP' ? diasmpKitHtml(false)
-    : `<div class="kit-pane"><div id="rsKitInv"></div><div class="kit-sub kit-foot">Rounds are first to 4</div>${serverLineHtml('NeliSMP')}</div>`;
+    : maceKitHtml(false);
   return `<div class="acc-rules"><details open><summary>⚔ Kit</summary><div>${body}</div></details></div>`;
 }
 // full ruleset page for one gamemode
@@ -2337,8 +2334,7 @@ function openKitPop(kit) {
   closeKitPop();
   const pop = document.createElement('div');
   pop.id = 'kitPop'; pop.className = 'info-tooltip overall-tooltip kit-open kit-pop active';
-  pop.innerHTML = '<button class="kit-close" type="button" aria-label="Close">&times;</button>' + (kit === 'Triathlon' ? triathlonKitHtml(true) : kit === 'Vanilla' ? vanillaKitHtml(true) : kit === 'Sword' ? swordKitHtml(true, 'kitPopInv') : kit === 'Spear' ? spearKitHtml(true, 'kitPopInv') : kit === 'CPvP' ? cpvpKitHtml(true) : kit === 'DiaSMP' ? diasmpKitHtml(true) : kit === 'NeliSMP'
-    ? `<div class="kit-pane"><div class="kit-header"><img src="${LEADERBOARDS[kit].icon}" alt=""><span>${kit} Kit</span></div><div id="kitPopInv"></div><div class="kit-sub kit-foot">Rounds are first to 4</div>${serverLineHtml('NeliSMP')}</div>`
+  pop.innerHTML = '<button class="kit-close" type="button" aria-label="Close">&times;</button>' + (kit === 'Mace' ? maceKitHtml(true) : kit === 'UHC' ? uhcKitHtml(true) : kit === 'SMP' ? smpKitHtml(true) : kit === 'Vanilla' ? vanillaKitHtml(true) : kit === 'Sword' ? swordKitHtml(true, 'kitPopInv') : kit === 'Spear' ? spearKitHtml(true, 'kitPopInv') : kit === 'CPvP' ? cpvpKitHtml(true) : kit === 'DiaSMP' ? diasmpKitHtml(true)
     : `<div class="kit-header" style="margin:4px 0 10px"><img src="${LEADERBOARDS[kit].icon}" alt="" style="width:36px;height:36px;image-rendering:pixelated"><span style="font-size:22px;font-weight:700">${accEsc(kit)} Kit</span></div><div class="kit-empty">No kit yet</div>`);
   accEl('accModal').appendChild(pop);
   pop.querySelector('.kit-close').onclick = closeKitPop;
@@ -2658,15 +2654,15 @@ function accBindMatches(box) {
 }
 function accViewScore(m) {
   const iAmTestee = m.testee_user === accSession.user.id, you = iAmTestee ? m.testee_name : m.opponent_name, them = iAmTestee ? m.opponent_name : m.testee_name;
-  accOpen(`<h2>Final score</h2><p class="acc-p">${accEsc(m.test_type || 'Test')} · ${accEsc(m.kit || '')}<br>${accEsc(m.testee_name)} vs ${accEsc(m.opponent_name)}. ${m.kit === 'Triathlon' ? 'Enter the total score of all 3 kits combined.' : m.kit === 'Sword' ? 'LT3 and below first to 6, HT3 first to 10, T2 first to 15, T1 first to 20.' : m.kit === 'CPvP' ? 'Evaluation and LT3 are first to 4, HT3 and above are first to 6.' : 'Matches are first to 4.'}</p>
-    <div class="tt-when"><div><div class="acc-label">${accEsc(you)} (you)</div><input class="acc-in" id="sMe" type="number" min="0" max="${m.kit === 'Triathlon' ? 9 : m.kit === 'Sword' ? 20 : m.kit === 'CPvP' ? 6 : 4}" inputmode="numeric"></div>
-    <div><div class="acc-label">${accEsc(them)}</div><input class="acc-in" id="sThem" type="number" min="0" max="${m.kit === 'Triathlon' ? 9 : m.kit === 'Sword' ? 20 : m.kit === 'CPvP' ? 6 : 4}" inputmode="numeric"></div></div>
+  accOpen(`<h2>Final score</h2><p class="acc-p">${accEsc(m.test_type || 'Test')} · ${accEsc(m.kit || '')}<br>${accEsc(m.testee_name)} vs ${accEsc(m.opponent_name)}. ${m.kit === 'UHC' ? 'Evaluation matches are first to 6, all other matches are first to 10.' : m.kit === 'Sword' ? 'LT3 and below first to 6, HT3 first to 10, T2 first to 15, T1 first to 20.' : m.kit === 'CPvP' ? 'Evaluation and LT3 are first to 4, HT3 and above are first to 6.' : 'Matches are first to 4.'}</p>
+    <div class="tt-when"><div><div class="acc-label">${accEsc(you)} (you)</div><input class="acc-in" id="sMe" type="number" min="0" max="${m.kit === 'UHC' ? 10 : m.kit === 'Sword' ? 20 : m.kit === 'CPvP' ? 6 : 4}" inputmode="numeric"></div>
+    <div><div class="acc-label">${accEsc(them)}</div><input class="acc-in" id="sThem" type="number" min="0" max="${m.kit === 'UHC' ? 10 : m.kit === 'Sword' ? 20 : m.kit === 'CPvP' ? 6 : 4}" inputmode="numeric"></div></div>
     <div class="acc-msg" id="aMsg"></div><button class="acc-go" id="aGo" type="button">Submit score</button><button class="acc-go ghost" id="aLater" type="button">Later</button>`);
   accEl('aLater').onclick = accClose;
   accEl('aGo').onclick = async () => {
     const a = parseInt(accEl('sMe').value, 10), b = parseInt(accEl('sThem').value, 10);
-    const tri = m.kit === 'Triathlon', swd = m.kit === 'Sword';
-    if (m.kit === 'CPvP') { if (![a, b].every(n => Number.isInteger(n) && n >= 0 && n <= 6) || ![4, 6].includes(Math.max(a, b)) || a === b) return accMsg('Enter a valid score: the winner must have 4 (evaluation and LT3) or 6 (HT3 and above).'); } else if (swd) { if (![a, b].every(n => Number.isInteger(n) && n >= 0 && n <= 20) || a === b || ![6, 10, 15, 20].includes(Math.max(a, b))) return accMsg('Enter a valid score: the winner must have 6, 10, 15 or 20 rounds depending on the match length.'); } else if (tri ? (![a, b].every(n => Number.isInteger(n) && n >= 0 && n <= 9) || a === b) : (![a, b].every(n => Number.isInteger(n) && n >= 0 && n <= 4) || (a === 4) === (b === 4))) return accMsg(tri ? 'Enter the total score of all 3 kits (0-9). It cannot be a tie.' : 'Enter a valid score: exactly one player has 4.');
+    const swd = m.kit === 'Sword';
+    if (m.kit === 'CPvP') { if (![a, b].every(n => Number.isInteger(n) && n >= 0 && n <= 6) || ![4, 6].includes(Math.max(a, b)) || a === b) return accMsg('Enter a valid score: the winner must have 4 (evaluation and LT3) or 6 (HT3 and above).'); } else if (swd) { if (![a, b].every(n => Number.isInteger(n) && n >= 0 && n <= 20) || a === b || ![6, 10, 15, 20].includes(Math.max(a, b))) return accMsg('Enter a valid score: the winner must have 6, 10, 15 or 20 rounds depending on the match length.'); } else if (m.kit === 'UHC') { const ft = m.test_type === 'Evaluation Test' ? 6 : 10; if (![a, b].every(n => Number.isInteger(n) && n >= 0 && n <= ft) || (a === ft) === (b === ft)) return accMsg(`Enter a valid score: exactly one player has ${ft}.`); } else if (![a, b].every(n => Number.isInteger(n) && n >= 0 && n <= 4) || (a === 4) === (b === 4)) return accMsg('Enter a valid score: exactly one player has 4.');
     accEl('aGo').disabled = true;
     const vals = { status: 'completed', score_testee: iAmTestee ? a : b, score_opponent: iAmTestee ? b : a };
     if (await accMatchUpdate(m, vals, `${accProfile.mc_username} reported the final score of your duel: ${you} ${a}-${b} ${them}.`)) {
@@ -2733,8 +2729,8 @@ function accViewAssign(id) {
 // ----- tester: resolve a test -----
 const RS_SCORES = [['4-0', 4, 0], ['4-1', 4, 1], ['4-2', 4, 2], ['4-3', 4, 3]];
 const RS6_SCORES = [['6-0', 6, 0], ['6-1', 6, 1], ['6-2', 6, 2], ['6-3', 6, 3], ['6-4', 6, 4], ['6-5', 6, 5]];
-// Triathlon: only the total margin over all 3 kits matters
-const TRI_SCORES = [['Won by 1-2', 2, 0], ['Won by 3+', 3, 0], ['Lost', 0, 1]];
+const UHC6_SCORES = [0, 1, 2, 3, 4, 5].map(l => ['6-' + l, 6, l]);
+const UHC10_SCORES = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(l => ['10-' + l, 10, l]);
 async function accSubmitResult(req, outcome) {
   const col = LEADERBOARDS[req.kit].col, now = new Date().toISOString();
   if (outcome.tier) {
@@ -2775,13 +2771,13 @@ async function accViewResolve(id) {
   const high = !!myKey && TIER_ORDER[myKey] <= TIER_ORDER['3+'];     // HT3 or above in this gamemode
   const plan = req.opponents || { steps: [] }, meta = plan.meta || {};
   const tm = /^([HL])T([1-5]) Test$/.exec(req.test_type || ''), target = tm ? tm[2] + (tm[1] === 'H' ? '+' : '') : null;
-  const isTri = kit === 'Triathlon', isSword = kit === 'Sword', isCp = kit === 'CPvP';
+  const isSword = kit === 'Sword', isCp = kit === 'CPvP', isUhc = kit === 'UHC';
   const cpHigh = () => !isEval && !!target && TIER_ORDER[target] <= TIER_ORDER['3+'];   // CPvP: HT3 and above is first to 6
-  const scs = () => isTri ? TRI_SCORES : (isCp && cpHigh()) ? RS6_SCORES : RS_SCORES;
+  const scs = () => isUhc ? (isEval ? UHC6_SCORES : UHC10_SCORES) : (isCp && cpHigh()) ? RS6_SCORES : RS_SCORES;
   // Sword scores are free round counts ("a-b"); bridging needs double the opponent's rounds, T1 needs 20-14 or better
   const swSc = score => { const m = /^(\d+)-(\d+)$/.exec(score || ''); return m ? ['' + score, +m[1], +m[2]] : null; };
   const findSc = score => isSword ? swSc(score) : scs().find(x => x[0] === score);
-  const bridgeSc = (sc, tier) => isTri ? (sc[1] - sc[2] >= 3) : isCp ? (isEval ? sc[1] - sc[2] >= 2 : (sc[1] >= 6 && sc[1] - sc[2] >= 3)) : isSword ? ((tier === 1) ? (sc[1] >= 20 && sc[2] <= 14) : (sc[1] > sc[2] && sc[1] >= 2 * sc[2])) : (sc[1] - sc[2] >= 2);
+  const bridgeSc = (sc, tier) => isUhc ? (sc[1] > sc[2] && sc[1] >= 2 * sc[2]) : isCp ? (isEval ? sc[1] - sc[2] >= 2 : (sc[1] >= 6 && sc[1] - sc[2] >= 3)) : isSword ? ((tier === 1) ? (sc[1] >= 20 && sc[2] <= 14) : (sc[1] > sc[2] && sc[1] >= 2 * sc[2])) : (sc[1] - sc[2] >= 2);
   const bridgeOk = (score) => { const sc = findSc(score); return !!sc && target !== '1+' && bridgeSc(sc, target ? +target[0] : null); };
   let side = null, choice = null, score = null, opp2 = null;
 
@@ -2791,13 +2787,13 @@ async function accViewResolve(id) {
     const pool = accTierPlayers(kit, myKey, me).filter(n => n.toLowerCase() !== req.mc_username.toLowerCase());
     const pick = pool.length ? accPick(pool) : null;
     if (pick) {
-      plan.steps = [...(plan.steps || []), { kind: 'eval2', title: `Tester lost: play a ${keyLabel(myKey)} player (${isTri ? 'win overall' : (isSword || isCp) ? 'win the match' : 'win with 4-3 or better'})`, opponents: [pick], tier: myKey }];
+      plan.steps = [...(plan.steps || []), { kind: 'eval2', title: `Tester lost: play a ${keyLabel(myKey)} player (${(isSword || isCp || isUhc) ? 'win the match' : 'win with 4-3 or better'})`, opponents: [pick], tier: myKey }];
       sb.from('tier_requests').update({ opponents: plan }).eq('id', req.id).then(() => sb.rpc('sync_matches', { p_request: String(req.id) })).then(() => {}, () => {});
     }
     return pick;
   };
   const opt = (val, cur, label, sub = '', cls = '') => `<button type="button" class="rs-opt ${cls} ${cur === val ? 'on' : ''}" data-v="${val}">${label}${sub ? `<small>${sub}</small>` : ''}</button>`;
-  const scoreOpts = (cur, extra = '') => isSword ? `<div class="tt-when"><div><div class="acc-label">Testee rounds</div><input class="acc-in" id="swA" type="number" min="0" max="20" inputmode="numeric" value="${swSc(cur) ? swSc(cur)[1] : ''}"></div><div><div class="acc-label">Opponent rounds</div><input class="acc-in" id="swB" type="number" min="0" max="20" inputmode="numeric" value="${swSc(cur) ? swSc(cur)[2] : ''}"></div></div><div class="rs-opts one"><button type="button" class="rs-opt" data-sw="1">Set score</button>${extra}</div>` : `<div class="rs-opts">${(isTri ? scs().filter(x => x[1] > x[2]) : scs()).map(x => opt(x[0], cur, x[0])).join('')}${extra}</div>`;
+  const scoreOpts = (cur, extra = '') => isSword ? `<div class="tt-when"><div><div class="acc-label">Testee rounds</div><input class="acc-in" id="swA" type="number" min="0" max="20" inputmode="numeric" value="${swSc(cur) ? swSc(cur)[1] : ''}"></div><div><div class="acc-label">Opponent rounds</div><input class="acc-in" id="swB" type="number" min="0" max="20" inputmode="numeric" value="${swSc(cur) ? swSc(cur)[2] : ''}"></div></div><div class="rs-opts one"><button type="button" class="rs-opt" data-sw="1">Set score</button>${extra}</div>` : `<div class="rs-opts">${scs().map(x => opt(x[0], cur, x[0])).join('')}${extra}</div>`;
 
   const outcomeNow = () => {
     if (isEval) {
@@ -2829,16 +2825,16 @@ async function accViewResolve(id) {
         if (!high) {
           body += `<div class="rs-opts one">${opt('PASS', choice, 'Passed Evaluation', 'Assigns LT3 and lets them test for HT3 right away', 'pass')}</div>`;
         } else if (opp2) {
-          body += `<div class="tt-note">The testee beat you, so they now play another ${keyLabel(myKey)} player. ${isTri ? 'Winning overall (any margin)' : (isSword || isCp) ? 'Winning the match' : 'Winning with <b>4-3 or better</b>'} earns ${keyLabel(myKey)}. Winning also lets them test the next tier straight away (bridging).</div>
+          body += `<div class="tt-note">The testee beat you, so they now play another ${keyLabel(myKey)} player. ${(isSword || isCp || isUhc) ? 'Winning the match' : 'Winning with <b>4-3 or better</b>'} earns ${keyLabel(myKey)}. Winning also lets them test the next tier straight away (bridging).</div>
             <div class="acc-label">Assigned opponent</div><div style="margin-bottom:12px">${oppChips([opp2])}</div>
-            <div class="acc-label">Testee's score against ${accEsc(opp2)}</div>${scoreOpts(score, opt('WORSE', score, isTri ? 'Lost overall' : 'Lost', 'Gets LT3 + Passed Evaluation', 'bad'))}`;
+            <div class="acc-label">Testee's score against ${accEsc(opp2)}</div>${scoreOpts(score, opt('WORSE', score, 'Lost', 'Gets LT3 + Passed Evaluation', 'bad'))}`;
         } else {
           body += `<div class="tt-note warn">There is no other ${keyLabel(myKey)} player to assign, so the testee gets ${keyLabel(myKey)} directly.</div><div class="rs-opts one">${opt('GRANT', choice, 'Grant ' + keyLabel(myKey), '', 'pass')}</div>`;
         }
       }
     } else {
       body += `<div class="rs-seg">${opt('PASS', choice, 'Passed', '', 'pass')}${opt('FAIL', choice, 'Failed', '14 day cooldown', 'bad')}</div>`;
-      if (choice === 'PASS') body += (isCp && target ? `<div class="tt-note">${keyLabel(target)}: the testee must <b>win the match</b> (first to ${cpHigh() ? 6 : 4}). Bridging needs <b>6-3 or better</b>.</div>` : '') + (isSword && target ? `<div class="tt-note">${keyLabel(target)}: the testee must <b>win the match</b> (first to ${swordFirstTo(target)}). Bridging needs ${+target[0] === 1 ? '20-14 or better' : 'double the opponent\'s rounds'}.</div>` : '') + `<div class="acc-label">${isTri ? 'Total result over all 3 kits' : 'Score of the final match'}</div>${scoreOpts(score)}`;
+      if (choice === 'PASS') body += (isCp && target ? `<div class="tt-note">${keyLabel(target)}: the testee must <b>win the match</b> (first to ${cpHigh() ? 6 : 4}). Bridging needs <b>6-3 or better</b>.</div>` : '') + (isSword && target ? `<div class="tt-note">${keyLabel(target)}: the testee must <b>win the match</b> (first to ${swordFirstTo(target)}). Bridging needs ${+target[0] === 1 ? '20-14 or better' : 'double the opponent\'s rounds'}.</div>` : '') + (isUhc && target ? `<div class="tt-note">${keyLabel(target)}: the testee must <b>win the match</b> (first to 10). Bridging needs double the opponent's rounds.</div>` : '') + `<div class="acc-label">Score of the final match</div>${scoreOpts(score)}`;
     }
     const out = outcomeNow();
     let sum = '';
