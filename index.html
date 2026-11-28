@@ -302,7 +302,7 @@ img[src*="Respawn_Anchor"] { image-rendering: auto !important; }
 .home-section .player { margin-left: 0; margin-right: 0; }
 .home-empty { text-align: center; padding: 30px; color: #8b8b96; }
 .gm-title { font-family: 'Minecraft', monospace; font-weight: normal; font-size: 26px; margin: 38px 20px 16px; }
-.gm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 230px)); gap: 14px; margin: 0 20px; }
+.gm-grid { display: grid; grid-template-columns: repeat(var(--gm-cols, 4), minmax(0, 1fr)); gap: 14px; margin: 0 20px; }
 .gm-card { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 26px 12px 22px; background: #191920; border: 1px solid #25252d; border-radius: 12px; text-decoration: none; color: #fff; transition: transform 0.15s, box-shadow 0.15s, background 0.15s; }
 .gm-card:hover { transform: scale(1.035); background: #272731; box-shadow: 0 6px 16px rgba(0,0,0,0.45); }
 .gm-icon { width: 70px; height: 70px; border-radius: 14px; background: #131318; border: 1px solid #2c2c34; display: flex; align-items: center; justify-content: center; }
@@ -773,7 +773,7 @@ body.drag-pan, body.drag-pan * { cursor: grabbing !important; user-select: none 
 .rs-gm { background: #1c1c22; border: 1px solid #2c2c34; color: #fff; border-radius: 10px; padding: 10px 8px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: Arial, sans-serif; }
 .rs-gm:hover { background: #22222a; } .rs-gm.on { background: #ececf1; color: #131318; border-color: #ececf1; }
 /* Login and "Get tier tested" are hidden for now (display-only tiers). Delete this block to bring them back. */
-#accBtn, #heroTest, #accBellWrap { display: none !important; }
+#heroTest, #accBellWrap { display: none !important; }
 .hero-buttons { display: flex; justify-content: center; }
 .hero-buttons > span:empty { display: none; }
 .hero-buttons > .hero-search { justify-self: auto; }
@@ -819,6 +819,305 @@ body.drag-pan, body.drag-pan * { cursor: grabbing !important; user-select: none 
 .tester-dot img { width: 21px; height: 21px; }
 .tester-dot::after { font-size: 18px; padding: 7px 14px; border-radius: 10px; top: calc(100% + 10px); }
 .kit-foot { margin: 14px 0 4px; }
+
+/* ---------- Ranked Mace 2v2 ---------- */
+.ranked-btn { display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1px; padding: 8px 38px 9px; border-radius: 14px; text-decoration: none; cursor: pointer; font-family: Arial, 'Helvetica Neue', sans-serif; background: linear-gradient(180deg, #ffe27a 0%, #f7bd1f 52%, #d9920a 100%); border: 2px solid rgba(255,238,170,0.85); box-shadow: 0 6px 18px rgba(217,146,10,0.35), inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -6px 14px rgba(160,92,0,0.35); transition: transform 0.15s, filter 0.15s; }
+.ranked-btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+.ranked-btn .rb-big { font-size: 25px; font-weight: 900; letter-spacing: 0.4px; text-transform: uppercase; color: #fff; line-height: 1.05; text-shadow: 0 2px 0 rgba(140,80,0,0.45), 0 0 10px rgba(255,255,255,0.25); }
+.ranked-btn .rb-small { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #fff; text-shadow: 0 1px 0 rgba(140,80,0,0.5); }
+.ranked-btn .rb-small img { width: 16px; height: 16px; object-fit: contain; image-rendering: pixelated; }
+.ranked-mid, .ranked-top { display: none; justify-content: center; }
+.ranked-mid { padding: 14px 0 6px; }
+.ranked-mid .rb-gold, .ranked-top .rb-gold { display: inline-flex; }
+body.is-ranked .rb-gold { display: none; }
+body.is-ranked .ranked-mid .rb-green, body.is-ranked .ranked-top .rb-green { display: inline-flex; }
+@media (min-width: 920px) { .ranked-top { display: flex; } }
+@media (min-width: 920px) and (max-width: 1099px) { .ranked-btn { padding: 6px 22px 7px; } .ranked-btn .rb-big { font-size: 21px; } .ranked-btn .rb-small { font-size: 12px; } }
+@media (max-width: 919px) { .ranked-mid { display: flex; } }
+.ranked-title { margin: auto; display: flex; align-items: center; gap: 10px; font-family: Arial, 'Helvetica Neue', sans-serif; font-weight: 900; font-size: 24px; letter-spacing: 0.3px; color: #ffd24a; }
+.ranked-title img { width: 32px; height: 32px; object-fit: contain; image-rendering: pixelated; }
+.ranked-row .rank-flag.has-skin { min-width: 0; padding-right: 46px; }
+.ranked-row .skin-wrap { width: 88px; }
+.ranked-row .info { min-width: 0; }
+.ranked-row .player-name { font-size: 24px; }
+.rk-amp { color: #8b8b96; margin: 0 0.5em; }
+.rk-right { display: flex; align-items: center; gap: 16px; padding: 0 26px; }
+.rk-elo { font-family: 'Minecraft', monospace; font-size: 26px; color: #fff; white-space: nowrap; }
+.rk-streak { position: relative; width: 68px; height: 84px; flex-shrink: 0; }
+.rk-streak img { width: 100%; height: 100%; display: block; object-fit: contain; filter: drop-shadow(0 0 6px rgba(255,110,20,0.55)); }
+.rk-streak b { position: absolute; left: 0; right: 0; top: 56%; transform: translateY(-50%); text-align: center; font: 900 19px Arial, sans-serif; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.75); }
+/* shiny finish (both buttons): glossy top band + corner glare, plus a light sweep on hover */
+.ranked-btn { position: relative; overflow: hidden; isolation: isolate; }
+.ranked-btn::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; border-radius: inherit; background: linear-gradient(180deg, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.14) 46%, rgba(255,255,255,0) 52%), radial-gradient(120% 90% at 85% 0%, rgba(255,255,255,0.28), rgba(255,255,255,0) 60%); }
+.ranked-btn::after { content: ''; position: absolute; top: 0; bottom: 0; left: -60%; width: 40%; z-index: -1; pointer-events: none; background: linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0) 100%); transform: skewX(-18deg); transition: left 0.6s ease; }
+.ranked-btn:hover::after { left: 120%; }
+/* green "Tierlist" button - colors sampled from the reference picture */
+.ranked-btn.rb-green { background: linear-gradient(to top right, #08a35b 0%, #14b26d 22%, #21d676 55%, #1df16f 100%); border: 2px solid #0a0d0d; box-shadow: 0 6px 18px rgba(29,241,111,0.28), inset 0 2px 0 #4cf58d, inset 0 -6px 14px rgba(0,90,40,0.35); }
+.ranked-btn.rb-green .rb-big { text-shadow: 0 2px 0 rgba(0,70,30,0.45), 0 0 10px rgba(255,255,255,0.2); }
+.ranked-btn.rb-green .rb-small { text-shadow: 0 1px 0 rgba(0,70,30,0.5); }
+@media (max-width: 700px) {
+  .ranked-btn { padding: 5px 16px 6px; border-radius: 11px; }
+  .ranked-btn .rb-big { font-size: 18px; }
+  .ranked-btn .rb-small { font-size: 11px; }
+  .ranked-title { font-size: 19px; }
+  .ranked-row .skin-wrap { width: 54px; min-height: 80px; }
+  .ranked-row .rank-flag.has-skin { padding: 0 30px 0 12px; }
+  .ranked-row .player-name { font-size: 15px; }
+  .rk-elo { font-size: 16px; } .rk-right { padding: 0 12px; gap: 8px; }
+  .rk-streak { width: 52px; height: 64px; } .rk-streak b { font-size: 15px; }
+}
+
+/* ---------- Ranked: team profile, hover, profile box ---------- */
+.ranked-row { cursor: pointer; }
+.team-box { width: 1000px; max-width: 96vw; text-align: left; padding: 28px; border-radius: 22px; border: 1px solid #1d263b; background: linear-gradient(150deg, #18265a 0%, #0f1838 48%, #0a0f26 100%); }
+.tm-top { display: flex; justify-content: flex-end; margin: 0 44px 20px 0; }
+.tm-tabs { display: flex; gap: 12px; }
+.tm-tab { display: inline-flex; align-items: center; gap: 8px; background: #0a0a1a; border: 1px solid #1d263b; border-radius: 12px; padding: 10px 16px; color: #8b8b8b; font: 600 15px Arial, sans-serif; cursor: pointer; transition: border-color 0.15s, color 0.15s, background 0.15s; }
+.tm-tab svg { width: 18px; height: 18px; }
+.tm-tab:hover { background: #131322; }
+.tm-tab.active { border-color: #535966; color: #a2a5a6; }
+.tm-stats-view { display: flex; align-items: stretch; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.tm-players { display: flex; flex-direction: column; gap: 10px; }
+.tm-player { display: flex; align-items: center; gap: 10px; background: #191920; border: 1px solid #2c2c34; border-radius: 10px; padding: 8px 18px 8px 8px; font-family: 'Minecraft', monospace; font-size: 18px; }
+.tm-player img { width: 40px; height: 40px; border-radius: 6px; image-rendering: pixelated; }
+.tm-player.link { cursor: pointer; }
+.tm-player.link:hover { background: #272731; border-color: #34343f; }
+.tm-stats { display: flex; gap: 12px; align-items: stretch; }
+.tm-stat { min-width: 110px; background: #191920; border: 1px solid #2c2c34; border-radius: 12px; padding: 14px 18px; text-align: center; display: flex; flex-direction: column; justify-content: center; }
+.tm-stat small { color: #8b8b96; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.tm-stat b { display: block; margin-top: 6px; font: 800 28px Arial, sans-serif; }
+.tm-empty { color: #8b8b96; text-align: center; padding: 26px 0; }
+.hm-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; background: #191920; border: 1px solid #24242d; border-radius: 12px; padding: 0 14px; margin-bottom: 10px; min-height: 66px; overflow: hidden; }
+.hm-team { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.hm-team.right { justify-content: flex-end; }
+.hm-skin { position: relative; width: 40px; height: 62px; flex-shrink: 0; }
+.hm-skin img { position: absolute; left: 50%; bottom: -10%; height: 108%; width: auto; max-width: none; transform: translateX(-50%); }
+.hm-names { display: flex; flex-direction: column; min-width: 0; margin: 0 8px; font-family: 'Minecraft', monospace; font-size: 14px; line-height: 1.35; }
+.hm-names span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hm-team.right .hm-names { text-align: right; }
+.hm-mid { display: flex; align-items: center; gap: 10px; }
+.hm-score { font: 800 24px Arial, sans-serif; min-width: 64px; text-align: center; white-space: nowrap; }
+.hm-delta { display: flex; justify-content: center; gap: 5px; min-width: 84px; font: 700 14px Arial, sans-serif; white-space: nowrap; }
+.hm-gain { color: #3ddc84; } .hm-loss { color: #ff5c5c; } .hm-bonus { color: #ffd24a; }
+.rk-label { display: flex; align-items: center; gap: 8px; margin-top: 18px; }
+.rk-label img { width: 18px; height: 18px; object-fit: contain; image-rendering: pixelated; }
+.rkp-box { display: flex; align-items: center; gap: 12px; background: #191920; border: 1px solid #2c2c34; border-radius: 12px; padding: 12px 16px; text-align: left; margin-bottom: 8px; font-family: 'Minecraft', monospace; font-size: 18px; }
+.rkp-rank { color: #ffd24a; } .rkp-with { color: #8b8b96; }
+.rkp-mate.link { cursor: pointer; } .rkp-mate.link:hover { text-decoration: underline; }
+@media (max-width: 700px) {
+  .team-box { padding: 16px; }
+  .tm-top { margin-right: 40px; } .tm-tab { padding: 8px 10px; font-size: 13px; gap: 6px; }
+  .tm-stat { min-width: 0; flex: 1; padding: 10px; } .tm-stat b { font-size: 22px; } .tm-stats { width: 100%; }
+  .hm-row { padding: 0 8px; gap: 6px; } .hm-skin { width: 28px; height: 46px; } .hm-names { font-size: 11px; margin: 0 4px; }
+  .hm-score { font-size: 17px; min-width: 40px; } .hm-delta { min-width: 46px; font-size: 11px; flex-direction: column; gap: 0; align-items: center; } .hm-mid { gap: 4px; }
+}
+
+.rk-queue { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin: 10px 6px 12px; padding: 14px 18px; background: #191920; border: 1px solid #2c2c34; border-radius: 12px; }
+.rkq-text { flex: 1 1 260px; color: #c9c9d1; font-size: 15px; }
+.rkq-text b { color: #fff; }
+.rkq-opp { font-family: 'Minecraft', monospace; color: #fff; }
+.rkq-warn { color: #ff8a8a; }
+.rkq-wait { color: #ffd24a; font-weight: 700; }
+.rkq-score { display: flex; align-items: center; gap: 8px; color: #c9c9d1; font-weight: 700; }
+.rkq-sel { background: #0a0a1a; color: #fff; border: 1px solid #1d263b; border-radius: 8px; padding: 7px 8px; font: 700 15px Arial, sans-serif; }
+.rkq-btn { background: linear-gradient(180deg, #ffe27a 0%, #f7bd1f 52%, #d9920a 100%); color: #3b2600; border: 1px solid rgba(255,238,170,0.85); border-radius: 10px; padding: 10px 20px; font: 800 15px Arial, sans-serif; cursor: pointer; transition: filter 0.15s, transform 0.15s; }
+.rkq-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.rkq-btn:disabled { opacity: 0.6; cursor: default; }
+.rkq-btn.ghost { background: #0a0a1a; color: #a2a5a6; border-color: #535966; }
+
+/* blue style (matches the Stats / Match History buttons) */
+.tm-player, .tm-stat, .hm-row, .rkp-box { background: rgba(8,10,28,0.72); border: 1px solid #1d263b; }
+.tm-player.link:hover { background: #131a38; border-color: #535966; }
+.hm-row { padding: 6px 14px; }
+.hm-team[data-team] { cursor: pointer; border-radius: 10px; padding: 4px 6px; transition: background 0.12s; }
+.hm-team[data-team]:hover { background: rgba(255,255,255,0.08); }
+.hm-delta { flex-direction: column; align-items: center; gap: 2px; }
+.hm-flame { position: relative; width: 30px; height: 36px; }
+.hm-flame img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.hm-flame b { position: absolute; left: 0; right: 0; top: 58%; transform: translateY(-50%); text-align: center; font: 900 12px Arial, sans-serif; color: #ffd24a; text-shadow: 0 0 3px #000, 0 1px 2px #000; }
+.rk-card { margin-top: 18px; padding: 14px 16px 8px; text-align: left; border-radius: 18px; border: 1px solid #1d263b; background: linear-gradient(150deg, #18265a 0%, #0f1838 48%, #0a0f26 100%); }
+.rk-card .rk-label { margin: 0 0 10px; }
+
+/* ranked page: blue rounded container, the title sits inside it */
+body.is-ranked .container { border-radius: 22px; margin-bottom: 30px; }
+body.is-ranked .container::before { top: 0; border-radius: 22px; border: 1px solid #1d263b; background: linear-gradient(150deg, #18265a 0%, #0f1838 48%, #0a0f26 100%); }
+body.is-ranked .tab-bar { border-radius: 22px 22px 0 0; }
+body.is-ranked .player { background: rgba(8,10,28,0.72); border-color: #1d263b; }
+body.is-ranked .player:hover { background: #131a38; border-color: #535966; transform: none; box-shadow: 0 2px 10px rgba(0,0,0,0.25); }
+.rk-queue { background: rgba(8,10,28,0.72); border-color: #1d263b; }
+
+/* ranked page: blue page glow instead of the red one, blue controls, no info / tierlist ruleset buttons */
+body.is-ranked { background: radial-gradient(ellipse 110% 560px at 50% 0, #17265c 0%, rgba(9,12,28,0) 100%) no-repeat, #090c1c; }
+body.is-ranked #topBar .ruleset-btn { display: none; }
+.ranked-rules-btn { display: none; }
+body.is-ranked .ranked-rules-btn { display: flex; }
+body.is-ranked .search-btn, body.is-ranked .ranked-rules-btn, body.is-ranked #infoBtn { background: #0a0a1a; border: 1px solid #1d263b; color: #a2a5a6; }
+body.is-ranked .search-btn:hover, body.is-ranked .ranked-rules-btn:hover, body.is-ranked #infoBtn:hover { background: #131322; border-color: #535966; }
+body.is-ranked .search-panel, body.is-ranked .info-tooltip { background: #0b1126; border-color: #1d263b; }
+body.is-ranked .search-result-item:hover { background: #131a38; }
+.search-result-item img + img { margin-left: -4px; }
+.rules-box { width: 680px; min-height: 260px; }
+.rules-title { margin: 0 44px 18px 0; font-size: 22px; color: #fff; }
+
+/* match history: elo gained / lost / streak bonus in the Minecraft font */
+.hm-delta { font-family: 'Minecraft', monospace; font-weight: normal; font-size: 16px; }
+.hm-flame b { font-family: 'Minecraft', monospace; font-weight: normal; font-size: 13px; }
+@media (max-width: 700px) { .hm-delta { font-size: 12px; } .hm-flame b { font-size: 11px; } }
+
+/* match found popup */
+.match-box { width: 600px; max-width: 94vw; }
+.mp-title { margin: 0 0 16px; font-size: 22px; color: #fff; }
+.mp-opp { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1px solid #1d263b; background: rgba(8,10,28,0.72); border-radius: 14px; cursor: pointer; transition: background 0.12s, border-color 0.12s; }
+.mp-opp:hover { background: #131a38; border-color: #535966; }
+.mp-opp .hm-skin { width: 56px; height: 86px; }
+.mp-opp .hm-names { font-size: 20px; flex: 1; }
+.mp-stats { display: flex; align-items: center; gap: 12px; }
+.mp-opp .rk-elo { font-size: 24px; }
+.mp-opp .rk-streak { width: 44px; height: 54px; }
+.mp-opp .rk-streak b { font-size: 14px; }
+.mp-server { display: flex; align-items: center; gap: 12px; margin-top: 14px; padding: 10px 14px; border: 1px solid #1d263b; background: rgba(8,10,28,0.72); border-radius: 12px; color: #8b8b96; }
+.mp-server b { font-family: 'Minecraft', monospace; font-size: 20px; color: #fff; flex: 1; font-weight: normal; }
+.mp-body { margin-top: 16px; display: flex; flex-direction: column; gap: 12px; color: #c9c9d1; }
+.mp-body .rkq-score { justify-content: flex-start; flex-wrap: wrap; }
+.rk-hint { color: #8b8b96; font-size: 13px; }
+
+/* history: the streak bonus sits between the names and the elo gain; leaderboard flame number in the Minecraft font */
+.hm-delta { flex-direction: row; align-items: center; gap: 6px; min-width: 120px; }
+.hm-delta.l { justify-content: flex-end; }
+.hm-delta.r { justify-content: flex-start; }
+.rk-streak b { font-family: 'Minecraft', monospace; font-weight: normal; font-size: 22px; }
+.mp-opp .rk-streak b { font-size: 17px; }
+@media (max-width: 700px) { .hm-delta { flex-direction: row; min-width: 64px; gap: 3px; } .rk-streak b { font-size: 17px; } .mp-opp .rk-streak b { font-size: 14px; } }
+
+/* ranked rules text */
+#rankedRulesBody { color: #c9c9d1; font-size: 15px; line-height: 1.6; text-align: left; }
+#rankedRulesBody p { margin: 0 0 14px; }
+#rankedRulesBody ul { margin: 0 0 14px; padding-left: 22px; }
+#rankedRulesBody li { margin-bottom: 6px; }
+#rankedRulesBody b { color: #fff; }
+.rr-head { color: #8b8b96; text-transform: uppercase; letter-spacing: 1px; font-size: 13px; }
+.rk-link { color: #7aa2ff; text-decoration: underline; }
+.rk-link:hover { color: #a9c1ff; }
+
+/* ---------- Log in / account button ---------- */
+#accBtn { gap: 10px; padding: 10px 22px; min-width: 120px; justify-content: center; cursor: pointer; border: none; position: relative; z-index: 501; }
+#accBtn.logged { justify-content: flex-start; padding: 7px 14px 7px 8px; min-width: 130px; width: max-content; max-width: none !important; }
+#accBtn .acc-head { width: 30px; height: 30px; border-radius: 6px; image-rendering: pixelated; flex-shrink: 0; background: #000; }
+#accBtn .acc-name { font-family: 'Minecraft', monospace; font-weight: normal; font-size: 15px; max-width: none; overflow: visible; text-overflow: clip; white-space: nowrap; }
+#accBtn .acc-caret { margin-left: 6px; width: 8px; height: 8px; border-right: 2px solid #131318; border-bottom: 2px solid #131318; transform: rotate(45deg) translateY(-2px); transition: transform .2s; flex-shrink: 0; }
+#accBtn.open { border-bottom-left-radius: 0; border-bottom-right-radius: 0; background: #ffffff; transform: none; }
+#accBtn.open .acc-caret { transform: rotate(-135deg) translateY(-2px); }
+#accUserWrap .acc-drop { top: 100%; left: 0; right: 0; min-width: 0; margin-top: -1px; padding: 4px 6px 6px; background: #ececf1; border: none; border-top: 1px solid #d3d3dc; border-radius: 0 0 10px 10px; box-shadow: 0 12px 24px rgba(0,0,0,0.45); }
+#accUserWrap .acc-drop button.item { color: #131318; padding: 10px 10px; }
+#accUserWrap .acc-drop button.item:hover { background: #d9d9e2; }
+#accUserWrap .acc-drop button.item.danger { color: #c62828; }
+@media (max-width: 700px) { #accBtn { padding: 7px 12px; min-width: 0; font-size: 14px; } #accBtn.logged { min-width: 0; padding: 5px 10px 5px 6px; } #accBtn .acc-head { width: 24px; height: 24px; } #accBtn .acc-name { font-size: 13px; } }
+
+/* ---------- Hamburger + right sidebar ---------- */
+.menu-btn { display: inline-flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 46px; height: 46px; padding: 0; background: none; border: 1px solid #3a3a45; border-radius: 10px; cursor: pointer; flex-shrink: 0; transition: border-color .15s, background .15s; }
+.menu-btn:hover { border-color: #8b8b96; background: rgba(255,255,255,0.05); }
+.menu-btn span { display: block; width: 20px; height: 2px; border-radius: 2px; background: #e6e6ee; }
+.side-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); opacity: 0; pointer-events: none; transition: opacity .25s; z-index: 900; }
+.side-overlay.open { opacity: 1; pointer-events: auto; }
+.side-menu { position: fixed; top: 0; right: 0; height: 100%; width: 300px; max-width: 86vw; background: #1c1c22; border-left: 1px solid #2c2c34; box-shadow: -12px 0 32px rgba(0,0,0,0.5); transform: translateX(100%); transition: transform .28s ease; z-index: 901; display: flex; flex-direction: column; padding: 18px 18px 24px; font-family: Arial, sans-serif; overflow-y: auto; visibility: hidden; }
+.side-menu.open { transform: translateX(0); visibility: visible; }
+.side-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; color: #8b8b96; text-transform: uppercase; letter-spacing: 1px; font-size: 13px; font-weight: 700; }
+.side-close { background: none; border: none; color: #c8c8d2; font-size: 30px; line-height: 1; cursor: pointer; padding: 0 4px; }
+.side-close:hover { color: #fff; }
+.side-nav { display: flex; flex-direction: column; gap: 12px; }
+.side-item { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: none; border: 1.5px solid #3a3a45; border-radius: 12px; color: #e6e6ee; text-decoration: none; font-size: 16px; font-weight: 700; transition: border-color .15s, background .15s, transform .15s; }
+.side-item:hover { border-color: #9a9aa8; background: rgba(255,255,255,0.05); transform: translateX(-2px); }
+.side-item svg, .side-item .side-ico-img { width: 24px; height: 24px; flex-shrink: 0; object-fit: contain; image-rendering: pixelated; }
+body.side-open { overflow: hidden; }
+
+/* ---------- Ranked end screen: pick the winning team ---------- */
+.rkq-win { display: flex; flex-wrap: wrap; gap: 10px; margin: 6px 0 4px; }
+.rkq-dot { display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; background: #0a0a1a; color: #c9c9d1; border: 1px solid #1d263b; border-radius: 10px; font: 700 15px Arial, sans-serif; cursor: pointer; transition: border-color .15s, background .15s; }
+.rkq-dot:hover { border-color: #535966; background: #131322; }
+.rkq-dot i { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #6d7080; box-sizing: border-box; flex-shrink: 0; transition: background .15s, border-color .15s, box-shadow .15s; }
+.rkq-dot.on { border-color: #21d676; color: #fff; }
+.rkq-dot.on i { border-color: #21d676; background: #21d676; box-shadow: inset 0 0 0 3px #0a0a1a; }
+
+/* ---------- Round: ranked tweaks ---------- */
+.rr-head { font-family: 'Minecraft', monospace; font-weight: normal; color: #fff; }
+.ranked-mid { display: none !important; }
+.rkq-btn:hover { transform: none; }
+.rkq-btn:disabled, .rkq-btn.locked { background: #2a2a33; color: #7c7c88; border-color: #3a3a45; filter: none; cursor: not-allowed; box-shadow: none; }
+.rkq-tip { position: relative; display: inline-flex; }
+.rkq-tip .rkq-btn { pointer-events: none; }
+.rkq-tip::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: #0a0a1a; color: #fff; border: 1px solid #1d263b; border-radius: 8px; padding: 6px 10px; font: 700 13px Arial, sans-serif; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .15s; z-index: 5; }
+.rkq-tip:hover::after { opacity: 1; }
+/* ranked kit info: copyable command + server */
+.kit-note { margin: 14px 8px 6px; text-align: center; color: #c9c9d1; font: 600 14px/1.5 Arial, sans-serif; }
+.kit-copy { display: inline-block; padding: 1px 8px; background: #0a0a1a; border: 1px solid #1d263b; border-radius: 6px; color: #fff; font-family: 'Minecraft', monospace; font-weight: normal; cursor: copy; transition: border-color .15s, background .15s; }
+.kit-copy:hover { border-color: #535966; background: #131322; }
+.kit-server { margin: 4px 8px 2px; text-align: center; color: #8b8b96; font: 600 13px Arial, sans-serif; }
+.kit-server .kit-copy { font-size: 14px; }
+/* home page: Ranked button under View rankings */
+.is-home .top-bar-lefts { flex-direction: column; align-items: flex-start; gap: 10px; }
+.rk-mob { display: none; }
+@media (max-width: 700px) {
+  .menu-btn { width: 38px; height: 38px; gap: 4px; }
+  .menu-btn span { width: 18px; }
+  body.acc-in .top-fixed-bar { height: auto; min-height: 80px; padding-top: 8px; padding-bottom: 8px; }
+  body.acc-in .top-bar-right { flex-direction: column; align-items: flex-end; gap: 6px; }
+  .is-home .top-fixed-bar { height: auto; min-height: 80px; padding-top: 8px; padding-bottom: 8px; }
+  /* ranked leaderboard rows */
+  .ranked-row { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; align-items: stretch; min-height: 0; margin: 10px 6px; }
+  .ranked-row > .rank-flag.has-skin { grid-column: 1; grid-row: 1; min-width: 0; padding: 0 26px 0 8px; gap: 4px; }
+  .ranked-row > .rank-flag.has-skin .rank-num { font-size: 22px; width: 24px; }
+  .ranked-row .skin-wrap { width: 48px; min-height: 72px; }
+  .ranked-row > .rk-mob { grid-column: 1; grid-row: 2; display: flex; align-items: center; justify-content: flex-start; gap: 8px; padding: 8px 10px; }
+  .ranked-row > .rk-mob .rk-elo { order: 1; font-size: 15px; }
+  .ranked-row > .rk-mob .rk-streak { order: 2; width: 34px; height: 42px; }
+  .ranked-row > .rk-mob .rk-streak b { font-size: 13px; }
+  .ranked-row > .rk-right { display: none; }
+  .ranked-row > .info { grid-column: 2; grid-row: 1 / span 2; align-self: center; padding: 0 8px 0 4px; }
+  .ranked-row .player-name { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; font-size: 14px; line-height: 1.15; }
+  .ranked-row .rk-amp { display: block; margin: 0; line-height: 1; }
+  .ranked-row .rk-name { overflow-wrap: anywhere; }
+}
+
+/* ---------- Opponent found cinematic ---------- */
+.found-ov { position: fixed; inset: 0; z-index: 3000; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.93); pointer-events: auto; }
+.found-ov.show { display: flex; }
+.found-text { font-family: 'Minecraft', monospace; font-size: clamp(34px, 9vw, 96px); color: #fff; text-align: center; padding: 0 16px; text-shadow: 0 4px 0 rgba(0,0,0,0.6), 0 0 28px rgba(255,255,255,0.25); animation: foundPop .2s cubic-bezier(.2,1.5,.4,1) both, foundGrow var(--dur, 3s) linear .2s forwards; }
+@keyframes foundPop { 0% { transform: scale(0.3); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes foundGrow { from { transform: scale(1); } to { transform: scale(1.12); } }
+/* match found window: neutral team boxes, "vs" in between */
+.mp-solo { display: flex; justify-content: center; }
+.mp-solo .mp-tbox { flex: 0 1 280px; }
+.mp-vs2 { display: flex; align-items: stretch; gap: 10px; }
+.mp-vsword { align-self: center; font-family: 'Minecraft', monospace; font-size: 24px; color: #8b8b96; }
+.mp-tbox { flex: 1; min-width: 0; position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 10px 12px; background: rgba(8,10,28,0.72); border: 2px solid #1d263b; border-radius: 14px; color: #fff; transition: border-color .15s, background .15s; }
+.mp-tbox.link { cursor: pointer; }
+.mp-tbox.link:hover, .mp-tbox.pick:hover { border-color: #535966; background: #131a38; }
+.mp-tbox.sel, .mp-tbox.sel:hover { border-color: #21d676; }
+.mp-dot { position: absolute; top: 10px; right: 10px; width: 20px; height: 20px; border-radius: 50%; border: 2px solid #6d7080; box-sizing: border-box; transition: background .15s, border-color .15s, box-shadow .15s; }
+.mp-tbox.sel .mp-dot { border-color: #21d676; background: #21d676; box-shadow: inset 0 0 0 3px #0a0d20; }
+.mp-tbox.pick { cursor: pointer; }
+.mp-select { margin: -6px 0 12px; font-family: 'Minecraft', monospace; font-size: 20px; color: #21d676; }
+.mp-label { font: 700 12px Arial, sans-serif; letter-spacing: 1px; text-transform: uppercase; color: #8b8b96; }
+.mp-skins { display: flex; gap: 6px; }
+.mp-tbox .hm-skin { width: 56px; height: 86px; }
+.mp-names { display: flex; flex-direction: column; align-items: center; gap: 2px; font-family: 'Minecraft', monospace; font-size: 17px; line-height: 1.2; text-align: center; overflow-wrap: anywhere; }
+.mp-tbox .mp-stats { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 50px; }
+.mp-tbox .rk-elo { font-size: 22px; }
+.mp-tbox .rk-streak { width: 40px; height: 50px; }
+.mp-tbox .rk-streak b { font-size: 14px; }
+.mp-actions { display: flex; justify-content: center; margin-top: 14px; }
+.mp-actions .rkq-btn { display: inline-flex; align-items: center; gap: 8px; }
+.mp-actions .rkq-btn img { width: 20px; height: 20px; object-fit: contain; image-rendering: pixelated; }
+@media (max-width: 700px) {
+  .mp-vs2 { flex-direction: column; gap: 4px; }
+  .mp-vsword { font-size: 20px; }
+  .mp-tbox { padding: 12px 8px 10px; gap: 6px; }
+  .mp-tbox .hm-skin { width: 40px; height: 62px; }
+  .mp-names { font-size: 14px; }
+  .mp-tbox .rk-elo { font-size: 18px; }
+  .mp-tbox .rk-streak { width: 32px; height: 40px; }
+  .mp-tbox .mp-stats { min-height: 40px; }
+}
 </style>
 </head>
 <body>
@@ -828,6 +1127,7 @@ body.drag-pan, body.drag-pan * { cursor: grabbing !important; user-select: none 
       <img class="top-bar-logo" src="https://github.com/Toggelt/nexo-tiers/blob/main/assets/nexo_tiers_title.png?raw=true" alt="Nexo Tiers">
     </a>
     <a class="hero-btn hero-btn-secondary rank-btn" id="rankBtn" href="#/overall"><img src="https://github.com/Toggelt/nexo-tiers/blob/main/assets/trophy.png?raw=true" alt=""><span>View rankings</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    <a class="hero-btn hero-btn-secondary rank-btn" id="rankedHomeBtn" href="#/ranked"><img id="rankedHomeIco" alt=""><span>Ranked 2v2 Mace</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
   </div>
   <div class="top-bar-right">
     <div class="acc-wrap" id="accBellWrap">
@@ -839,22 +1139,34 @@ body.drag-pan, body.drag-pan * { cursor: grabbing !important; user-select: none 
       </svg></button>
       <div class="acc-drop wide" id="accPanel"></div>
     </div>
-    <a class="discord-btn" href="https://discord.gg/BjBjqmRHAD" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
-      <span>Discord</span>
-    </a>
-    <div class="acc-wrap">
-      <button class="hero-btn hero-btn-primary" id="accBtn" type="button"><span>Log in</span></button>
-      <div class="acc-drop" id="accMenu"></div>
+    <div class="acc-wrap" id="accUserWrap">
+      <button class="hero-btn hero-btn-primary" id="accBtn" type="button" aria-haspopup="menu" aria-expanded="false"><span>Log in</span></button>
+      <div class="acc-drop" id="accMenu" role="menu"></div>
     </div>
+    <div class="ranked-top" id="rankedTop" style="display:none !important"></div>
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sideMenu"><span></span><span></span><span></span></button>
   </div>
 </div>
 
+
+<div class="side-overlay" id="sideOverlay"></div>
+<aside class="side-menu" id="sideMenu" aria-hidden="true">
+  <div class="side-head"><span>Menu</span><button class="side-close" id="sideClose" type="button" aria-label="Close menu">&times;</button></div>
+  <nav class="side-nav">
+    <a class="side-item" href="#/home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/><path d="M10 20v-6h4v6"/></svg><span>Home</span></a>
+    <a class="side-item" href="#/overall"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3"/><path d="M7 5H4v2a3 3 0 0 0 3 3"/></svg><span>Tierlist</span></a>
+    <a class="side-item" href="#/ranked"><img class="side-ico-img" id="sideMaceIco" alt=""><span>Ranked 2v2 Mace</span></a>
+    <a class="side-item" href="https://discord.gg/BjBjqmRHAD" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg><span>Discord</span></a>
+  </nav>
+</aside>
+
 <div class="container">
+  <div class="ranked-mid" id="rankedMid"></div>
   <div class="tab-bar" id="tabBar"></div>
   <div class="top-bar" id="topBar">
     <label class="retired-toggle" id="retiredToggle" style="display:none"><input type="checkbox" id="retiredToggleInput"><span class="rt-track"><span class="rt-thumb"></span></span><span class="rt-text">Count retired tiers</span></label>
     <button class="info-btn ruleset-btn" type="button"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><line x1="9" y1="12" x2="16" y2="12"/><line x1="9" y1="16" x2="16" y2="16"/></svg>Tierlist Ruleset</button>
+    <button class="info-btn ranked-rules-btn" id="rkRulesBtn" type="button"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><line x1="9" y1="12" x2="16" y2="12"/><line x1="9" y1="16" x2="16" y2="16"/></svg>Rules</button>
     <div class="info-btn-wrapper">
       <button class="info-btn" id="infoBtn"><svg class="info-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16.5"/><circle cx="12" cy="7.8" r="0.7" fill="currentColor" stroke="none"/></svg>Info</button>
       <div class="info-tooltip" id="infoTooltip">Loading...</div>
@@ -901,10 +1213,38 @@ body.drag-pan, body.drag-pan * { cursor: grabbing !important; user-select: none 
     <div class="header-player">Player</div>
     <div class="header-tiers">Tiers</div>
   </div>
+  <div class="rk-queue" id="rkQueue" style="display:none"></div>
   <div id="list">Loading...</div>
   <button id="toggleBtn" class="toggle-btn" style="display:none;">Show more</button>
 </div>
 
+<div class="found-ov" id="foundOverlay"><div class="found-text" id="foundText">Opponent found</div></div>
+<div class="modal-overlay" id="matchOverlay"><div class="modal-box team-box no-glow match-box" id="matchBox"></div></div>
+<div class="modal-overlay" id="rulesOverlay">
+  <div class="modal-box team-box no-glow rules-box">
+    <button class="modal-close" id="rulesClose">✕</button>
+    <h2 class="rules-title">Ranked 2v2 Mace Rules</h2>
+    <div id="rankedRulesBody">
+      <p><span class="rr-head">Info:</span> This is an <b>Open Beta</b> so changes will be made along the way.<br>You cannot queue into the same team more than 2 times within a 7 day period, the system prevents it.</p>
+      <p class="rr-head">Rules:</p>
+      <ul>
+        <li>Accountsharing, Alting, Boosting, Cheating, faking results, and dodging are <b>forbidden</b> and will be punished</li>
+        <li>No substitute Teammates. You may only queue with your registered teammate</li>
+      </ul>
+      <p>To register join our <a class="rk-link" href="https://discord.gg/BjBjqmRHAD" target="_blank" rel="noopener">discord</a>.</p>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="teamOverlay">
+  <div class="modal-box team-box no-glow">
+    <button class="modal-close" id="teamClose">✕</button>
+    <div class="tm-top"><div class="tm-tabs">
+      <button class="tm-tab active" data-v="stats" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m19 9-5 5-4-4-3 3"/></svg>Stats</button>
+      <button class="tm-tab" data-v="history" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>Match History</button>
+    </div></div>
+    <div id="teamBody"></div>
+  </div>
+</div>
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal-box">
     <span class="inactive-pill" id="modalInactive" style="display:none">Inactive</span>
@@ -921,6 +1261,7 @@ body.drag-pan, body.drag-pan * { cursor: grabbing !important; user-select: none 
     <div class="position-card" id="modalPositionCard"></div>
     <div class="modal-section-label">Tiers</div>
     <div class="tiers-row" id="tiersRow"></div>
+    <div class="rk-card" id="rkCard" style="display:none"><div class="modal-section-label rk-label"><img id="rkLabelImg" alt="">Ranked 2v2 Mace</div><div id="rkBoxes"></div></div>
   </div>
 </div>
 <div class="global-mini-tip" id="globalMiniTip"></div>
@@ -1072,7 +1413,7 @@ function parseRoute() {
   const p = window.location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
   let board = 'Home', profile = null;
   if (p[0] === 'player' && p[1]) profile = decodeURIComponent(p[1]);
-  else if (p[0]) { const seg = p[0].toLowerCase(); const k = Object.keys(LEADERBOARDS).find(k => k.toLowerCase() === seg); if (k) board = k; }
+  else if (p[0]) { const seg = p[0].toLowerCase(); const k = Object.keys(LEADERBOARDS).find(k => k.toLowerCase() === seg); if (k) board = k; if (seg === 'ranked') board = 'Ranked'; }
   const kit = board === 'Mace' && !profile && p[1] === 'kit';
   return { board, profile, kit };
 }
@@ -1103,6 +1444,7 @@ window.addEventListener('popstate', handleRoute);
 
 function renderTabBar() {
   tabBar.innerHTML = "";
+  if (currentBoard === 'Ranked') { tabBar.innerHTML = `<div class="ranked-title"><img src="${MACE_ICON_URL}" alt="">Ranked 2v2 Mace</div>`; return; }
   Object.values(LEADERBOARDS).forEach(board => {
     const el = document.createElement("div");
     el.className = "tab-button" + (board.key === currentBoard && !currentProfileName ? " active" : "");
@@ -1171,6 +1513,9 @@ function showMiniTip(wrap) {
   globalMiniTip.innerHTML = isNaN(cT)
     ? `<div class="tip-tier">No Tier</div>`
     : generateTierTooltipHTML(wrap.dataset.mode, cT, wrap.dataset.currentPlus === '1', wrap.dataset.peakTier ? parseInt(wrap.dataset.peakTier) : null, wrap.dataset.peakPlus === '1', wrap.dataset.state, wrap.dataset.pts !== undefined ? parseInt(wrap.dataset.pts) : null);
+  placeMiniTip(wrap);
+}
+function placeMiniTip(wrap) {
   globalMiniTip.style.display = "block";
   const rect = wrap.getBoundingClientRect();
   const cx = rect.left + rect.width / 2, half = globalMiniTip.offsetWidth / 2, edge = 8;
@@ -1317,7 +1662,51 @@ const SPEAR_KIT_ITEMS = [
   { slot: 43, name: "Wind Charge", icon: "wind_charge", count: 64 },
   { slot: 44, name: "Shield", icon: "shield", enchants: ["Unbreaking III"] }
 ];
-const kitItemsFor = kit => kit === 'Sword' ? SWORD_KIT_ITEMS : kit === 'Spear' ? SPEAR_KIT_ITEMS : KIT_ITEMS;
+
+// Ranked 2v2 Mace kit (armour + offhand in the top row, like the in-game inventory)
+const RANKED_KIT_ITEMS = [
+  { slot: 2, name: "Netherite Helmet", icon: "helmet", enchants: ["Protection IV", "Respiration III", "Aqua Affinity", "Unbreaking III", "Mending"], slotLabel: "When on Head:", attributes: ["+3 Armor", "+3 Armor Toughness", "+10% Knockback Resistance"] },
+  { slot: 3, name: "Netherite Chestplate", icon: "chestplate", enchants: ["Protection IV", "Unbreaking III", "Mending"], slotLabel: "When on Body:", attributes: ["+8 Armor", "+3 Armor Toughness", "+10% Knockback Resistance"] },
+  { slot: 4, name: "Netherite Leggings", icon: "leggings", enchants: ["Protection IV", "Swift Sneak III", "Unbreaking III", "Mending"], slotLabel: "When on Legs:", attributes: ["+6 Armor", "+3 Armor Toughness", "+10% Knockback Resistance"] },
+  { slot: 5, name: "Netherite Boots", icon: "boots", enchants: ["Protection IV", "Feather Falling IV", "Depth Strider III", "Unbreaking III", "Mending"], slotLabel: "When on Feet:", attributes: ["+3 Armor", "+3 Armor Toughness", "+10% Knockback Resistance"] },
+  { slot: 6, name: "Totem of Undying", icon: "totem", rarity: "uncommon" },
+  // row 1
+  { slot: 9, name: "Ender Pearl", icon: "ender_pearl", count: 16 },
+  { slot: 10, name: "Ender Pearl", icon: "ender_pearl", count: 16 },
+  { slot: 11, name: "Breeze Rod", icon: "breeze_rod", count: 64 },
+  { slot: 12, name: "Totem of Undying", icon: "totem", rarity: "uncommon" },
+  { slot: 13, name: "Totem of Undying", icon: "totem", rarity: "uncommon" },
+  { slot: 14, name: "Totem of Undying", icon: "totem", rarity: "uncommon" },
+  { slot: 15, ...STRENGTH },
+  { slot: 16, ...STRENGTH },
+  { slot: 17, name: "Bottle o' Enchanting", icon: "xp_bottle", rarity: "uncommon", glint: true, count: 64 },
+  // row 2
+  { slot: 18, name: "Ender Pearl", icon: "ender_pearl", count: 16 },
+  { slot: 19, name: "Ender Pearl", icon: "ender_pearl", count: 16 },
+  { slot: 20, name: "Breeze Rod", icon: "breeze_rod", count: 64 },
+  { slot: 21, name: "Totem of Undying", icon: "totem", rarity: "uncommon" },
+  { slot: 22, name: "Totem of Undying", icon: "totem", rarity: "uncommon" },
+  { slot: 23, name: "Totem of Undying", icon: "totem", rarity: "uncommon" },
+  { slot: 24, ...STRENGTH },
+  { slot: 25, ...STRENGTH },
+  { slot: 26, name: "Bottle o' Enchanting", icon: "xp_bottle", rarity: "uncommon", glint: true, count: 64 },
+  // row 3
+  { slot: 27, name: "Ender Pearl", icon: "ender_pearl", count: 16 },
+  { slot: 28, name: "Ender Pearl", icon: "ender_pearl", count: 16 },
+  ...[29, 30, 31, 32, 33, 34].map(slot => ({ slot, ...STRENGTH })),
+  { slot: 35, name: "Golden Apple", icon: "golden_apple", rarity: "uncommon", count: 64 },
+  // hotbar
+  { slot: 36, name: "Netherite Sword", icon: "sword", enchants: ["Sharpness V", "Knockback I", "Unbreaking III"], slotLabel: WEAPON, attributes: ["&2 8 Attack Damage", "&2 1.6 Attack Speed"] },
+  { slot: 37, name: "Ender Pearl", icon: "ender_pearl", count: 16 },
+  { slot: 38, name: "Water Bucket", icon: "bucket" },
+  { slot: 39, name: "Cobweb", icon: "cobweb", count: 32 },
+  { slot: 40, name: "Golden Apple", icon: "golden_apple", rarity: "uncommon", count: 64 },
+  { slot: 41, name: "Mace", icon: "mace", rarity: "epic", enchants: ["Wind Burst II", "Density V", "Unbreaking III"], slotLabel: WEAPON, attributes: ["&2 6 Attack Damage", "&2 0.6 Attack Speed"] },
+  { slot: 42, name: "Wind Charge", icon: "wind_charge", count: 64 },
+  { slot: 43, name: "Netherite Axe", icon: "axe", enchants: ["Sharpness V", "Unbreaking III"], slotLabel: WEAPON, attributes: ["&2 10 Attack Damage", "&2 1 Attack Speed"] },
+  { slot: 44, name: "Shield", icon: "shield", enchants: ["Unbreaking III", "Mending"] }
+];
+const kitItemsFor = kit => kit === 'Sword' ? SWORD_KIT_ITEMS : kit === 'Spear' ? SPEAR_KIT_ITEMS : kit === 'Ranked' ? RANKED_KIT_ITEMS : KIT_ITEMS;
 
 const MC_COLORS = { 0:'#000000',1:'#0000AA',2:'#00AA00',3:'#00AAAA',4:'#AA0000',5:'#AA00AA',6:'#FFAA00',7:'#AAAAAA',8:'#555555',9:'#5555FF',a:'#55FF55',b:'#55FFFF',c:'#FF5555',d:'#FF55FF',e:'#FFFF55',f:'#FFFFFF' };
 const RARITY_COLORS = { common: '#FFFFFF', uncommon: '#FFFF55', rare: '#55FFFF', epic: '#FF55FF' };
@@ -1498,6 +1887,23 @@ function swordKitHtml(withHeader = true, invId = 'kitInventory') {
   </div>`;
 }
 
+function rankedKitHtml(withHeader = true, invId = 'kitInventory') {
+  return `<div class="kit-pane">
+    ${withHeader ? `<div class="kit-header"><img src="${MACE_ICON_URL}" alt="Ranked"><span>Ranked 2v2 Mace Kit</span></div>` : ''}
+    <div id="${invId}"></div>
+    <div class="kit-note">To get the kit do <span class="kit-copy" data-copy="/profile TestingCheats" title="Click to copy">/profile TestingCheats</span> and copy the 5th kit labeled "Ranked 2v2 Mace"</div>
+    <div class="kit-server">Server: <span class="kit-copy" data-copy="mcpvp.club" title="Click to copy">mcpvp.club</span></div>
+  </div>`;
+}
+document.addEventListener('click', e => {
+  const c = e.target.closest('.kit-copy'); if (!c) return;
+  e.stopPropagation();
+  const txt = c.dataset.copy, orig = c.textContent;
+  const done = () => { c.textContent = 'Copied!'; setTimeout(() => { c.textContent = orig; }, 1200); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, () => {});
+  else { const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (x) {} ta.remove(); }
+}, true);
+
 function spearKitHtml(withHeader = true, invId = 'kitInventory') {
   return `<div class="kit-pane">
     ${withHeader ? `<div class="kit-header"><img src="${SPEAR_ICON_URL}" alt="Spear"><span>Spear Kit</span></div>` : ''}
@@ -1580,6 +1986,11 @@ function applyView() {
   if (searchWrapper.parentElement !== searchTarget) { searchTarget.appendChild(searchWrapper); closeSearch(); }
   if (!home) document.getElementById('titlesCard').classList.remove('in-view');
   document.body.classList.toggle('is-home', home);
+  document.body.classList.toggle('is-ranked', currentBoard === 'Ranked');
+  renderRankedPanel();
+  const sl = document.querySelector('.search-label'), si = document.getElementById('searchInput');
+  if (sl) sl.textContent = currentBoard === 'Ranked' ? 'Team search' : 'Player search';
+  if (si) si.placeholder = currentBoard === 'Ranked' ? 'Team search' : 'Player search';
   document.querySelector('.container').classList.toggle('is-home-view', home);
   homeView.style.display = home ? 'block' : 'none';
   tabBar.style.display = home ? 'none' : '';
@@ -1603,6 +2014,8 @@ function renderHome() {
 }
 
 function renderGamemodes() {
+  const gmCols = [4, 5, 3, 6, 2].find(d => SUB_BOARDS.length % d === 0) || 4;   // whole rows that fill the container
+  document.getElementById("gmGrid").style.setProperty('--gm-cols', gmCols);
   document.getElementById("gmGrid").innerHTML = SUB_BOARDS.map(key => {
     const b = LEADERBOARDS[key];
     return `<a class="gm-card" href="#/${key.toLowerCase()}"><div class="gm-icon"><img src="${b.icon}" alt="${b.label}"></div><span class="gm-name">${b.label}</span></a>`;
@@ -1672,6 +2085,7 @@ function openFromList(p) { currentProfileName = p.name; navigateTo(currentBoard,
 function render() {
   applyView();
   if (currentBoard === 'Home') { renderHome(); return; }
+  if (currentBoard === 'Ranked') { renderInfoTooltip(); renderRanked(); return; }
   const isOverall = currentBoard === "Overall";
   document.getElementById('retiredToggle').style.display = isOverall ? '' : 'none';
   const prevScroll = list.querySelector('.tier-columns')?.scrollLeft || 0;
@@ -1749,6 +2163,366 @@ function render() {
   }
 }
 
+// ---------- Ranked Mace 2v2 ----------
+// Button: top bar of the home page (next to "View rankings") and top middle of the overall / tierlist pages.
+const rankedBtnHtml = `<a class="ranked-btn rb-gold" href="#/ranked"><span class="rb-big">Ranked</span><span class="rb-small"><img src="${MACE_ICON_URL}" alt="">2v2 Mace</span></a>`;
+const rankedBtnsHtml = rankedBtnHtml + '<a class="ranked-btn rb-green" href="#/overall"><span class="rb-big">Tierlist</span><span class="rb-small">Regular Tiers</span></a>';
+document.getElementById('rankedMid').innerHTML = '';
+document.getElementById('rankedHomeIco').src = MACE_ICON_URL;
+document.getElementById('rankedTop').innerHTML = rankedBtnsHtml;
+
+const FLAME_URL = 'https://raw.githubusercontent.com/Toggelt/nexo-tiers/main/assets/2ac6391d8ca0f7adbe7efbb94529f5f5-1.png.png';
+const rkEsc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+let rankedSig = '', rankedTeams = [];
+const rkFetch = async path => { const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, { headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY } }); const b = await res.json(); if (!res.ok) throw new Error(b.message || res.status); return b; };
+async function renderRanked(force = true) {
+  document.getElementById('retiredToggle').style.display = 'none';
+  overallHeaders.style.display = 'none';
+  toggleBtn.style.display = 'none';
+  let rows;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/ranked_teams?select=id,name1,name2,teamname,elo,winstreak&order=elo.desc,id.asc`, { headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY } });
+    rows = await res.json();
+    if (!res.ok) throw new Error(rows.message || res.status);
+  } catch (e) {
+    if (currentBoard === 'Ranked') list.innerHTML = `<div style="padding:30px;text-align:center;color:#ff6b6b;">Error loading ranked teams<br><small style="color:#8b8b96">${rkEsc(e.message)} (has supabase_ranked.sql been run?)</small></div>`;
+    return;
+  }
+  if (currentBoard !== 'Ranked') return;
+  const sig = JSON.stringify(rows);
+  if (!force && sig === rankedSig && list.children.length) return;
+  rankedSig = sig;
+  rankedTeams = rows;
+  rkQPoll();
+  const first = lastAnimBoard !== 'Ranked';
+  lastAnimBoard = 'Ranked';
+  list.innerHTML = rows.length ? '' : '<div style="text-align:center;padding:30px;color:#8b8b96;">No ranked teams yet</div>';
+  rows.forEach((t, i) => {
+    const rank = i + 1, streak = Number(t.winstreak) || 0;
+    const div = document.createElement('div');
+    div.className = `player ranked-row ${rankClass(rank)}`;
+    div.innerHTML = `
+      <div class="rank-flag has-skin"><span class="rank-num">${rank}.</span><div class="skin-wrap">${skinImg(t.name1, 160)}</div><div class="skin-wrap">${skinImg(t.name2, 160)}</div></div><div class="rk-mob"><span class="rk-elo">[${Math.round(Number(t.elo))}]</span>${streak >= 1 ? `<span class="rk-streak" data-streak="${streak}"><img src="${FLAME_URL}" alt=""><b>${streak}</b></span>` : ''}</div>
+      <div class="info"><div class="player-name"><span class="rk-name">${rkEsc(t.name1)}</span><span class="rk-amp">&amp;</span><span class="rk-name">${rkEsc(t.name2)}</span></div></div>
+      <div class="rk-right">${streak >= 1 ? `<span class="rk-streak" data-streak="${streak}"><img src="${FLAME_URL}" alt=""><b>${streak}</b></span>` : ''}<span class="rk-elo">[${Math.round(Number(t.elo))}]</span></div>`;
+    if (first) { div.classList.add('pop'); div.style.animationDelay = (i * 70) + 'ms'; }
+    div.addEventListener('click', () => openTeamProfile(t));
+    list.appendChild(div);
+  });
+}
+
+
+// ---------- Flame tooltip ----------
+list.addEventListener('mouseover', e => {
+  const f = e.target.closest('.rk-streak');
+  if (!f) return;
+  globalMiniTip.style.animation = 'none'; void globalMiniTip.offsetWidth; globalMiniTip.style.animation = '';
+  globalMiniTip.innerHTML = `<div class="tip-tier">Winstreak: ${f.dataset.streak}</div>`;
+  placeMiniTip(f);
+});
+
+// ---------- Team profile ----------
+const tmEl = document.getElementById('teamOverlay'), tmBody = document.getElementById('teamBody');
+let tmTeam = null, tmView = 'stats', tmMatches = null, tmErr = '';
+const playerByName = n => allPlayers.find(p => p.name.toLowerCase() === String(n).toLowerCase());
+async function openTeamProfile(team) {
+  tmTeam = team; tmView = 'stats'; tmMatches = null; tmErr = '';
+  globalMiniTip.style.display = 'none';
+  tmEl.classList.add('active');
+  renderTeam();
+  if (!rankedTeams.length) { try { rankedTeams = await rkFetch('ranked_teams?select=id,name1,name2,teamname,elo,winstreak&order=elo.desc,id.asc'); } catch (e) {} }
+  const enc = encodeURIComponent(team.teamname);
+  try { tmMatches = await rkFetch(`ranked_matches?select=id,team1,team2,team1_score,team2_score,elo_change,streak_bonus&or=(team1.eq.${enc},team2.eq.${enc})&order=id.desc&limit=1000`); }
+  catch (e) { tmMatches = []; tmErr = e.message; }
+  if (tmTeam === team) renderTeam();
+}
+function tmSkins(t) { return `<span class="hm-skin">${skinImg(t.name1, 120)}</span><span class="hm-skin">${skinImg(t.name2, 120)}</span>`; }
+function tmDelta(won, tied, m, side) {
+  if (tied || m.elo_change == null) return `<span class="hm-delta ${side}">-</span>`;
+  const ch = Math.round(Number(m.elo_change)), b = Number(m.streak_bonus) || 0;
+  const gain = `<span class="hm-gain">+${ch}</span>`, fl = b ? `<span class="hm-flame"><img src="${FLAME_URL}" alt=""><b>+${b}</b></span>` : '';
+  return won ? `<span class="hm-delta ${side}">${side === 'l' ? fl + gain : gain + fl}</span>` : `<span class="hm-delta ${side}"><span class="hm-loss">&minus;${ch}</span></span>`;
+}
+function tmHistoryRow(m) {
+  const mine1 = m.team1 === tmTeam.teamname;
+  const opp = rankedTeams.find(t => t.teamname === (mine1 ? m.team2 : m.team1)) || { name1: '?', name2: '?' };
+  const my = mine1 ? m.team1_score : m.team2_score, op = mine1 ? m.team2_score : m.team1_score;
+  const names = t => `<span class="hm-names"><span>${rkEsc(t.name1)}</span><span>${rkEsc(t.name2)}</span></span>`;
+  return `<div class="hm-row"><div class="hm-team" data-team="${rkEsc(tmTeam.teamname)}">${tmSkins(tmTeam)}${names(tmTeam)}</div>
+    <div class="hm-mid">${tmDelta(my > op, my === op, m, 'l')}<span class="hm-score">${my > op ? '1 - 0' : my < op ? '0 - 1' : '-'}</span>${tmDelta(op > my, my === op, m, 'r')}</div>
+    <div class="hm-team right"${opp.teamname ? ` data-team="${rkEsc(opp.teamname)}"` : ''}>${names(opp)}${tmSkins(opp)}</div></div>`;
+}
+// Win % color: dark purple (0-25) -> red (25-40) -> light green (40-60) -> strong green (60-90) -> gold (90+), blended smoothly in HSL
+const WIN_STOPS = [[0, [270, 70, 40]], [20, [270, 70, 40]], [30, [354, 80, 56]], [36, [354, 80, 56]], [44, [140, 70, 72]], [60, [140, 70, 72]], [87, [142, 85, 45]], [93, [44, 100, 60]], [100, [44, 100, 60]]];
+function winPctColor(pct) {
+  let i = 1;
+  while (i < WIN_STOPS.length - 1 && pct > WIN_STOPS[i][0]) i++;
+  const [p0, a] = WIN_STOPS[i - 1], [p1, b] = WIN_STOPS[i];
+  const t = Math.min(1, Math.max(0, (pct - p0) / (p1 - p0)));
+  const dh = ((b[0] - a[0] + 540) % 360) - 180;
+  return `hsl(${((a[0] + dh * t) % 360 + 360) % 360} ${a[1] + (b[1] - a[1]) * t}% ${a[2] + (b[2] - a[2]) * t}%)`;
+}
+function renderTeam() {
+  const t = tmTeam, m = tmMatches;
+  document.querySelectorAll('.tm-tab').forEach(b => b.classList.toggle('active', b.dataset.v === tmView));
+  if (tmView === 'history') {
+    tmBody.innerHTML = tmErr ? `<div class="tm-empty">${rkEsc(tmErr)}</div>` : !m ? '<div class="tm-empty">Loading...</div>' : m.length ? m.map(tmHistoryRow).join('') : '<div class="tm-empty">No matches played yet</div>';
+    return;
+  }
+  const plr = n => `<div class="tm-player${playerByName(n) ? ' link' : ''}" data-name="${rkEsc(n)}"><img src="${avatarUrl(n, 40)}" alt="" onerror="this.style.visibility='hidden'"><span>${rkEsc(n)}</span></div>`;
+  let w = 0, l = 0;
+  (m || []).forEach(x => { const my = x.team1 === t.teamname ? x.team1_score : x.team2_score, op = x.team1 === t.teamname ? x.team2_score : x.team1_score; if (my > op) w++; else if (my < op) l++; });
+  const stat = (label, v, c) => `<div class="tm-stat"><small>${label}</small><b${c ? ` style="color:${c}"` : ''}>${v}</b></div>`;
+  const pct = m && (w + l) ? w / (w + l) * 100 : null;
+  tmBody.innerHTML = `<div class="tm-stats-view"><div class="tm-players">${plr(t.name1)}${plr(t.name2)}</div>
+    <div class="tm-stats">${stat('Wins', m ? w : '...')}${stat('Losses', m ? l : '...')}${stat('Win %', !m ? '...' : pct != null ? Math.round(pct * 10) / 10 + '%' : 'N/A', pct != null ? winPctColor(pct) : '')}</div></div>`;
+}
+document.querySelectorAll('.tm-tab').forEach(b => b.addEventListener('click', () => { tmView = b.dataset.v; renderTeam(); }));
+tmBody.addEventListener('click', e => {
+  const tm = e.target.closest('.hm-team[data-team]');
+  if (tm) {
+    if (tm.dataset.team === tmTeam.teamname) { tmView = 'stats'; renderTeam(); }
+    else { const t = rankedTeams.find(x => x.teamname === tm.dataset.team); if (t) openTeamProfile(t); }
+    return;
+  }
+  const el = e.target.closest('.tm-player.link'); const p = el && playerByName(el.dataset.name); if (p) openFromList(p);
+});
+const closeTeam = () => { tmEl.classList.remove('active'); tmTeam = null; };
+document.getElementById('teamClose').addEventListener('click', closeTeam);
+tmEl.addEventListener('click', e => { if (e.target === tmEl) closeTeam(); });
+
+// ---------- Ranked box in the player profile ----------
+document.getElementById('rkLabelImg').src = MACE_ICON_URL;
+async function renderProfileRanked(player) {
+  const label = document.getElementById('rkCard'), box = document.getElementById('rkBoxes');
+  label.style.display = 'none'; box.innerHTML = '';
+  let teams;
+  try { teams = await rkFetch('ranked_teams?select=id,name1,name2,teamname,elo,winstreak&order=elo.desc,id.asc'); } catch (e) { return; }
+  rankedTeams = teams;
+  const n = player.name.toLowerCase();
+  if ((currentProfileName || '').toLowerCase() !== n) return;
+  const mine = teams.map((t, i) => ({ t, rank: i + 1 })).filter(x => x.t.name1.toLowerCase() === n || x.t.name2.toLowerCase() === n);
+  if (!mine.length) return;
+  label.style.display = 'block';
+  box.innerHTML = mine.map(({ t, rank }) => {
+    const mate = t.name1.toLowerCase() === n ? t.name2 : t.name1;
+    return `<div class="rkp-box"><span class="rkp-rank">#${rank}</span><span class="rkp-elo">[${Math.round(Number(t.elo))}]</span><span class="rkp-with">with</span><span class="rkp-mate${playerByName(mate) ? ' link' : ''}" data-name="${rkEsc(mate)}">${rkEsc(mate)}</span></div>`;
+  }).join('');
+}
+document.getElementById('rkBoxes').addEventListener('click', e => { const el = e.target.closest('.rkp-mate.link'); const p = el && playerByName(el.dataset.name); if (p) openFromList(p); });
+
+
+// ---------- Ranked queue ----------
+let rkQ = { state: 'none' }, rkQBusy = false, rkQTimer = null, rkJoining = false;
+const rkAudio = new Audio('https://raw.githubusercontent.com/Toggelt/nexo-tiers/main/assets/Beacon_power1.ogg.mp3');
+rkAudio.preload = 'auto';
+const rkSound = () => { try { rkAudio.currentTime = 0; rkAudio.play().catch(() => {}); } catch (e) {} };
+// unlock audio on the click that joins the queue, so the match sound can play later even when the tab is in the background
+const rkAudioPrime = () => { try { rkAudio.muted = true; rkAudio.play().then(() => { rkAudio.pause(); rkAudio.currentTime = 0; rkAudio.muted = false; }).catch(() => { rkAudio.muted = false; }); } catch (e) {} };
+async function rkQCall(fn, args) {
+  if (!sb || !accSession) return;
+  if (fn === 'ranked_queue_join' && !RANKED_QUEUE_ENABLED) return;
+  rkQBusy = true; rkJoining = fn === 'ranked_queue_join'; if (rkJoining) rkAudioPrime(); renderRankedPanel();
+  const { data, error } = await sb.rpc(fn, args);
+  rkQBusy = false;
+  if (error) {
+    const t = (error.message || '') + (error.code || '');
+    accToast(t.includes('bad_score') ? 'Select which team won.' : t.includes('expired') ? 'The accept time ran out.' : t.includes('in_match') ? 'You are already in a match.' : t.includes('no_team') ? 'You are not registered yet.' : 'Queue unavailable. Has supabase_ranked_queue.sql been run?');
+    rkQ.state = rkQ.state === 'none' ? 'error' : rkQ.state;
+  } else rkQApply(data);
+  rkJoining = false;
+  renderRankedPanel();
+}
+let rkFound = false, rkMyTeam = null;
+async function rkRefreshTeams() {
+  try { rankedTeams = await rkFetch('ranked_teams?select=id,name1,name2,teamname,elo,winstreak&order=elo.desc,id.asc'); rkMatchSig = ''; renderMatchPopup(); } catch (e) {}
+}
+let rkTeamFetchAt = 0;
+function rkMeNames() {
+  const out = [];
+  const add = v => { v = String(v || '').trim().toLowerCase(); if (v && !out.includes(v)) out.push(v); };
+  add(rkQ.me); try { add(accProfile && accProfile.mc_username); } catch (e) {}
+  try { const u = accSession && accSession.user; if (u) { add(u.user_metadata && u.user_metadata.mc_username); add(String(u.email || '').split('@')[0]); } } catch (e) {}
+  return out;
+}
+function rkOwnTeam() {
+  const names = rkMeNames();
+  const hasMe = t => t && names.some(n => String(t.name1 || '').toLowerCase() === n || String(t.name2 || '').toLowerCase() === n);
+  const byMe = rankedTeams.find(hasMe);
+  if (byMe) { try { localStorage.setItem('rkMyTeam', JSON.stringify({ name1: byMe.name1, name2: byMe.name2, teamname: byMe.teamname })); } catch (e) {} return byMe; }
+  let c = rkMyTeam || rkQ.team || rkQ.my_team || rkQ.mine || null;
+  if (!c) { try { c = JSON.parse(localStorage.getItem('rkMyTeam') || 'null'); } catch (e) {} }
+  if (c) return rankedTeams.find(t => (c.teamname && t.teamname === c.teamname) || (t.name1 === c.name1 && t.name2 === c.name2)) || c;
+  // team list missing or not containing us yet: reload it (at most every 5s)
+  if (Date.now() - rkTeamFetchAt > 30000) { rkTeamFetchAt = Date.now(); rkRefreshTeams(); }
+  return {};
+}
+const rkBoth = {};
+function rkUnlockLeft() {
+  if (!(rkQ.accepted && rkQ.opp_accepted)) return 60;
+  const k = 'rkBoth:' + rkQ.pairing_id;
+  let t = rkBoth[k];
+  if (!t) { try { t = Number(localStorage.getItem(k)) || 0; } catch (e) {} if (!t) { t = Date.now(); try { localStorage.setItem(k, String(t)); } catch (e) {} } rkBoth[k] = t; }
+  return Math.max(0, 60 - Math.floor((Date.now() - t) / 1000));
+}
+function openRankedKitPop() {
+  document.getElementById('rkKitPop')?.remove();
+  const pop = document.createElement('div');
+  pop.id = 'rkKitPop'; pop.className = 'info-tooltip overall-tooltip kit-open kit-pop active';
+  pop.innerHTML = '<button class="kit-close" type="button" aria-label="Close">&times;</button>' + rankedKitHtml(true, 'rkKitPopInv');
+  document.body.appendChild(pop);
+  const close = () => { pop.remove(); document.removeEventListener('click', outside, true); };
+  const outside = e => { if (!pop.contains(e.target)) { e.stopPropagation(); close(); } };
+  pop.querySelector('.kit-close').onclick = close;
+  setTimeout(() => document.addEventListener('click', outside, true), 0);
+  const inv = document.getElementById('rkKitPopInv');
+  if (inv) { try { renderInventory(inv, RANKED_KIT_ITEMS); } catch (err) { inv.textContent = 'Kit failed to load'; } }
+}
+function rkShowFound() {
+  const ov = document.getElementById('foundOverlay');
+  const dur = (isFinite(rkAudio.duration) && rkAudio.duration > 0) ? rkAudio.duration : 3;
+  rkFound = true;
+  ov.classList.remove('show'); void ov.offsetWidth;
+  ov.style.setProperty('--dur', dur + 's');
+  ov.classList.add('show');
+  let done = false;
+  const end = () => { if (done) return; done = true; rkAudio.removeEventListener('ended', end); ov.classList.remove('show'); rkFound = false; renderMatchPopup(); };
+  rkAudio.addEventListener('ended', end);
+  setTimeout(end, dur * 1000 + 500);
+}
+function rkQApply(d) {
+  if (!d) return;
+  if (d.state === 'matched') d.deadline = Date.now() + (d.seconds_left || 0) * 1000;
+  if (d.team) { rkMyTeam = d.team; try { localStorage.setItem('rkMyTeam', JSON.stringify(d.team)); } catch (e) {} }
+  if (d.state === 'matched' && rkQ.state !== 'matched') rkRefreshTeams();
+  if ((rkQ.state === 'queued' || rkJoining) && d.state === 'matched') { rkSound(); rkShowFound(); }
+  if (d.me && accProfile && accProfile.__fb) { accProfile.mc_username = d.me; accUpdateUI(); }
+  rkQ = d;
+}
+async function rkQPoll() {
+  if (!sb || !accSession || rkQBusy) return;
+  if (Date.now() - rkQLast < 1000) return; rkQLast = Date.now();
+  const { data, error } = await sb.rpc('ranked_queue_status');
+  if (error) { if (rkQ.state === 'none') rkQ = { state: 'error' }; } else rkQApply(data);
+  renderRankedPanel();
+}
+function rkQSync() {
+  if (!accSession) { rkQ = { state: 'none' }; renderRankedPanel(); return; }
+  rkQPoll();
+}
+let rkTick = 0, rkSyncKey = null, rkQLast = 0;
+function rkOnTick() {
+  rkTick++;
+  if (!accSession) return;
+  const inQ = rkQ.state === 'queued' || rkQ.state === 'matched';
+  if (inQ) { if (rkQ.state === 'matched' || rkTick % 2 === 0) rkQPoll(); }
+  else if (currentBoard === 'Ranked' && !document.hidden && rkTick % 5 === 0) rkQPoll();
+}
+try { // a worker timer is not throttled in background tabs, so a found match is noticed (and the sound plays) even when tabbed out
+  const w = new Worker(URL.createObjectURL(new Blob(['setInterval(function(){postMessage(0)},2000)'], { type: 'text/javascript' })));
+  w.onmessage = rkOnTick;
+} catch (e) { setInterval(rkOnTick, 2000); }
+setInterval(() => {
+  const tq = document.getElementById('rkQTime'); if (tq && rkQ.state === 'queued') tq.textContent = rkElapsed();
+  const ta = document.getElementById('rkAccTime'); if (ta && rkQ.state === 'matched') ta.textContent = Math.max(0, Math.ceil((rkQ.deadline - Date.now()) / 1000));
+  if (rkQ.state === 'matched' && rkQ.accepted && rkQ.opp_accepted && rkUnlockLeft() === 0) renderMatchPopup();
+}, 1000);
+const rkElapsed = () => { const sec = Math.max(0, Math.floor((Date.now() - new Date(rkQ.since).getTime()) / 1000)); return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); };
+// Set to true when ranked releases: the Join queue button becomes active again.
+const RANKED_QUEUE_ENABLED = false;
+let rkPanelSig = '';
+function renderRankedPanel() {
+  renderMatchPopup();
+  const box = document.getElementById('rkQueue');
+  if (currentBoard !== 'Ranked') { box.style.display = 'none'; rkPanelSig = ''; return; }
+  let loggedIn;
+  try { loggedIn = !!accSession; } catch (e) { return; }   // account code is not initialised yet during the very first paint
+  box.style.display = 'flex';
+  // rebuild only when something visible changed, otherwise the button is replaced under the mouse (flicker, lost clicks)
+  const psig = JSON.stringify([loggedIn, rkJoining, rkQ.state, rkQ.team, rkQ.queued, rkQ.opponent, rkQBusy, RANKED_QUEUE_ENABLED]);
+  if (psig === rkPanelSig && box.children.length) return;
+  rkPanelSig = psig;
+  const busy = rkQBusy ? ' disabled' : '';
+  const names = t => `${rkEsc(t.name1)} <span class="rk-amp">&amp;</span> ${rkEsc(t.name2)}`;
+  let html;
+  if (!loggedIn) html = '<div class="rkq-text">Log in to queue for ranked games.</div><button class="rkq-btn" id="rkqLogin" type="button">Log in</button>';
+  else if (rkJoining) html = '<div class="rkq-text"><b>Joining queue.</b> This will take a moment</div>';
+  else if (rkQ.state === 'noteam') html = '<div class="rkq-text">You are <b>not registered</b> yet. To register join our <a class="rk-link" href="https://discord.gg/BjBjqmRHAD" target="_blank" rel="noopener">discord</a>. If you believe this is an error, please contact a staff member.</div>';
+  else if (rkQ.state === 'error') html = '<div class="rkq-text">Queue unavailable right now.</div>';
+  else if (rkQ.state === 'queued') html = `<div class="rkq-text"><b>Searching for a team...</b> <span id="rkQTime">${rkElapsed()}</span> &middot; ${rkQ.queued} in queue</div><button class="rkq-btn ghost" id="rkqLeave" type="button"${busy}>Leave queue</button>`;
+  else if (rkQ.state === 'matched') html = `<div class="rkq-text"><b>Match found!</b> Your duel against <span class="rkq-opp">${names(rkQ.opponent)}</span> is in the popup window.</div>`;
+  else html = `<div class="rkq-text">${rkQ.team ? `Queue as <b>${names(rkQ.team)}</b>. ` : ''}You may only queue with your registered teammate. Not doing so will result in a punishment</div>${RANKED_QUEUE_ENABLED ? `<button class="rkq-btn" id="rkqJoin" type="button"${busy}>Join queue</button>` : '<span class="rkq-tip" data-tip="Releases soon"><button class="rkq-btn locked" id="rkqJoin" type="button" disabled>Join queue</button></span>'}`;
+  box.innerHTML = html;
+  const on = (id, fn) => { const e = document.getElementById(id); if (e) e.onclick = fn; };
+  on('rkqLogin', () => accEl('accBtn').click());
+  on('rkqJoin', () => { if (RANKED_QUEUE_ENABLED) rkQCall('ranked_queue_join'); });
+  on('rkqLeave', () => rkQCall('ranked_queue_leave'));
+}
+
+// ---------- Match found popup (cannot be closed by hand; it ends with the duel) ----------
+const rkScore = { win: null, key: '' };
+let rkMatchSig = '';
+const rkScoreValid = () => rkScore.win === 'my' || rkScore.win === 'opp';
+function renderMatchPopup() {
+  const ov = document.getElementById('matchOverlay'), box = document.getElementById('matchBox');
+  if (rkQ.state !== 'matched' || rkFound) { ov.classList.remove('active'); rkMatchSig = ''; return; }
+  ov.classList.add('active');
+  const key = rkQ.pairing_id + ':' + rkQ.mismatches;
+  if (rkScore.key !== key) { rkScore.win = null; rkScore.key = key; }
+  const mine = rkOwnTeam();
+  const o = rkQ.opponent || {};
+  const ot = o.elo != null ? o : (rankedTeams.find(t => t.name1 === o.name1 && t.name2 === o.name2) || o);
+  const both = !!(rkQ.accepted && rkQ.opp_accepted);
+  const unlocked = both && rkUnlockLeft() === 0;
+  const sig = JSON.stringify([rkQ.pairing_id, rkQ.accepted, rkQ.opp_accepted, rkQ.reported, rkQ.mismatches, rkQBusy, rkQ.opponent, mine, unlocked]);
+  if (sig === rkMatchSig) return;   // nothing changed: keep the buttons as they are
+  rkMatchSig = sig;
+  const busy = rkQBusy ? ' disabled' : '';
+  const left = Math.max(0, Math.ceil((rkQ.deadline - Date.now()) / 1000));
+  const canPick = unlocked && !rkQ.reported;
+  const tbox = (t, w, label, extra = '') => { const st = Number(t.winstreak) || 0; const sel = canPick && rkScore.win === w;
+    return `<div class="mp-tbox ${extra}${canPick ? ' pick' : ''}${sel ? ' sel' : ''}" data-w="${w}"${w === 'opp' ? ' id="mpOpp"' : ''}>${canPick ? '<i class="mp-dot"></i>' : ''}<span class="mp-label">${label}</span>
+      <div class="mp-skins"><span class="hm-skin">${skinImg(t.name1, 120)}</span><span class="hm-skin">${skinImg(t.name2, 120)}</span></div>
+      <div class="mp-names"><span>${rkEsc(t.name1 || '?')}</span><span>${rkEsc(t.name2 || '?')}</span></div>
+      <div class="mp-stats">${t.elo != null ? `<span class="rk-elo">[${Math.round(Number(t.elo))}]</span>` : ''}${st >= 1 ? `<span class="rk-streak" title="Winstreak: ${st}"><img src="${FLAME_URL}" alt=""><b>${st}</b></span>` : ''}</div></div>`; };
+  const kitBtn = `<div class="mp-actions"><button class="rkq-btn ghost" id="mpKit" type="button"><img src="${MACE_ICON_URL}" alt="">Kit</button></div>`;
+  let boxes, body;
+  if (!rkQ.accepted) {
+    boxes = `<div class="mp-solo">${tbox(ot, 'opp', 'Opponents', 'link')}</div>`;
+    body = `<div>Accept the duel within <b><span id="rkAccTime">${left}</span>s</b>.</div><div><button class="rkq-btn" id="mpAccept" type="button"${busy}>Accept</button></div>`;
+  } else {
+    boxes = `<div class="mp-vs2">${tbox(mine, 'my', 'Your team', canPick ? '' : 'link')}<div class="mp-vsword">vs</div>${tbox(ot, 'opp', 'Opponents', canPick ? '' : 'link')}</div>`;
+    if (!rkQ.opp_accepted) body = `<div><b>Accepted.</b> Waiting for the other team to accept (<span id="rkAccTime">${left}</span>s).</div>`;
+    else body = `<div><b>Duel accepted!</b> Join the server and play one round. Then select which team won.${rkQ.mismatches && !rkQ.reported ? ' <span class="rkq-warn">The results did not match - select again.</span>' : ''}</div>` +
+      (rkQ.reported ? '<div class="rkq-wait">Result sent. Waiting for the other team to confirm.</div>'
+        : unlocked ? `<div class="rkq-score"><button class="rkq-btn" id="mpSend" type="button"${busy}${rkScoreValid() ? '' : ' disabled'}>Submit result</button></div>` : '');
+  }
+  box.innerHTML = `<h2 class="mp-title">Match found!</h2>${canPick ? '<div class="mp-select">Select winner</div>' : ''}${boxes}${kitBtn}<div class="mp-body">${body}</div>`;
+  const $ = id => document.getElementById(id);
+  try { hydrateSkins(box); } catch (e) {}
+  $('mpKit').onclick = openRankedKitPop;
+  box.querySelectorAll('.mp-tbox.link').forEach(el => el.onclick = () => {
+    const t = el.dataset.w === 'opp' ? (ot.teamname ? ot : rankedTeams.find(x => x.name1 === ot.name1 && x.name2 === ot.name2)) : (mine.teamname ? mine : null);
+    if (t) openTeamProfile(t);
+  });
+  if ($('mpAccept')) $('mpAccept').onclick = () => rkQCall('ranked_accept', { p_pairing: rkQ.pairing_id });
+  if ($('mpSend')) {
+    box.querySelectorAll('.mp-tbox.pick').forEach(el => el.onclick = () => {
+      rkScore.win = el.dataset.w;
+      box.querySelectorAll('.mp-tbox.pick').forEach(x => x.classList.toggle('sel', x === el));
+      $('mpSend').disabled = rkQBusy || !rkScoreValid();
+    });
+    // only one round is played: the winner is stored as a 4-0 result
+    $('mpSend').onclick = () => { if (rkScoreValid()) rkQCall('ranked_report', { p_pairing: rkQ.pairing_id, p_my: rkScore.win === 'my' ? 4 : 0, p_opp: rkScore.win === 'opp' ? 4 : 0 }); };
+  }
+}
+
+// ---------- Ranked rules window (content to be added in #rankedRulesBody) ----------
+const rulesEl = document.getElementById('rulesOverlay');
+document.getElementById('rkRulesBtn').addEventListener('click', () => rulesEl.classList.add('active'));
+document.getElementById('rulesClose').addEventListener('click', () => rulesEl.classList.remove('active'));
+rulesEl.addEventListener('click', e => { if (e.target === rulesEl) rulesEl.classList.remove('active'); });
+
 // ---------- Tier column width ----------
 // Minecraft names are 3-16 chars of [A-Za-z0-9_]. Size the columns to fit 16 of the widest glyph in the
 // name font, plus the row's avatar, badge, gaps and padding. Re-measured once the font has loaded.
@@ -1771,7 +2545,7 @@ if (document.fonts) {
 // ---------- Info tooltip ----------
 let infoTab = 'titles';
 let infoSig = '';
-const boardHasKit = () => ['Mace', 'UHC', 'SMP', 'Vanilla', 'Sword', 'Spear', 'CPvP', 'DiaSMP'].includes(currentBoard);
+const boardHasKit = () => ['Mace', 'UHC', 'SMP', 'Vanilla', 'Sword', 'Spear', 'CPvP', 'DiaSMP', 'Ranked'].includes(currentBoard);
 const INFO_BTN_ICON = '<svg class="info-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16.5"/><circle cx="12" cy="7.8" r="0.7" fill="currentColor" stroke="none"/></svg>';
 const KIT_BTN_ICON = '<svg class="info-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9.5 17.5 21 6 21 3 18 3 6.5 14.5"/><line x1="11" y1="19" x2="5" y2="13"/><line x1="8" y1="16" x2="4" y2="20"/><line x1="5" y1="21" x2="3" y2="19"/></svg>';
 // Overall board: "Info" (titles + points). Gamemode boards: "Kit" (only the kit).
@@ -1800,6 +2574,7 @@ function renderInfoTooltip() {
     : currentBoard === 'Vanilla' ? vanillaKitHtml(true)
     : currentBoard === 'Sword' ? swordKitHtml(true)
     : currentBoard === 'Spear' ? spearKitHtml(true)
+    : currentBoard === 'Ranked' ? rankedKitHtml(true)
     : currentBoard === 'CPvP' ? cpvpKitHtml(true)
     : currentBoard === 'DiaSMP' ? diasmpKitHtml(true)
     : `<div class="kit-empty">No kit yet</div>`;
@@ -1941,7 +2716,8 @@ function openProfile(player) {
     <div class="rank-flag"><span class="rank-num">${rank}.</span></div>
     <div class="pos-info"><span class="pos-overall">Overall</span><span class="pos-points">(${totalPoints} Points)</span></div>`;
   renderProfileTiers(player);
-  const box = document.querySelector(".modal-box");
+  renderProfileRanked(player);
+  const box = document.querySelector("#modalOverlay .modal-box");
   const glowSize = TITLE_GLOW_SIZE[title];
   box.classList.toggle("no-glow", !glowSize || !!player.inactive);
   document.getElementById("modalInactive").style.display = player.inactive ? "" : "none";
@@ -1972,6 +2748,19 @@ searchInput.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSe
 searchInput.addEventListener("input", () => renderSearchResults(searchInput.value));
 function renderSearchResults(query) {
   const q = query.trim().toLowerCase();
+  if (currentBoard === 'Ranked') {   // team search: type a player name, open the team profile
+    const teams = (q ? rankedTeams.filter(t => t.name1.toLowerCase().includes(q) || t.name2.toLowerCase().includes(q)) : rankedTeams).slice(0, 8);
+    if (!teams.length) { searchResults.innerHTML = '<div class="search-empty">No teams found</div>'; return; }
+    searchResults.innerHTML = "";
+    teams.forEach(t => {
+      const row = document.createElement("div");
+      row.className = "search-result-item";
+      row.innerHTML = `<img src="${avatarUrl(t.name1, 26)}" alt="" onerror="this.style.display='none'"><img src="${avatarUrl(t.name2, 26)}" alt="" onerror="this.style.display='none'"><span>${rkEsc(t.name1)} &amp; ${rkEsc(t.name2)}</span>`;
+      row.addEventListener("click", () => { closeSearch(); openTeamProfile(t); });
+      searchResults.appendChild(row);
+    });
+    return;
+  }
   const matches = (q ? allPlayers.filter(p => p.name.toLowerCase().includes(q)) : allPlayers).slice(0, 8);
   if (matches.length === 0) { searchResults.innerHTML = '<div class="search-empty">No players found</div>'; return; }
   searchResults.innerHTML = "";
@@ -2069,7 +2858,10 @@ toggleBtn.addEventListener("click", () => { visibleCount += PAGE_SIZE; render();
 renderGamemodes();
 renderInfoSections();
 handleRoute();
-setInterval(() => loadPlayersAndRender(false), 5000);
+setInterval(() => { if (!document.hidden) loadPlayersAndRender(false); }, 30000);
+setInterval(() => { if (!document.hidden && currentBoard === 'Ranked') renderRanked(false); }, 20000);
+
+document.addEventListener('visibilitychange', () => { if (!document.hidden) { loadPlayersAndRender(false); if (currentBoard === 'Ranked') renderRanked(false); } });
 
 // ================= Accounts (Minecraft verification + tier tests) =================
 const MC_SERVER_IP = "play.yourserver.net";   // <-- put your Minecraft server address here
@@ -2091,7 +2883,7 @@ function accToast(text) { const t = document.createElement('div'); t.className =
 function accStopTimers() { clearInterval(accCodeTimer); accCodeTimer = null; }
 function accOpen(html, wide = false) { closeKitPop(); const b = accEl('accBody'); delete b.dataset.q; b.innerHTML = html; accEl('accModal').firstElementChild.classList.toggle('wide', wide); accEl('accModal').firstElementChild.scrollTop = 0; accEl('accModal').classList.add('open'); closeDrops(); }
 function accClose() { accEl('accModal').classList.remove('open'); accStopTimers(); closeKitPop(); }
-function closeDrops() { accEl('accMenu').classList.remove('open'); accEl('accPanel').classList.remove('open'); }
+function closeDrops() { accEl('accMenu').classList.remove('open'); accEl('accPanel').classList.remove('open'); const b = accEl('accBtn'); b.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); }
 function onEnter(ids, fn) { ids.forEach(i => accEl(i)?.addEventListener('keydown', e => { if (e.key === 'Enter') fn(); })); }
 function errText(e) { return (e && (e.message || e.details || '')) + ''; }
 function copyText(txt, btn) {
@@ -2415,41 +3207,40 @@ function openKitPop(kit) {
 function accViewLogin() {
   accStopTimers();
   accOpen(`<h2>Log in</h2>
-    <input class="acc-in" id="aUser" placeholder="Minecraft Name" maxlength="16" autocomplete="username">
+    <input class="acc-in" id="aUser" placeholder="Username" maxlength="16" autocomplete="username">
     <input class="acc-in" id="aPass" type="password" placeholder="Password" autocomplete="current-password">
     <div class="acc-msg" id="aMsg"></div>
     <button class="acc-go" id="aGo" type="button">Log in</button>
-    <div class="acc-alt">No account yet? <a id="aSwitch">Register</a></div>`);
+    <div class="acc-alt">No account yet? <a href="https://discord.gg/BjBjqmRHAD" target="_blank" rel="noopener">Register</a></div>`);
   const go = async () => {
     const u = accEl('aUser').value.trim(), p = accEl('aPass').value;
-    if (!u || !p) return accMsg('Enter your Minecraft name and password.');
+    if (!u || !p) return accMsg('Enter your username and password.');
     accEl('aGo').disabled = true;
     const { error } = await sb.auth.signInWithPassword({ email: accEmail(u), password: p });
     accEl('aGo').disabled = false;
-    if (error) return accMsg('Wrong Minecraft name or password.');
+    if (error) return accMsg('Wrong username or password.');
     accClose();
   };
   accEl('aGo').onclick = go; onEnter(['aUser', 'aPass'], go);
-  accEl('aSwitch').onclick = accViewRegister;
   accEl('aUser').focus();
 }
 
 function accViewRegister() {
   accStopTimers();
   accOpen(`<h2>Register</h2>
-    <input class="acc-in" id="aUser" placeholder="Minecraft Name" maxlength="16" autocomplete="off">
+    <input class="acc-in" id="aUser" placeholder="Username" maxlength="16" autocomplete="off">
     <div class="acc-msg" id="aMsg"></div>
     <button class="acc-go" id="aGo" type="button">Continue</button>
     <div class="acc-alt">Already registered? <a id="aSwitch">Log in</a></div>`);
   const go = async () => {
     const u = accEl('aUser').value.trim();
-    if (!/^[A-Za-z0-9_]{3,16}$/.test(u)) return accMsg('Enter a valid Minecraft name (3-16 letters, numbers or _).');
+    if (!/^[A-Za-z0-9_]{3,16}$/.test(u)) return accMsg('Enter a valid username (3-16 letters, numbers or _).');
     accEl('aGo').disabled = true;
     const { data, error } = await sb.rpc('request_code', { p_username: u });
     accEl('aGo').disabled = false;
     if (error) {
       const t = errText(error);
-      if (t.includes('already_registered')) return accMsg('This Minecraft name is already registered.');
+      if (t.includes('already_registered')) return accMsg('This username is already registered.');
       if (t.includes('too_many')) return accMsg('Too many attempts. Wait a few minutes and try again.');
       return accMsg('Something went wrong. Try again.');
     }
@@ -2496,7 +3287,7 @@ function accViewPassword(user, code) {
     accEl('aGo').disabled = false;
     if (error) {
       const t = errText(error);
-      if (t.includes('already')) return accMsg('This Minecraft name is already registered.');
+      if (t.includes('already')) return accMsg('This username is already registered.');
       if (t.includes('Database error')) return accMsg('Verification expired. Start again.');
       console.error(error); return accMsg(t || 'Could not create the account.');
     }
@@ -2606,6 +3397,7 @@ async function accViewSchedule(kit) {
 
 // ----- roles (from the players table) -----
 let accRoleSig = null;
+const accDisplayName = () => { if (!accProfile) return ''; const n = accProfile.mc_username, l = n.toLowerCase(); const p = (typeof allPlayers !== 'undefined' && allPlayers.find(p => p.name.toLowerCase() === l)); return p ? p.name : n; };
 const accMe = () => accProfile ? (allPlayers.find(p => p.name.toLowerCase() === accProfile.mc_username.toLowerCase()) || null) : null;
 const accTesterKits = () => { const me = accMe(); return me ? SUB_BOARDS.filter(k => me.tester && me.tester[k]) : []; };
 const accIsRegulator = () => !!accMe()?.regulator;
@@ -2614,24 +3406,35 @@ function accOnPlayersLoaded() { if (accProfile) accUpdateUI(); }
 
 // ----- header UI + tester notifications -----
 function accUpdateUI() {
-  accEl('accBtn').querySelector('span').textContent = accProfile ? accProfile.mc_username : 'Log in';
+  { const b = accEl('accBtn');
+    if (accProfile) {
+      const n = accDisplayName();
+      b.classList.add('logged'); document.body.classList.add('acc-in');
+      b.innerHTML = `<img class="acc-head" src="${avatarUrl(n, 60)}" alt="" onerror="this.style.visibility='hidden'"><span class="acc-name">${accEsc(n)}</span><i class="acc-caret"></i>`;
+    } else {
+      b.classList.remove('logged', 'open'); b.setAttribute('aria-expanded', 'false'); document.body.classList.remove('acc-in');
+      b.innerHTML = '<span>Log in</span>';
+    }
+  }
   const active = accTesterKits().length > 0 || accIsRegulator();
   accEl('accBell').style.display = accProfile ? 'inline-flex' : 'none';
-  if (accProfile && !accNotifTimer) { accPollAll(); accNotifTimer = setInterval(accPollAll, 8000); }
+  if (accProfile && !accNotifTimer) { accPollAll(); accNotifTimer = setInterval(accPollAll, 20000); }
   if (!accProfile && accNotifTimer) { clearInterval(accNotifTimer); accNotifTimer = null; accNotifs = []; accNotifSeen = null; accMatches = []; accRenderBell(); }
   if (accProfile) accQStart(); else accQStop();
+  { const k = accSession ? accSession.user.id : ''; if (k !== rkSyncKey) { rkSyncKey = k; rkQSync(); } }
   const sig = `${accProfile ? accProfile.mc_username : ''}|${accTesterKits().join()}|${accIsRegulator()}`;
   if (sig === accRoleSig) return;
   accRoleSig = sig;
   clearInterval(accPollTimer); accPollTimer = null; accSeen = null;
-  if (active) { accPollRequests(); accPollTimer = setInterval(accPollRequests, 15000); }
+  if (active) { accPollRequests(); accPollTimer = setInterval(() => { if (!document.hidden) accPollRequests(); }, 30000); }
   else { accPending = []; }
 }
 
 async function accRefreshProfile() {
   if (!accSession) { accProfile = null; accUpdateUI(); return; }
   const { data } = await sb.from('profiles').select('mc_username').eq('user_id', accSession.user.id).maybeSingle();
-  accProfile = data || null; accUpdateUI();
+  const fb = ((accSession.user.email || '').split('@')[0]);
+  accProfile = data || (fb ? { mc_username: fb, __fb: true } : null); accUpdateUI();
 }
 
 let accNotifs = [], accNotifSeen = null, accNotifTimer = null, accMatches = [], accScoreShown = new Set(), accUnreadAtOpen = new Set(), accRefreshPending = null;
@@ -2664,7 +3467,7 @@ async function accPollNotifs() {
   accNotifSeen = new Set(data.map(x => x.id));
   accNotifs = data; accRenderBell();
 }
-async function accPollAll() { await accPollNotifs(); await accPollMatches(); }
+async function accPollAll() { if (document.hidden) return; await accPollNotifs(); await accPollMatches(); }
 
 // ----- duels (matches between a testee and an assigned opponent) -----
 async function accPollMatches() {
@@ -2959,7 +3762,6 @@ async function accQueuePoll() {
   if (error || !data) { accQErr = true; if (!accQ) accQ = { kits: {}, favs: [], tester_open: {}, mine: [], testing: [] }; if (accEl('qBoxes') && accQBoxKits) accRenderQueueBoxes(accQBoxKits); return; }
   accQErr = false; accQ = data; accQAt = Date.now();
   if (accEl('qBoxes') && accQBoxKits) accRenderQueueBoxes(accQBoxKits);
-  if (++accQN % 2 === 0) accPollNotifs();
 }
 const accQMine = k => (accQ?.mine || []).find(x => x.kit === k);
 function accQBoxHtml(k) {
@@ -3079,7 +3881,7 @@ function accQConfirmCard(k) {
   d.querySelector('[data-c=yes]').onclick = async () => { d.remove(); await sb.rpc('queue_confirm', { p_kit: k }); accQConfirmShown[k] = false; accQueuePoll(); };
   d.querySelector('[data-c=no]').onclick = async () => { d.remove(); await sb.rpc('queue_close', { p_kit: k }); accQueuePoll(); };
 }
-function accQStart() { if (accQTimer) return; accQueuePoll(); accQTimer = setInterval(accQueuePoll, 4000); accQTick = setInterval(accQTickFn, 1000); }
+function accQStart() { if (accQTimer) return; accQueuePoll(); accQTimer = setInterval(() => { if (!document.hidden) accQueuePoll(); }, 8000); accQTick = setInterval(accQTickFn, 1000); }
 function accQStop() {
   clearInterval(accQTimer); clearInterval(accQTick); accQTimer = accQTick = null; accQ = null; accQKey = null; accQPhase = null;
   document.querySelectorAll('.q-confirm').forEach(e => e.remove());
@@ -3098,13 +3900,14 @@ async function initAuth() {
     e.stopPropagation();
     if (!accSession) return accViewLogin();
     const menu = accEl('accMenu'); accEl('accPanel').classList.remove('open');
-    menu.innerHTML = '<button class="item" id="mReq" type="button">Tier tests</button><button class="item" id="mOut" type="button">Log out</button>';
-    menu.classList.toggle('open');
-    accEl('mReq').onclick = accViewTests;
+    menu.innerHTML = '<button class="item" id="mProf" type="button" role="menuitem">View profile</button><button class="item danger" id="mOut" type="button" role="menuitem">Log out</button>';
+    const open = menu.classList.toggle('open');
+    btn.classList.toggle('open', open); btn.setAttribute('aria-expanded', String(open));
+    accEl('mProf').onclick = () => { closeDrops(); if (accProfile) window.location.hash = '#/player/' + encodeURIComponent(accDisplayName()); };
     accEl('mOut').onclick = async () => { closeDrops(); await sb.auth.signOut(); };
   };
-  hero.addEventListener('click', e => { e.preventDefault(); accSession ? accViewTests() : accViewRegister(); });
-  hero.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); accSession ? accViewTests() : accViewRegister(); } });
+  hero.addEventListener('click', e => { e.preventDefault(); accSession ? accViewTests() : accViewLogin(); });
+  hero.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); accSession ? accViewTests() : accViewLogin(); } });
   accEl('accBell').onclick = e => { e.stopPropagation(); accEl('accMenu').classList.remove('open'); if (accEl('accPanel').classList.toggle('open')) accOpenPanel(); };
   accEl('accPanel').onclick = e => e.stopPropagation();
   document.addEventListener('click', closeDrops);
@@ -3112,6 +3915,18 @@ async function initAuth() {
   accEl('accModal').addEventListener('mousedown', e => { if (e.target === accEl('accModal')) accClose(); });
   accEl('accModal').addEventListener('click', e => { if (!e.target.closest('#kitPop') && !e.target.closest('.tt-i')) closeKitPop(); });
 }
+
+// ----- right sidebar menu -----
+(function () {
+  const btn = document.getElementById('menuBtn'), menu = document.getElementById('sideMenu'), ov = document.getElementById('sideOverlay');
+  document.getElementById('sideMaceIco').src = MACE_ICON_URL;
+  const set = open => { menu.classList.toggle('open', open); ov.classList.toggle('open', open); document.body.classList.toggle('side-open', open); btn.setAttribute('aria-expanded', String(open)); menu.setAttribute('aria-hidden', String(!open)); };
+  btn.addEventListener('click', e => { e.stopPropagation(); set(!menu.classList.contains('open')); });
+  ov.addEventListener('click', () => set(false));
+  document.getElementById('sideClose').addEventListener('click', () => set(false));
+  menu.querySelectorAll('.side-item').forEach(a => a.addEventListener('click', () => set(false)));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') set(false); });
+})();
 initAuth();
 
 // Click-and-drag panning (mouse): dragging on empty space scrolls the tier columns left/right (no vertical dragging)
@@ -3120,7 +3935,9 @@ initAuth();
   let st = null;
   document.addEventListener('mousedown', e => {
     if (e.button !== 0 || e.target.closest(SKIP)) return;
+    if (['Home', 'Overall', 'Ranked'].includes(currentBoard)) return;
     const cols = document.querySelector('.tier-columns');
+    if (!cols) return;
     st = { x: e.clientX, y: e.clientY, left: cols ? cols.scrollLeft : 0, top: window.scrollY, cols, moved: false };
   });
   document.addEventListener('mousemove', e => {
