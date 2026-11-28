@@ -2429,7 +2429,7 @@ setInterval(() => {
 }, 1000);
 const rkElapsed = () => { const sec = Math.max(0, Math.floor((Date.now() - new Date(rkQ.since).getTime()) / 1000)); return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); };
 // Set to true when ranked releases: the Join queue button becomes active again.
-const RANKED_QUEUE_ENABLED = false;
+const RANKED_QUEUE_ENABLED = true;
 let rkPanelSig = '';
 function renderRankedPanel() {
   renderMatchPopup();
